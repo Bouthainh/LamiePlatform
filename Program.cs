@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //DI for connection string 
-builder.Services.AddDbContext<MaherdbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MaherDb")));
+builder.Services.AddDbContext<BadeedbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 var app = builder.Build();
 

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BadeePlatform.Data;
 
-public partial class MaherdbContext : DbContext
+public partial class BadeedbContext : DbContext
 {
-    public MaherdbContext()
+    public BadeedbContext()
     {
     }
 
-    public MaherdbContext(DbContextOptions<MaherdbContext> options)
+    public BadeedbContext(DbContextOptions<BadeedbContext> options)
         : base(options)
     {
     }
@@ -53,7 +53,7 @@ public partial class MaherdbContext : DbContext
 
         if (!optionsBuilder.IsConfigured)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=maherdb;Trusted_Connection=True;TrustServerCertificate=true");
+            optionsBuilder.UseSqlServer("Server=.;Database=badeedb;Trusted_Connection=True;TrustServerCertificate=true");
         }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
