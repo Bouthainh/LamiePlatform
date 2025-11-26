@@ -1,0 +1,119 @@
+@{
+    ViewData["Title"] = "ماهر -صفحة ولي الأمر ";
+}
+
+
+
+    <main>
+        <div class="main-container">
+            <aside class="sidebar">
+                <div class="sidebar-links">
+                    <a href="ParentHomePage.html" class="sidebar-item home-icon">
+                        🏠
+                    </a>
+                    <a href="#profile" class="sidebar-item profile-icon">
+                        👤
+                    </a>
+                    <a href="#documents" class="sidebar-item documents-icon">
+                        📄
+                    </a>
+                    <a href="#tasks" class="sidebar-item tasks-icon">
+                        ☐
+                    </a>
+                    <a href="#settings" class="sidebar-item settings-icon">
+                        ⚙️
+                    </a>
+                    <a href="LogInPage.html" class="sidebar-item logout">
+                        🚪
+                    </a>
+                </div>
+            </aside>
+
+            <section class="main-content">
+                <div class="page-header">
+                    <h1>الصفحة الرئيسية</h1>
+                    <div class="logo-corner">
+                        <img src="~/images/MaherLogo.png" alt="MaherLogo">
+                    </div>
+                </div>
+
+                <div class="children-section">
+                    <h2>قائمة الأطفال</h2>
+                    
+                    <div class="children-grid">
+                        <div class="add-child-card">
+                            <a href="AddChildPage.html">
+                                <div class="add-icon">+</div>
+                                <p>اضافة طفل</p>
+                            </a>
+                        </div>
+
+                        <div class="child-card">
+                            <div class="child-avatar">
+                                <img src="~/images/ChildBoy.png" alt="عمر">
+                            </div>
+                            <div class="child-info">
+                                <h3>عمر</h3>
+                                <p>العمر: 6 سنوات</p>
+                                <div class="talents">
+                                    <span class="talent">🎨</span>
+                                    <span class="talent">🎵</span>
+                                    <span class="talent">⚽</span>
+                                </div>
+                            </div>
+                            <a href="#" class="view-profile-btn">عرض الملف</a>
+                        </div>
+
+                        <div class="child-card">
+                            <div class="child-avatar">
+                                <img src="~/images/ChildGirl.png" alt="لين">
+                            </div>
+                            <div class="child-info">
+                                <h3>لين</h3>
+                                <p>العمر: 5 سنوات</p>
+                                <div class="talents">
+                                    <span class="talent">🎭</span>
+                                    <span class="talent">📚</span>
+                                    <span class="talent">🧩</span>
+                                </div>
+                            </div>
+                            <a href="childProfile.html" class="view-profile-btn">عرض الملف</a>
+                        </div>
+
+                        <div class="child-card">
+                            <div class="child-avatar">
+                                <img src="~/images/ChildBoy2.png" alt="عبدالرحمن">
+                            </div>
+                            <div class="child-info">
+                                <h3>عبدالرحمن</h3>
+                                <p>العمر: 7 سنوات</p>
+                                <div class="talents">
+                                    <span class="talent">🎨</span>
+                                    <span class="talent">⚽</span>
+                                </div>
+                            </div>
+                            <a href="#" class="view-profile-btn">عرض الملف</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notifications-section">
+                    <h2>الإشعارات</h2>
+                    <div class="notifications-list">
+                        <div class="notification-item">
+                            <div class="notification-icon">👧</div>
+                            <p>وصلت رسالة جديدة من معلمة لين</p>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon">🎯</div>
+                            <p>تم اكتشاف تقدم في الذكاء البصري لدى عمر</p>
+                        </div>
+                        <div class="notification-item">
+                            <div class="notification-icon">🔔</div>
+                            <p>تقرير جديد متاح لطفلك</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>

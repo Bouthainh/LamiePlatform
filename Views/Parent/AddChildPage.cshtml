@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "ماهر -اضافة طفل ";
+}
+
+
+<main>
+    <div class="main-container">
+        <section class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h1>اضافة طفل</h1>
+                </div>
+
+                <form method="POST" action="/add-child">
+
+                    <!-- Child Information Section -->
+                    <div class="form-section">
+                        <h2>بيانات الطفل</h2>
+
+                        <div class="form-group">
+                            <label for="fullName">اسم الطفل الكامل</label>
+                            <input type="text" id="fullName" name="fullName" placeholder="اكتب اسم الطفل كامل" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age">العمر</label>
+                                <select id="age" name="age" required>
+                                    <option value="">اختر العمر</option>
+                                    <option value="4">4 سنوات</option>
+                                    <option value="5">5 سنوات</option>
+                                    <option value="6">6 سنوات</option>
+                                    <option value="7">7 سنوات</option>
+                                    <option value="8">8 سنوات</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">الجنس</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="">اختر الجنس</option>
+                                    <option value="male">ذكر</option>
+                                    <option value="female">أنثى</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- School Information Section -->
+                    <div class="form-section">
+                        <h2>بيانات المدرسة</h2>
+
+                        <div class="form-group">
+                            <label for="schoolName">اسم المدرسة</label>
+                            <input type="text" id="schoolName" name="schoolName" placeholder="اكتب اسم المدرسة" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="stage">المرحل الدراسية</label>
+                                <input type="text" id="stage" name="stage" placeholder="اكتب المرحلة الدراسية للطفل" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="class">الفصل</label>
+                                <select id="class" name="class" required>
+                                    <option value="">اختر الفصل</option>
+                                    <option value="a">أ</option>
+                                    <option value="b">ب</option>
+                                    <option value="c">ج</option>
+                                    <option value="d">د</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educatorName">اسم المعلم/ة</label>
+                        <input type="text" id="educatorName" name="educatorName" placeholder="اكتب اسم المعلم/ة للطفل" required>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="terms-section">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">أوافق على الشروط والأحكام</label>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">تسجيل</button>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</main>

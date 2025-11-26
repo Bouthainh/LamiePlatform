@@ -1,0 +1,102 @@
+
+@{
+    ViewData["Title"] = "ماهر - تسجيل الدخول ";
+}
+@{
+    Layout = null;
+}
+
+    @* <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="~/images/MaherLogo.png" alt="MaherLogo">
+            </div>
+            <nav>
+                <a href="MainPage.html">الرئيسية</a>
+            </nav>
+        </div>
+    </header> *@
+
+    <!-- Main Content -->
+    <main>
+        <div class="signup-container">
+            <!-- Sign Up Form -->
+            <div class="signup-form-section">
+                <div class="form-header">
+                    <h1>أهلاً بك في ماهر</h1>
+                    <p>أنشئ حسابك الآن</p>
+                </div>
+
+                <form class="signup-form" action="#" method="POST"> 
+                    <!-- Email and Username Row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="username">أدخل اسمك</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">أدخل إيميلك هنا</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <!-- Region Selection Row -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="region">اختار منطقتك</label>
+                            <select id="region" name="region" required>
+                                <option value="">اختار منطقتك</option>
+                                <option value="riyadh">منطقة الرياض</option>
+                                <option value="makkah">منطقة مكة المكرمة</option>
+                                <option value="madinah">منطقة المدينة المنورة</option>
+                                <option value="qassim">منطقة القصيم</option>
+                                <option value="eastern">المنطقة الشرقية</option>
+                                <option value="asir">منطقة عسير</option>
+                                <option value="tabuk">منطقة تبوك</option>
+                                <option value="hail">منطقة حائل</option>
+                                <option value="northern">منطقة الحدود الشمالية</option>
+                                <option value="jazan">منطقة جازان</option>
+                                <option value="najran">منطقة نجران</option>
+                                <option value="bahah">منطقة الباحة</option>
+                                <option value="jouf">منطقة الجوف</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">اختار دورك</label>
+                            <select id="role" name="role" required>
+                                <option value="">اختار دورك</option>
+                                <option value="parent">ولي أمر</option>
+                                <option value="teacher">معلم/معلمة</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group full-width">
+                        <label for="password">أدخل كلمة المرور هنا</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-submit">
+                        <button type="submit" class="signup-btn">سجل الآن</button>
+                    </div>
+
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        <p>لديك حساب؟ <a href="LogInPage.html">سجل الدخول</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Character Illustration -->
+            <div class="illustration-section">
+                <div class="character-container">
+                    <img src="~/images/ChildwPrize.png" alt="شخصية ماهر">
+                </div>
+            </div>
+        </div>
+    </main>
+
+

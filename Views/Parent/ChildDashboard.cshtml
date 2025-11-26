@@ -1,0 +1,175 @@
+@{
+    ViewData["Title"] = "ماهر - لوحة تحكم الطفل ";
+}
+
+
+
+
+    <main>
+        <div class="main-container">
+            <aside class="sidebar">
+                <div class="sidebar-links">
+                    <a href="index.html" class="sidebar-item home-icon">
+                        🏠
+                    </a>
+                    <a href="#profile" class="sidebar-item profile-icon">
+                        👤
+                    </a>
+                    <a href="#documents" class="sidebar-item documents-icon">
+                        📄
+                    </a>
+                    <a href="#tasks" class="sidebar-item tasks-icon">
+                        ☐
+                    </a>
+                    <a href="#settings" class="sidebar-item settings-icon">
+                        ⚙️
+                    </a>
+                    <a href="loginpage.html" class="sidebar-item logout">
+                        🚪
+                    </a>
+                </div>
+            </aside>
+
+            <section class="main-content">
+                <div class="dashboard-container">
+                    <!-- Header Card -->
+                    <div class="header-card">
+                        <div class="child-info">
+                            <h1>محمد أحمد</h1>
+                            <p>الصف الأول - 6 سنوات</p>
+                            <p class="school-note">أم سلطانة الدولي</p>
+                            <div class="avatar-circle"></div>
+                        </div>
+                        <div class="header-stats">
+                            <div class="stat-item blue-bg">
+                                <p>أعلى 3 ذكاءات</p>
+                                <span>3</span>
+                                <div class="stat-icon">✍️</div>
+                            </div>
+                            <div class="stat-item green-bg">
+                                <p>تحديات مكتملة</p>
+                                <span>06/12</span>
+                                <div class="stat-icon">📚</div>
+                            </div>
+                            <div class="stat-item light-blue-bg">
+                                <p>المستوى العام</p>
+                                <span>⭐</span>
+                                <div class="stat-icon">🎯</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Cards Grid -->
+                    <div class="cards-grid">
+                        <!-- Discovery Results Card -->
+                        <div class="card discovery-card">
+                            <div class="card-header">
+                                <h2>نتائج مرحلة الاكتشاف</h2>
+                                <div class="icon">📊</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="discovery-chart">
+                                    <div class="chart-labels">
+                                        <p>إكتشاف</p>
+                                        <p>الموسيقى</p>
+                                        <p>الذكاء</p>
+                                        <p>العددي</p>
+                                        <p>المنطقي</p>
+                                        <p>اللغوي</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Teacher Contact Card -->
+                        <div class="card teacher-card">
+                            <div class="card-header">
+                                <h2>التواصل مع المعلم</h2>
+                                <div class="icon">💬</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="teacher-info">
+                                    <div class="teacher-avatar"></div>
+                                </div>
+                                <p class="teacher-name">أ.زيد خالد</p>
+                                <p class="teacher-email">zaied@gmail.com</p>
+                                <p class="teacher-role">معلم عربي</p>
+                                <button class="contact-btn">تواصل</button>
+                            </div>
+                        </div>
+
+                        <!-- Top Talents Card -->
+                        <div class="card talents-card">
+                            <div class="card-header">
+                                <h2>أعلى 3 ذكاءات</h2>
+                                <div class="icon">🎨</div>
+                            </div>
+                            <div class="card-content talents-content">
+                                <div class="talent-item">
+                                    <div class="talent-bar-container">
+                                        <div class="talent-bar blue-bar"></div>
+                                        <div class="talent-name">الذكاء الرياضي</div>
+                                    </div>
+                                </div>
+                                <div class="talent-item">
+                                    <div class="talent-bar-container">
+                                        <div class="talent-bar yellow-bar"></div>
+                                        <div class="talent-name">المنطقي البصري</div>
+                                    </div>
+                                </div>
+                                <div class="talent-item">
+                                    <div class="talent-bar-container">
+                                        <div class="talent-bar purple-bar"></div>
+                                        <div class="talent-name">اللغوي</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personalized Activities Card -->
+                        <div class="card activities-card">
+                            <div class="card-header">
+                                <h2>أنشطة مخصصة</h2>
+                                <div class="icon">🎯</div>
+                            </div>
+                            <div class="card-content">
+                                <p class="activities-title">نشاط المهارات:</p>
+                                <p class="activities-desc">قائم على ورق يزود أنشطة مختلفة وتوزيع حسب الذكاء والاهتمام وتركيب الأشكال الهندسية. استخدام مكعبات لإنشاء أشكال لتاية الأطفال.</p>
+                                <button class="view-btn">عرض</button>
+                            </div>
+                        </div>
+
+                        <!-- Teacher Name Card -->
+                        <div class="card teacher-name-card">
+                            <div class="card-content">
+                                <div class="teacher-avatar-large"></div>
+                                <p class="teacher-name-text">أ.زيد خالد</p>
+                            </div>
+                        </div>
+
+                        <!-- Latest Reports Card -->
+                        <div class="card reports-card">
+                            <div class="card-header">
+                                <h2>آخر التقارير</h2>
+                                <div class="icon">📋</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="report-item">
+                                    <span class="report-date">تقرير 11/11 2025</span>
+                                    <button class="report-btn">عرض</button>
+                                </div>
+                                <div class="report-item">
+                                    <span class="report-date">تقرير 11/12 2025</span>
+                                    <button class="report-btn">عرض</button>
+                                </div>
+                                <div class="report-footer">
+                                    <a href="#" class="view-all-reports">عرض جميع التقارير</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+

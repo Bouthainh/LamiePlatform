@@ -1,0 +1,89 @@
+
+@{
+    ViewData["Title"] = "ماهر - تعديل معلومات الطفل ";
+}
+
+
+    <main>
+        <div class="main-container">
+            <section class="main-content">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h1>تعديل معلومات الطفل</h1>
+                        <div class="logo-corner">
+                            <img src="~/images/MaherLogo.png" alt="MaherLogo">
+                        </div>
+                    </div>
+
+                    <form method="POST" action="/edit-child">
+                        <!-- Child Information Section -->
+                        <div class="form-section">
+                            <h2>بيانات الطفل</h2>
+                            
+                            <div class="form-group">
+                                <label for="fullName">الاسم الكامل</label>
+                                <input type="text" id="fullName" name="fullName" placeholder="الاسم الكامل" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="age">العمر</label>
+                                    <input type="text" id="age" name="age" placeholder="العمر" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="gender">الجنس</label>
+                                    <input type="text" id="gender" name="gender" placeholder="الجنس" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- School Information Section -->
+                        <div class="form-section">
+                            <h2>بيانات المدرسة</h2>
+                            
+                            <div class="form-group">
+                                <label for="schoolName">اسم المدرسة</label>
+                                <input type="text" id="schoolName" name="schoolName" placeholder="اسم المدرسة" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="stage">المرحلة</label>
+                                    <input type="text" id="stage" name="stage" placeholder="المرحلة" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="class">الفصل</label>
+                                    <input type="text" id="class" name="class" placeholder="الفصل" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-actions">
+                            <button type="submit" class="submit-btn">حفظ التغييرات</button>
+                        </div>
+                    </form>
+
+                    <div class="sidebar-navigation">
+                        <a href="index.html" class="sidebar-item home-icon" title="الرئيسية">
+                            🏠
+                        </a>
+                        <a href="#profile" class="sidebar-item profile-icon" title="الملف الشخصي">
+                            👤
+                        </a>
+                        <a href="#documents" class="sidebar-item documents-icon" title="المستندات">
+                            📄
+                        </a>
+                        <a href="#tasks" class="sidebar-item tasks-icon" title="المهام">
+                            ☐
+                        </a>
+                        <a href="#settings" class="sidebar-item settings-icon" title="الإعدادات">
+                            ⚙️
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
