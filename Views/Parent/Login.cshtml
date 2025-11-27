@@ -1,50 +1,59 @@
+@model BadeePlatform.DTOs.LoginParentDTO
 
 @{
+    ViewData["Title"] = "ماهر - تسجيل الدخول ";
     Layout = null;
 }
 
-
-    <div class="login-container">
-        <div class="login-left">
-            <div class="login-illustration">
-                <img src="~/images/MaherLogo.png" alt="MaherLogo">
-            </div>
-        </div>
-
-        <div class="login-right">
-            <h1>مرحبا بعودتك إلى ماهر</h1>
-            
-            <form method="POST" action="/login">
-                <div class="form-group">
-                    <input 
-                        type="email" 
-                        name="email" 
-                        placeholder="أدخل بريدك هنا" 
-                        required
-                    >
-                </div>
-
-                <div class="form-group">
-                    <input 
-                        type="password" 
-                        name="password" 
-                        placeholder="أدخل كلمة المرور هنا" 
-                        required
-                    >
-                </div>
-
-                <div class="forgot-password">
-                    <a href="#">نسيت كلمة المرور؟</a>
-                </div>
-
-                <button type="submit" class="login-button">سجل دخول</button>
-            </form>
-
-            <div class="signup-link">
-                <p>ليس لديك حساب؟ <a href="SignUpPage.html">أنشئ الآن</a></p>
-            </div>
+<div class="login-container">
+    <div class="login-left">
+        <div class="login-illustration">
+            <img src="~/images/MaherLogo.png" alt="MaherLogo">
         </div>
     </div>
 
- 
+    <div class="login-right">
+        <h1>مرحبا بعودتك إلى ماهر</h1>
 
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success">@TempData["Success"]</div>
+        }
+
+        <form method="POST" asp-controller="Parent" asp-action="Login">
+
+            <div class="form-group">
+                <input asp-for="UsernameOrEmail"
+                       type="text"
+                       placeholder="اسم المستخدم أو بريدك هنا"
+                       required />
+                <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input asp-for="Password"
+                       type="password"
+                       placeholder="أدخل كلمة المرور هنا"
+                       required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">نسيت كلمة المرور؟</a>
+            </div>
+
+            <button type="submit" class="login-button">سجل دخول</button>
+        </form>
+
+        <div class="signup-link">
+            <p>
+                ليس لديك حساب؟
+                <a asp-controller="Parent" asp-action="Register">أنشئ الآن</a>
+            </p>
+        </div>
+    </div>
+</div>

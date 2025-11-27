@@ -35,5 +35,10 @@
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "كلمة المرور وتأكيدها غير متطابقتين.")]
         public string ConfirmPassword { get; set; }
+
+        [Required(ErrorMessage = "يجب اختيار دورك (أم/أب).")]
+        public string Role { get; set; }
+
+
     }
 }

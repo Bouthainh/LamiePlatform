@@ -1,4 +1,4 @@
-
+@model BadeePlatform.DTOs.RegisterParentDTO
 @{
     ViewData["Title"] = "ماهر - تسجيل الدخول ";
 }
@@ -63,12 +63,13 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="role">اختار دورك</label>
-                            <select id="role" name="role" required>
-                                <option value="">اختار دورك</option>
-                                <option value="parent">ولي أمر</option>
-                                <option value="teacher">معلم/معلمة</option>
-                            </select>
+                        <label asp-for="Role">اختار دورك</label>
+                        <select asp-for="Role" required>
+                            <option value="">اختار دورك</option>
+                            <option value="Mother">أم</option>
+                            <option value="Father">أب</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
                         </div>
                     </div>
 

@@ -53,7 +53,7 @@ namespace BadeePlatform.Controllers
                 if (result.Success)
                 {
                     TempData["Success"] = result.Message;
-                    return RedirectToAction("/Parent/Login");
+                    return RedirectToAction("login");
                 }
                 else
                 {
