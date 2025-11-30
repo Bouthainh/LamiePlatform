@@ -1,0 +1,86 @@
+$header-bg: #ffffff;
+$primary-pink: #df828b; 
+$text-dark: #333333;
+$hover-color: #e98b9a; 
+$shadow-color: rgba(0, 0, 0, 0.05);
+
+header {
+  background-color: $header-bg;
+  padding: 15px 0; 
+  box-shadow: 0 4px 20px $shadow-color; 
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  direction: rtl; 
+
+  nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 1400px; 
+    margin: 0 auto;
+    padding: 0 2rem; 
+
+    .logo {
+      img {
+        height: 70px; 
+        width: auto;
+        
+        @media (max-width: 768px) {
+          height: 45px;
+        }
+      }
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: 3.2rem;
+
+      @media (max-width: 992px) {
+        display: none; 
+      }
+
+      li {
+        a {
+          text-decoration: none;
+          color: $text-dark;
+          font-size: 1.1rem;
+          font-weight: 600; 
+          font-family: 'Cairo', sans-serif;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: $hover-color;
+          }
+        }
+      }
+    }
+
+    .auth-buttons {
+      .login-btn {
+        display: inline-block;
+        background-color: $primary-pink;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: 'Cairo', sans-serif;
+        
+        padding: 10px 35px;
+        border-radius: 12px; 
+        
+        box-shadow: 0 4px 6px rgba(223, 130, 139, 0.4); 
+        transition: all 0.3s ease;
+
+        &:hover {
+          background-color: darken($primary-pink, 5%);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 12px rgba(223, 130, 139, 0.6);
+        }
+      }
+    }
+  }
+}

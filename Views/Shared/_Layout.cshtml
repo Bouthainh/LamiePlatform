@@ -7,60 +7,92 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BadeePlatform.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
- <header>
-    <nav>
-        <div class="navbar-left">
-            <a href="index.html" class="logo">
-                <img src="../Media/MaherLogo.png" alt="MaherLogo">
-            </a>
-        </div>
-    </nav>
-</header>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="~/images/Maher_Logo.png" alt="MaherLogo">
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="#main">الرئيسية</a></li>
+                <li><a href="#about">من نحن؟</a></li>
+                <li><a href="#how-it-works">كيفية العمل</a></li>
+                <li><a href="#faq">الأسئلة الشائعة</a></li>
+            </ul>
+
+            <div class="auth-buttons">
+            <a href="login.cshtml" class="login-btn">تسجيل الدخول</a>
+            </div>
+        </nav>
+    </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>الاتصال والدعم</h3>
-                <ul>
-                    <li><a href="#">مركز العملاء</a></li>
-                    <li><a href="#">تواصل معنا</a></li>
-                    <li><a href="#">شارك معنا</a></li>
-                    <li><a href="#">تقديم شكوى</a></li>
-                </ul>
+<footer class="site-footer">
+    <div class="footer-container">
+        
+        <div class="footer-col logo-col">
+            <div class="logo-wrapper">
+                <img src="~/images/Maher_Logo.png" alt="Maher Logo" class="footer-logo">
             </div>
+            <p class="footer-desc">
+                ماهر – منصة ذكية لاكتشاف وتنمية مواهب الأطفال من خلال ألعاب تفاعلية مبنية على نظرية الذكاءات المتعددة.
+            </p>
+        </div>
 
-            <div class="footer-section">
-                <h3>تابعنا على</h3>
-                <div class="social-links">
-                    <a href="#">X</a>
-                    <a href="#">Facebook</a>
-                    <a href="#">LinkedIn</a>
-                    <a href="#">Instagram</a>
-                </div>
-                <p>الموقع: جدة</p>
-                <p>البريد: maherproject@gmail.com</p>
-            </div>
+        <div class="footer-col links-col">
+            <h3 class="footer-title">روابط مهمة</h3>
+            <ul class="footer-links">
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="#">من نحن ؟</a></li>
+                <li><a href="#">كيف نقيس الذكاءات؟</a></li>
+                <li><a href="#">الاسئلة الشائعة</a></li>
+            </ul>
+        </div>
 
-            <div class="footer-logo">
-                <img src="..\Media\MaherLogo.png" alt="MaherLogo">
-                <h2>ماهر - منصة ذكية لاكتشاف المواهب</h2>
-                <p>منصة تعليمية ذكية لاكتشاف وتنمية مواهب الأطفال من خلال العاب تعليمية فعالة ومنهجية علمية متطورة.</p>
+        <div class="footer-col contact-col">
+            <h3 class="footer-title">الاتصال والدعم</h3>
+            <ul class="footer-links">
+                <li><a href="#">مركز العملاء</a></li>
+                <li><a href="#">تواصل معنا</a></li>
+                <li><a href="#">شارك معنا</a></li>
+                <li><a href="#">تقديم شكوى</a></li>
+                <li><a href="#">الإبلاغ عن الفساد</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col social-col">
+            <h3 class="footer-title">تابعنا على</h3>
+            
+            <div class="social-icons">
+                <a href="#" class="icon-box"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="icon-box"><i class="bi bi-linkedin"></i></a>
+                <a href="#" class="icon-box"><i class="bi bi-twitter-x"></i></a> </div>
+
+            <div class="contact-info">
+                <p>السعودية ، جدة <i class="bi bi-geo-alt"></i></p>
+                <p>maher22@gmail.com <i class="bi bi-envelope"></i></p>
             </div>
         </div>
 
-        <div class="footer-bottom">
-            <p>جميع الحقوق محفوظة لفريق ماهر - 2025 </p>
-        </div>
-    </footer>
+    </div>
 
+    <div class="footer-bottom">
+        <div class="copyrights">
+            <p>جميع الحقوق محفوظة لفريق ماهر</p>
+            <p>تاريخ آخر تعديل: 04/12/2025</p>
+        </div>
+        <div class="wave-line"></div>
+        </div>
+</footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

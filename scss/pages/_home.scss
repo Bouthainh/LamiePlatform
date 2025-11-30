@@ -1,0 +1,354 @@
+
+
+
+
+//  just for testing 
+.main-section {
+  @include flex-between;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+  gap: $spacing-xl;
+  direction: rtl;
+  min-height: 600px;
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    text-align: center;
+    padding: $spacing-lg $spacing-md;
+  }
+
+  .main-text {
+    flex: 1;
+    max-width: 600px;
+
+    h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin-bottom: $spacing-md;
+
+      @include respond-to(tablet) {
+        font-size: 3rem;
+      }
+
+      @include respond-to(mobile) {
+        font-size: 2.5rem;
+      }
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: $footer-text;
+      margin-bottom: $spacing-lg;
+
+      @include respond-to(mobile) {
+        font-size: 1rem;
+      }
+    }
+
+    .hero-btn {
+      @include button-style($secondary-color, $white);
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.1rem;
+      padding: 15px 50px;
+    }
+  }
+
+  .main-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+
+      @include respond-to(tablet) {
+        max-height: 400px;
+      }
+    }
+  }
+}
+
+// ABOUT SECTION
+.about-section {
+  background: linear-gradient(135deg, rgba($secondary-color, 0.1), rgba($primary-color, 0.1));
+  padding: $spacing-xl $spacing-lg;
+  text-align: center;
+  direction: rtl;
+
+  h2 {
+    font-size: 2.5rem;
+    color: $text-color;
+    margin-bottom: $spacing-md;
+    font-weight: 700;
+
+    @include respond-to(mobile) {
+      font-size: 2rem;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $footer-text;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.8;
+
+    @include respond-to(mobile) {
+      font-size: 1rem;
+    }
+  }
+}
+
+// FEATURES SECTION
+.features-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-lg;
+  direction: rtl;
+
+  @include respond-to(desktop) {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    background: $white;
+    border-radius: 15px;
+    overflow: hidden;
+    @include card-shadow;
+    text-align: center;
+
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: $text-color;
+      margin: $spacing-md 0;
+      font-weight: 700;
+    }
+
+    p {
+      padding: 0 $spacing-md;
+      color: $footer-text;
+      line-height: 1.6;
+      margin-bottom: $spacing-md;
+    }
+
+    .feature-tags {
+      display: flex;
+      justify-content: center;
+      gap: $spacing-sm;
+      padding: $spacing-md;
+      flex-wrap: wrap;
+
+      span {
+        background-color: rgba($secondary-color, 0.2);
+        color: $text-color;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+// PROCESS SECTION
+.process-section {
+  background-color: $light-bg;
+  padding: $spacing-xl $spacing-lg;
+  direction: rtl;
+
+  .process-step {
+    max-width: 1000px;
+    margin: 0 auto $spacing-xl;
+    position: relative;
+    padding: $spacing-lg;
+    background: $white;
+    border-radius: 15px;
+    @include card-shadow;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -20px;
+      right: $spacing-lg;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, $primary-color, $secondary-color);
+      color: $white;
+      border-radius: 50%;
+      @include flex-center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      box-shadow: $box-shadow;
+
+      @include respond-to(mobile) {
+        right: 50%;
+        transform: translateX(50%);
+      }
+    }
+
+    img {
+      float: left;
+      margin: 0 0 $spacing-md $spacing-md;
+      max-width: 150px;
+      height: auto;
+
+      @include respond-to(mobile) {
+        float: none;
+        display: block;
+        margin: 0 auto $spacing-md;
+      }
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      color: $text-color;
+      margin-bottom: $spacing-md;
+      font-weight: 700;
+      margin-top: $spacing-md;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: $footer-text;
+      line-height: 1.8;
+      text-align: justify;
+    }
+  }
+}
+
+// FAQ SECTION
+.faq-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl $spacing-lg;
+  direction: rtl;
+
+  h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: $text-color;
+    margin-bottom: $spacing-xl;
+    font-weight: 700;
+
+    @include respond-to(mobile) {
+      font-size: 2rem;
+    }
+  }
+
+  .faq-items {
+    display: grid;
+    gap: $spacing-md;
+
+    .faq-item {
+      background: $white;
+      padding: $spacing-lg;
+      border-radius: 12px;
+      border-right: 4px solid $primary-color;
+      @include card-shadow;
+
+      h3 {
+        font-size: 1.3rem;
+        color: $text-color;
+        margin-bottom: $spacing-sm;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 1.1rem;
+        color: $footer-text;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+// CTA SECTION
+.cta-section {
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  padding: $spacing-xl $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $spacing-xl;
+  direction: rtl;
+  color: $white;
+  margin-top: $spacing-xl;
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  div:first-child {
+    flex: 1;
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: $spacing-md;
+      font-weight: 700;
+
+      @include respond-to(mobile) {
+        font-size: 2rem;
+      }
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: $spacing-lg;
+      opacity: 0.95;
+
+      @include respond-to(mobile) {
+        font-size: 1rem;
+      }
+    }
+
+    .register-btn {
+      @include button-style($white, $primary-color);
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.1rem;
+      padding: 15px 50px;
+
+      &:hover {
+        background-color: $light-bg;
+      }
+    }
+  }
+
+  .cta-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: contain;
+
+      @include respond-to(tablet) {
+        max-height: 300px;
+      }
+    }
+  }
+}

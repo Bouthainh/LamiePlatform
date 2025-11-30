@@ -1,1 +1,44 @@
-@use "layout/footer";
+@import 'base/variables';
+@import 'base/mixins';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $primary-font;
+  font-size: $font-size-base;
+  color: $text-color;
+  line-height: 1.6;
+  background-color: $white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@import 'layout/header';
+@import 'layout/footer';
+@import 'pages/home';
+
+.container {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @include respond-to(mobile) {
+    padding: 0 $spacing-sm;
+  }
+}
+
+main {
+  flex: 1;
+  padding: 0;
+}

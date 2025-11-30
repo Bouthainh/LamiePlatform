@@ -1,0 +1,59 @@
+// Mixin  (Responsive)
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == mobile {
+    @media (max-width: $breakpoint-mobile) {
+      @content;
+    }
+  } @else if $breakpoint == tablet {
+    @media (max-width: $breakpoint-tablet) {
+      @content;
+    }
+  } @else if $breakpoint == desktop {
+    @media (max-width: $breakpoint-desktop) {
+      @content;
+    }
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin transition($property: all) {
+  transition: $property $transition-speed $transition-ease;
+}
+
+@mixin button-style($bg-color, $text-color: $white) {
+  background-color: $bg-color;
+  color: $text-color;
+  padding: $spacing-sm $spacing-lg;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: $font-size-base;
+  font-weight: 600;
+  @include transition();
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: $box-shadow-hover;
+  }
+}
+
+@mixin card-shadow {
+  box-shadow: $box-shadow;
+  @include transition(box-shadow);
+
+  &:hover {
+    box-shadow: $box-shadow-hover;
+  }
+}
