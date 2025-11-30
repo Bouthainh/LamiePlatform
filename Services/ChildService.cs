@@ -200,7 +200,7 @@ namespace BadeePlatform.Services
         }
 
    
-        private async Task<ServiceResult> CreateNewChildAsync( string parentId, AddChildDTO dto, string relationshipType)
+        private async Task<ServiceResult> CreateNewChildAsync(string parentId, AddChildDTO dto, string relationshipType)
         { 
             var loginCode = await GenerateUniqueLoginCodeAsync();
 
@@ -311,8 +311,8 @@ namespace BadeePlatform.Services
 
                     SchoolName = child.School?.SchoolName,
                     City = child.School?.City,
-                    GradeName = child.Grade?.GradeName,
-                    ClassName = child.Class?.ClassName,
+                    Grade = child.Grade?.GradeName,
+                    Class = child.Class?.ClassName,
                     EducatorName = child.Class?.Educator?.EducatorName,
 
                     RelationshipType = parentChild.RelationshipType,

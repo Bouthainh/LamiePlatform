@@ -435,7 +435,7 @@ namespace BadeePlatform.Controllers
             return View();
         }
 
-        public IActionResult ViewChildDashboard()
+        public IActionResult ViewChildDashboard(string childId)
         {
             return View();
         }
