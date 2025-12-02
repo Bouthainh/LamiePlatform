@@ -522,5 +522,24 @@ namespace BadeePlatform.Services
                 return null;
             }
         }
+
+        //Retrieve children by parent to view & manage them 
+        public async Task<List<ChildrenViewModel>> GetAllChildrenByParentIdAsync(string parentId)
+        {
+            return await _db.ParentChildren
+                .Where(pc => pc.ParentId == parentId)
+                .Select(pc => new ChildrenViewModel
+                {
+                    ChildId = pc.ChildId,
+                    ChildName = pc.Child.ChildName,
+                    Age = pc.Child.Age,
+                    Gender = pc.Child.Gender,
+                    IconImgPath = pc.Child.Gender == "ذكر"
+                                                    ? "/images/ChildBoy.png"
+                                                     : "/images/ChildGirl.png"
+
+                })
+                .ToListAsync();
+        }
     }
 }

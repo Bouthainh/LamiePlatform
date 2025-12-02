@@ -23,6 +23,8 @@ namespace BadeePlatform.Services
         public Task<EditChildDTO?> GetChildForEditAsync(string parentId, string childId);
         public Task<ServiceResult> EditChildProfileAsync(string parentId, string childId, EditChildDTO dto);
 
+        public Task<List<ChildrenViewModel>> GetAllChildrenByParentIdAsync(string parentId);
+
 
 
     }
