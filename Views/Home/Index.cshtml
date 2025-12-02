@@ -12,8 +12,10 @@
                 تعتمد على الذكاءات المتعددة، وتُظهر لك نقاط قوته بطريقة بسيطة
                 وذكية. ابدأ الآن واكتشف عالم طفلك المميز!
             </p>
-            <a href="register.cshtml" class="hero-btn">سجّل الآن!</a>
-        </div>
+        <a asp-controller="Parent" asp-action="Register" class="hero-btn">
+            سجّل الآن!
+        </a>
+    </div>
 
         <div class="main-image">
             <img src="~/images/ChildwPrize.png" alt="الشخصية الرئيسية">
@@ -125,7 +127,7 @@
         <div>
             <h2>ابدأ رحلة اكتشاف ذكاء طفلك اليوم!</h2>
             <p>امنح طفلك فرصة لمعرفة نقاط قوته بطريقة ممتعة وذكية.</p>
-        <a href="register.cshtml" class="register-btn">التسجيل</a>
+        <a asp-controller="Parent" asp-action="Register" class="register-btn">التسجيل</a>
         </div>
 
         <div class="cta-image">
