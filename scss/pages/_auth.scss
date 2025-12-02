@@ -23,7 +23,6 @@
 }
 
 // ILLUSTRATION SECTION (Side Image)
-// ============================================
 .login-left,
 .illustration-section {
   flex: 1;
@@ -74,7 +73,6 @@
 }
 
 // FORM SECTION
-// ============================================
 .login-right,
 .signup-form-section {
   flex: 1;
@@ -158,7 +156,6 @@
 }
 
 // FORM ELEMENTS
-// ============================================
 .form-group {
   margin-bottom: $spacing-md;
   position: relative;
@@ -226,7 +223,6 @@
   }
 }
 // VALIDATION & ALERTS
-// ============================================
 .text-danger,
 .error {
   display: block;
@@ -255,7 +251,6 @@
 }
 
 // FORM OPTIONS ( Forgot Password)
-// ============================================
 .form-options {
   display: flex;
   justify-content: space-between;
@@ -304,7 +299,6 @@
 }
 
 // SUBMIT BUTTON
-// ============================================
 .login-button,
 .signup-btn {
   width: 100%;
@@ -338,7 +332,6 @@
 }
 
 // SIGNUP/LOGIN LINK
-// ============================================
 .signup-link,
 .login-link {
   margin-top: $spacing-md;
@@ -363,7 +356,6 @@
 }
 
 // PASSWORD TOGGLE BUTTON (Optional)
-// ============================================
 .toggle-password {
   position: absolute;
   left: 15px;

@@ -34,12 +34,18 @@
 {
     <aside class="sidebar">
         <div class="sidebar-links">
-            <a asp-action="ParentHomePage" asp-controller="Parent" class="sidebar-item home-icon" title="الرئيسية">🏠</a>
-            <a asp-action="ManageMultipleChildren" asp-controller="Parent" class="sidebar-item profile-icon" title="الأطفال">👤</a>
+           <a asp-controller="Parent" asp-action="ParentHomePage" class="sidebar-item home-icon">
+                        🏠
+           </a>
+           <a asp-controller="Parent" asp-action="ViewProfile" class="sidebar-item profile-icon">
+                        👤
+            </a>
             <a href="#documents" class="sidebar-item documents-icon">📄</a>
             <a href="#tasks" class="sidebar-item tasks-icon">☐</a>
             <a href="#settings" class="sidebar-item settings-icon">⚙️</a>
-            <a href="LogInPage.html" class="sidebar-item logout">🚪</a>
+            <a asp-controller="Parent" asp-action="Logout" class="sidebar-item logout">
+                        🚪
+            </a>
         </div>
     </aside>
 }
