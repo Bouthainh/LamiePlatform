@@ -95,9 +95,45 @@ namespace BadeePlatform.Services
             return new ServiceResult(false, "اسم المستخدم أو كلمة المرور غير صحيحة.");
         }
 
-      
+        public async Task<ParentProfileViewModel?> GetParentProfileAsync(string parentId)
+        {
+            var parent = await _db.Parents
+                .FirstOrDefaultAsync(p => p.ParentId == parentId);
+
+            if (parent == null)
+                return null;
+
+            return new ParentProfileViewModel
+            {
+                ParentId = parent.ParentId,
+                ParentName = parent.ParentName,
+                PhoneNumber = parent.PhoneNumber,
+                Email = parent.Email,
+                Username = parent.Username
+            };
+        }
+
+        public async Task<bool> UpdateParentProfileAsync(ParentProfileViewModel model)
+        {
+            var parent = await _db.Parents
+                .FirstOrDefaultAsync(p => p.ParentId == model.ParentId);
+
+            if (parent == null)
+                return false;
+
+            parent.ParentName = model.ParentName;
+            parent.PhoneNumber = model.PhoneNumber;
+            parent.Email = model.Email;
+            parent.Username = model.Username;
+
+            await _db.SaveChangesAsync();
+            return true;
+        }
+
+
+
     }
 
-         
+
 
 }
