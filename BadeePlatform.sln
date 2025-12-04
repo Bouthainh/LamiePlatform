@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
+VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadeePlatform", "BadeePlatform.csproj", "{5196BCB7-78BB-46B7-9F12-081A413F0A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LamiePlatform.Tests", "..\LamiePlatform.Tests\LamiePlatform.Tests.csproj", "{F1590BCF-2684-4122-ADF8-56F2C67AE536}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LamiePlatform.Tests", "LamiePlatform.Tests\LamiePlatform.Tests.csproj", "{C8F43E7C-40D9-41E9-8801-D0DB5684B980}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{5196BCB7-78BB-46B7-9F12-081A413F0A9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5196BCB7-78BB-46B7-9F12-081A413F0A9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5196BCB7-78BB-46B7-9F12-081A413F0A9D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1590BCF-2684-4122-ADF8-56F2C67AE536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1590BCF-2684-4122-ADF8-56F2C67AE536}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1590BCF-2684-4122-ADF8-56F2C67AE536}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1590BCF-2684-4122-ADF8-56F2C67AE536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F43E7C-40D9-41E9-8801-D0DB5684B980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F43E7C-40D9-41E9-8801-D0DB5684B980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F43E7C-40D9-41E9-8801-D0DB5684B980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F43E7C-40D9-41E9-8801-D0DB5684B980}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
