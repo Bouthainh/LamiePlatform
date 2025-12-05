@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Xunit;
+
 
 namespace LamiePlatform.Tests.Services
 {
-    internal class ChildServiceTests
+    public class ChildServiceTests
     {
+        [Fact]
+        public void Test1()
+        {
+        }
     }
 }
