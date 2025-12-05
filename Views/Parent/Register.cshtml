@@ -6,7 +6,6 @@
     Layout = null; 
 }
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -31,14 +30,11 @@
                 <h1>أهلاً بك في ماهر</h1>
                 <p>أنشئ حسابك الآن</p>
 
-                @if (TempData["Success"] != null)
-                {
-                    <div class="alert alert-success">@TempData["Success"]</div>
-                }
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@TempData["Error"]</div>
-                }
+                    @if (ViewData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+                    }
+
             </div>
 
             <form class="signup-form" asp-controller="Parent" asp-action="Register" method="POST">

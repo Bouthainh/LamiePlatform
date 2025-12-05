@@ -64,7 +64,7 @@ namespace BadeePlatform.Controllers
 
                 if (result.Success)
                 {
-                    TempData["SuccessMessage"] = result.Message;
+                    TempData["RegisterSuccessMessage"] = result.Message;
                     return RedirectToAction("Login");
                 }
                 else
@@ -160,7 +160,7 @@ namespace BadeePlatform.Controllers
 
             if (result.Success)
             {
-                TempData["SuccessMessage"] = result.Message;
+                TempData["ChildSuccessMessage"] = result.Message;
 
                 if (!string.IsNullOrEmpty(result.Data))
                 {
@@ -198,7 +198,7 @@ namespace BadeePlatform.Controllers
                     return RedirectToAction("ManageMultipleChildren");
                 }
 
-                TempData["SuccessMessage"] = "تم حذف الطفل برقم الهوية " + childId + " بنجاح";
+                TempData["ChildSuccessMessage"] = "تم حذف الطفل صاحب رقم الهوية " + childId + " بنجاح";
                 return RedirectToAction("ManageMultipleChildren");
             }
             catch (DbUpdateException ex)
@@ -410,7 +410,7 @@ namespace BadeePlatform.Controllers
 
             if (result.Success)
             {
-                TempData["SuccessMessage"] = result.Message;
+                TempData["ChildSuccessMessage"] = result.Message;
                 return RedirectToAction("ViewChildProfile", new { childId });
             }
             else
@@ -454,7 +454,7 @@ namespace BadeePlatform.Controllers
             var dashboardData = _dashboardService.GetChildDashboard(childId);
 
             if (dashboardData == null) {
-                TempData["Message"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
+                TempData["ErrorMessage"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
                 return RedirectToAction("ManageMultipleChildren");
             }
 
@@ -516,7 +516,7 @@ namespace BadeePlatform.Controllers
                 return View("ViewProfile", model);
             }
 
-            TempData["Success"] = "تم حفظ التعديلات بنجاح";
+            TempData["ProfileEditedSuccessMessage"] = "تم حفظ التعديلات بنجاح";
             return RedirectToAction("ViewProfile");
         }
 

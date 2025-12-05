@@ -3,11 +3,27 @@
 @model List<ChildrenViewModel>
 
 <h2>أطفالي</h2>
-<!-- No Dashboard Record -->
-@if (TempData["Message"] != null)
+
+<!-- Success messages after adding chilldren -->
+@if (TempData["ChildSuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ChildSuccessMessage"]
+    </div>
+}
+
+@if (TempData["LoginCode"] != null)
+{
+    <div class="alert alert-info">
+        كود الدخول للطفل: <strong>@TempData["LoginCode"]</strong>
+    </div>
+}
+
+<!-- No Dashboard Record, Errors in managing child -->
+@if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger">
-        @TempData["Message"]
+        @TempData["ErrorMessage"]
     </div>
 }
 

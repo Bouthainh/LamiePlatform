@@ -30,9 +30,9 @@
         <div class="login-right">
             <h1>مرحبا بعودتك إلى ماهر</h1>
 
-            @if (TempData["SuccessMessage"] != null)
+            @if (TempData["RegisterSuccessMessage"] != null)
             {
-                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                <div class="alert alert-success">@TempData["RegisterSuccessMessage"]</div>
             }
 
             @if (ViewData["ErrorMessage"] != null)

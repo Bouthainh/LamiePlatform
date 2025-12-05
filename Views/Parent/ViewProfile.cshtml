@@ -1,6 +1,13 @@
 ﻿@using BadeePlatform.Models.ViewModels
 @model ParentProfileViewModel
 
+<h2>ملفي الشخصي</h2>
+@if (TempData["ProfileEditedSuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["ProfileEditedSuccessMessage"]
+    </div>
+}
 <form asp-action="EditProfile" method="post">
 
     <input type="hidden" asp-for="ParentId" />
