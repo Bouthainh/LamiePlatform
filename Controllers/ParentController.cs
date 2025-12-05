@@ -15,11 +15,14 @@ namespace BadeePlatform.Controllers
     {
         private readonly IChildService _childService;
         private readonly IParentService _parentService;
+        private readonly IDashboardService _dashboardService;
 
-        public ParentController(IChildService childService, IParentService parentService)
+        public ParentController(IChildService childService, IParentService parentService, IDashboardService dashboardService)
         {
             _childService = childService;
             _parentService = parentService;
+            _dashboardService = dashboardService;
+
         }
 
         public IActionResult Index()
@@ -444,9 +447,18 @@ namespace BadeePlatform.Controllers
             return View(children);
         }
 
-        public IActionResult ViewChildDashboard(string childId)//////////////under construcion :)
+        [Authorize]
+        [HttpGet]
+        public IActionResult ViewChildDashboard(string childId) 
         {
-            return View();
+            var dashboardData = _dashboardService.GetChildDashboard(childId);
+
+            if (dashboardData == null) {
+                TempData["Message"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
+                return RedirectToAction("ManageMultipleChildren");
+            }
+
+           return View("ViewChildDashboard", dashboardData);
         }
 
         [Authorize]
@@ -460,12 +472,6 @@ namespace BadeePlatform.Controllers
             }
 
             var children = await _childService.GetAllChildrenByParentIdAsync(parentId);
-
-            if (children == null || !children.Any())
-            {
-                ViewBag.Message = "ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد.";
-                return View (children);
-            }
 
             return View(children); 
         }
