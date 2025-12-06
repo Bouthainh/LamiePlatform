@@ -9,7 +9,7 @@ namespace LamiePlatform.Tests.Services;
 
 public class ChildServiceTests
 {
-
+    
     // Delete Child Profile - TC1
     [Fact]
     public async Task DeleteChildProfileAsync_TC1()
@@ -55,5 +55,4 @@ public class ChildServiceTests
         deletedRecord.Should().BeNull();
     }
 
-   
 }
