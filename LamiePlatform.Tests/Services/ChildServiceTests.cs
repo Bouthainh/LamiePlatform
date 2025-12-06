@@ -1,16 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FluentAssertions;
 using Xunit;
-using BadeePlatform.Services;      
-using BadeePlatform.Models;         
-using BadeePlatform.Data;        
+using BadeePlatform.Services;
+using BadeePlatform.Models;
+using BadeePlatform.Data;
 using LamiePlatform.Tests.Helpers;
 namespace LamiePlatform.Tests.Services;
 
 public class ChildServiceTests
 {
-    
-    // Delete Child Profile - TC1
+
+    // Delete Child Profile - TC1: 
     [Fact]
     public async Task DeleteChildProfileAsync_TC1()
     {
@@ -28,7 +28,7 @@ public class ChildServiceTests
         count.Should().Be(0);
     }
 
-    // Delete Child Profile - TC2
+    // Delete Child Profile - TC2: 
     [Fact]
     public async Task DeleteChildProfileAsync_TC2()
     {
@@ -55,4 +55,56 @@ public class ChildServiceTests
         deletedRecord.Should().BeNull();
     }
 
+    // Revoke Educator Access - TC1: Permission does not exist
+    [Fact]
+    public async Task RevokeEducatorAccessAsync_TC1()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = new ChildService(context);
+
+        var parentId = "1012345678";
+        var childId = "1019876543";
+
+        var result = await service.RevokeEducatorAccessAsync(parentId, childId);
+
+        result.Should().NotBeNull();
+        result.Success.Should().BeTrue();
+        result.Message.Should().Be("الصلاحية غير موجودة.");
+
+        var count = await context.EducatorPermissions.CountAsync();
+        count.Should().Be(0);
+    }
+
+    // Revoke Educator Access - TC2: Permission exists and should be deleted
+    [Fact]
+    public async Task RevokeEducatorAccessAsync_TC2()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = new ChildService(context);
+
+        var parentId = "1015566778";
+        var childId = "1017788990";
+        var educatorId = "9876543210";
+
+        context.EducatorPermissions.Add(new EducatorPermission
+        {
+            EducatorId = educatorId,
+            ChildId = childId,
+            ParentId = parentId,
+            CreatedAt = DateTime.UtcNow
+        });
+        await context.SaveChangesAsync();
+
+        var result = await service.RevokeEducatorAccessAsync(parentId, childId);
+
+        result.Should().NotBeNull();
+        result.Success.Should().BeTrue();
+        result.Message.Should().Be("تم منع المعلم من الوصول لملف الطفل.");
+
+        var deletedPermission = await context.EducatorPermissions
+            .FirstOrDefaultAsync(ep => ep.ParentId == parentId && ep.ChildId == childId);
+        deletedPermission.Should().BeNull();
+    }
 }
+
+
