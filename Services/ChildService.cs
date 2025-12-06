@@ -332,71 +332,55 @@ namespace BadeePlatform.Services
 
         public async Task<ServiceResult> GrantEducatorAccessAsync(string parentId, string childId)
         {
-            try
+            // Check if permission already exists
+            var existingPermission = await _db.EducatorPermissions
+                .FirstOrDefaultAsync(ep => ep.ParentId == parentId && ep.ChildId == childId);
+
+            if (existingPermission != null)
             {
-                // Check if permission already exists
-                var existingPermission = await _db.EducatorPermissions
-                    .FirstOrDefaultAsync(ep => ep.ParentId == parentId && ep.ChildId == childId);
-
-                if (existingPermission != null)
-                {
-                    return new ServiceResult(true, "الصلاحية موجودة مسبقًا.");
-                }
-
-                // Get child and educator info
-                var child = await _db.Children
-                    .Include(c => c.Class)
-                    .FirstOrDefaultAsync(c => c.ChildId == childId);
-
-                if (child == null || child.Class?.EducatorId == null)
-                {
-                    return new ServiceResult(false, "لا يوجد معلم مسؤول عن هذا الفصل.");
-                }
-
-                // Add permission
-                var permission = new EducatorPermission
-                {
-                    EducatorId = child.Class.EducatorId,
-                    ChildId = childId,
-                    ParentId = parentId,
-                    CreatedAt = DateTime.UtcNow
-                };
-
-                _db.EducatorPermissions.Add(permission);
-                await _db.SaveChangesAsync();
-
-                return new ServiceResult(true, "تم السماح للمعلم بالوصول لملف الطفل.");
+                return new ServiceResult(true, "الصلاحية موجودة مسبقًا.");
             }
-            catch (Exception ex)
+
+            // Get child and educator info
+            var child = await _db.Children
+                .Include(c => c.Class)
+                .FirstOrDefaultAsync(c => c.ChildId == childId);
+
+            if (child == null || child.Class?.EducatorId == null)
             {
-                Console.WriteLine($"Error in GrantAccess: {ex.Message}");
-                return new ServiceResult(false, "حدث خطأ أثناء منح الصلاحية.");
+                return new ServiceResult(false, "لا يوجد معلم مسؤول عن هذا الفصل.");
             }
+
+            // Add permission
+            var permission = new EducatorPermission
+            {
+                EducatorId = child.Class.EducatorId,
+                ChildId = childId,
+                ParentId = parentId,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _db.EducatorPermissions.Add(permission);
+            await _db.SaveChangesAsync();
+
+            return new ServiceResult(true, "تم السماح للمعلم بالوصول لملف الطفل.");
         }
 
-  
+
         public async Task<ServiceResult> RevokeEducatorAccessAsync(string parentId, string childId)
         {
-            try
+            var permission = await _db.EducatorPermissions
+                .FirstOrDefaultAsync(ep => ep.ParentId == parentId && ep.ChildId == childId);
+
+            if (permission == null)
             {
-                var permission = await _db.EducatorPermissions
-                    .FirstOrDefaultAsync(ep => ep.ParentId == parentId && ep.ChildId == childId);
-
-                if (permission == null)
-                {
-                    return new ServiceResult(true, "الصلاحية غير موجودة.");
-                }
-
-                _db.EducatorPermissions.Remove(permission);
-                await _db.SaveChangesAsync();
-
-                return new ServiceResult(true, "تم منع المعلم من الوصول لملف الطفل.");
+                return new ServiceResult(true, "الصلاحية غير موجودة.");
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in RevokeAccess: {ex.Message}");
-                return new ServiceResult(false, "حدث خطأ أثناء إلغاء الصلاحية.");
-            }
+
+            _db.EducatorPermissions.Remove(permission);
+            await _db.SaveChangesAsync();
+
+            return new ServiceResult(true, "تم منع المعلم من الوصول لملف الطفل.");
         }
 
         public async Task<ServiceResult> EditChildProfileAsync(string parentId, string childId, EditChildDTO dto)
