@@ -1,44 +1,64 @@
-﻿
-@model List<ChildrenViewModel>
+﻿@model List<ChildrenViewModel>
 
-<h2>أطفالي</h2>
-
-@if (ViewBag.Message != null)
-{
-    <p>@ViewBag.Message</p>
-
-    <a href="@Url.Action("AddChild", "Parent")">
-        إضافة طفل جديد
-    </a>
+@{
+    ViewData["Title"] = "ماهر - إدارة الأطفال";
 }
-else
-{
-    <ul>
-        @foreach (var child in Model)
-        {
-            <li>
-                @child.ChildName
-                <div class="child-avatar">
-                    <img src="@child.IconImgPath" alt="child icon">
+
+<div class="manage-children-page">
+    <div class="main-container">
+        <section class="main-content">
+            <h2>أطفالي</h2>
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="empty-state">
+                    <p>@ViewBag.Message</p>
+                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                        إضافة طفل جديد
+                    </a>
                 </div>
-                | <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })">
-                    عرض
-                  </a>
+            }
+            else
+            {
+                <ul class="children-list">
+                    @foreach (var child in Model)
+                    {
+                        <li class="child-card">
+                            <div class="child-header">
+                                <div class="child-avatar">
+                                    <img src="@child.IconImgPath" alt="child icon">
+                                </div>
+                                <h3 class="child-name">@child.ChildName</h3>
+                            </div>
+                            
+                            <div class="child-actions">
+                                <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn view-btn">
+                                    عرض
+                                </a>
+                                
+                                <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn edit-btn">
+                                    تعديل
+                                </a>
+                                
+                                <form asp-action="DeleteChildProfile" asp-controller="Parent" method="post"
+                                      onsubmit="return confirm('هل أنت متأكد من حذف ملف @child.ChildName؟');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="childId" value="@child.ChildId" />
+                                    <button type="submit" class="action-btn delete-btn">حذف</button>
+                                </form>
+                            </div>
+                        </li>
+                    }
+                </ul>
 
-                | <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })">
-                    تعديل
-                  </a>
-
-                | <form asp-action="DeleteChildProfile" asp-controller="Parent" 
-                        method="post" style="display:inline">
-                        <input type="hidden" name="childId" value="@child.ChildId" />
-                        <button type="submit">حذف</button>
-                  </form>
-            </li>
-        }
-    </ul>
-
-    <a href="@Url.Action("AddChild", "Parent")">
-        إضافة طفل
-    </a>
-}
+                <div class="add-child-footer">
+                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                        إضافة طفل
+                    </a>
+                </div>
+            }
+        </section>
+    </div>
+</div>

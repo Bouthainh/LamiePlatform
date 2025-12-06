@@ -112,6 +112,30 @@
               font-size: $font-size-small;
             }
 
+            a {
+              display: inline-block;
+              margin-top: $spacing-sm;
+              background:$secondary-color;
+              color: $white;
+              text-decoration: none;
+              padding: $spacing-xs $spacing-lg;
+              border-radius: 10px;
+              font-weight: 600;
+              font-size: $font-size-small;
+              @include transition(all);
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+              &:hover {
+                background: $tirquaz-color;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba($child-light-blue, 0.4);
+              }
+
+              &:active {
+                transform: translateY(0);
+              }
+            }
+
             .talents {
               display: flex;
               justify-content: center;
@@ -135,13 +159,19 @@
         }
 
         .add-child-card {
-           order: 1;
+          order: 1;
           border-radius: 18px;
           background: linear-gradient(135deg, #D4EDC8, #B8E0A0);
           height: 200px;
           @include flex-center;
           flex-direction: column;
           cursor: pointer;
+          @include transition(all);
+
+          &:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+          }
 
           a {
             color: $white;
@@ -169,6 +199,20 @@
         color: $tirquaz-color;
         font-size: 20px;
         margin-bottom: $spacing-md;
+        position: relative;
+        padding-right: $spacing-sm;
+
+        &::before {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 4px;
+          height: 70%;
+          background-color: $tirquaz-color;
+          border-radius: 2px;
+        }
       }
 
       .notifications-list {
@@ -185,6 +229,16 @@
           border-radius: 12px;
           margin-bottom: $spacing-sm;
           @include card-shadow;
+          @include transition(all);
+
+          &:hover {
+            transform: translateX(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
 
           .notification-icon {
             font-size: 24px;
@@ -193,10 +247,42 @@
           p {
             margin: 0;
             color: $text-color;
+            font-size: $font-size-base;
           }
         }
       }
     }
+  }
 
+  // Responsive adjustments
+  @include respond-to(tablet) {
+    .main-content {
+      padding: $spacing-md;
+
+      .page-header h1 {
+        font-size: $font-size-base;
+      }
+
+      .children-section .children-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: $spacing-sm;
+
+    .main-content {
+      padding: $spacing-sm;
+
+      .children-section .children-grid {
+        grid-template-columns: 1fr;
+
+        .child-card .child-avatar {
+          width: 80px;
+          height: 80px;
+        }
+      }
+    }
   }
 }

@@ -1,0 +1,557 @@
+// Child Dashboard Page
+main {
+  width: 100%;
+  padding: $spacing-lg 0;
+  @include flex-center;
+  direction: rtl;
+}
+
+.main-container {
+  width: 100%;
+  padding-inline: $spacing-lg;
+  @include flex-center;
+  direction: rtl;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  background: $light-bg;
+  border-radius: 25px;
+  padding: $spacing-xl $spacing-lg;
+  @include card-shadow;
+  position: relative;
+  direction: rtl;
+  text-align: right;
+
+  @include respond-to(mobile) {
+    padding: $spacing-lg $spacing-sm;
+  }
+}
+
+// Dashboard Container
+.dashboard-container {
+  width: 100%;
+}
+
+// Header Card
+.header-card {
+  background: $white;
+  border-radius: 20px;
+  padding: $spacing-xl;
+  margin-bottom: $spacing-lg;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  @include card-shadow;
+  position: relative;
+
+  .child-info {
+    flex: 1;
+    position: relative;
+     padding-right: 100px; 
+
+    h1 {
+      color: $purple-color;
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 $spacing-xs;
+    }
+
+    p {
+      color: $text-dark;
+      font-size: $font-size-base;
+      margin: $spacing-xs 0;
+      font-weight: 500;
+    }
+
+    .school-note {
+      color: $text-light;
+      font-size: $font-size-small;
+    }
+
+    .avatar-circle {
+      position: absolute;
+      right: -$spacing-md;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, $child-purple, $child-pink);
+      border: 4px solid $white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  .header-stats {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+    .stat-item {
+      position: relative;
+      padding: $spacing-md $spacing-lg;
+      border-radius: 15px;
+      text-align: center;
+      min-width: 120px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      border: 2px solid transparent;
+
+      p {
+        font-size: $font-size-small;
+        font-weight: 600;
+        margin: 0 0 $spacing-xs;
+        color: $text-dark;
+      }
+
+      span {
+        font-size: 24px;
+        font-weight: 700;
+        color: $text-dark;
+        display: block;
+      }
+
+      .stat-icon {
+        position: absolute;
+        top: $spacing-xs;
+        left: $spacing-xs;
+        font-size: 18px;
+      }
+
+      &.blue-bg {
+        background: $child-light-blue;
+        border-color: darken($child-light-blue, 5%);
+      }
+
+      &.green-bg {
+        background: #fef9e6;
+        border-color: #f5e8b8;
+      }
+
+      &.light-blue-bg {
+        background: #e3f5f1;
+        border-color: #c5e9e0;
+      }
+    }
+  }
+
+  @include respond-to(tablet) {
+    flex-direction: column;
+    gap: $spacing-lg;
+
+    .child-info .avatar-circle {
+      position: relative;
+      left: 0;
+      top: 0;
+      transform: none;
+      margin: 0 auto $spacing-md;
+    }
+
+    .header-stats {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  @include respond-to(mobile) {
+    padding: $spacing-md;
+
+    .child-info h1 {
+      font-size: 22px;
+    }
+
+    .header-stats {
+      flex-direction: column;
+      width: 100%;
+
+      .stat-item {
+        width: 100%;
+      }
+    }
+  }
+}
+
+// Cards Grid
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $spacing-md;
+
+  @include respond-to(desktop) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Card Base Styles
+.card {
+  border-radius: 18px;
+  padding: $spacing-lg;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  @include transition(transform);
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-md;
+    padding-bottom: $spacing-sm;
+    border-bottom: 2px solid rgba($white, 0.5);
+
+    h2 {
+      color: $text-dark;
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .icon {
+      font-size: 22px;
+    }
+  }
+
+  .card-content {
+    p {
+      color: $text-dark;
+      line-height: 1.6;
+      margin: $spacing-sm 0;
+    }
+  }
+}
+
+// Discovery Card - Purple/Pink
+.discovery-card {
+  background: linear-gradient(135deg, #f3e5f5 0%, #fce4ec 100%);
+  border-color: #e1bee7;
+
+  .card-header {
+    border-bottom-color: rgba(#d1a3d6, 0.3);
+
+    h2 {
+      color: $purple-color;
+    }
+  }
+
+  .discovery-chart {
+    padding: $spacing-md 0;
+    text-align: center;
+
+    .chart-labels {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-xs;
+
+      p {
+        color: $text-dark;
+        font-weight: 600;
+        font-size: $font-size-small;
+        margin: $spacing-xs 0;
+      }
+    }
+  }
+}
+
+// Teacher Contact Card - Light Blue/Turquoise
+.teacher-card {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+  border-color: #80deea;
+
+  .card-header {
+    border-bottom-color: rgba(#4dd0e1, 0.3);
+  }
+
+  .card-content {
+    text-align: center;
+
+    .teacher-info {
+      margin-bottom: $spacing-md;
+
+      .teacher-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $secondary-color, #4fc3f7);
+        margin: 0 auto;
+        border: 3px solid $white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .teacher-name {
+      font-size: $font-size-base;
+      font-weight: 700;
+      color: $text-dark;
+      margin: $spacing-sm 0;
+    }
+
+    .teacher-email {
+      font-size: $font-size-small;
+      color: $text-light;
+      margin: $spacing-xs 0;
+    }
+
+    .teacher-role {
+      font-size: $font-size-small;
+      color: $text-light;
+      margin-bottom: $spacing-md;
+    }
+
+    .contact-btn {
+      background: $secondary-color;
+      color: $white;
+      border: none;
+      padding: $spacing-xs $spacing-lg;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: $font-size-small;
+      cursor: pointer;
+      @include transition(all);
+
+      &:hover {
+        background: darken($secondary-color, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba($secondary-color, 0.4);
+      }
+    }
+  }
+}
+
+// Top Talents Card - Light Yellow/Cream
+.talents-card {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+  border-color: #ffe8a3;
+
+  .card-header {
+    border-bottom-color: rgba(#ffd54f, 0.3);
+  }
+
+  .talents-content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .talent-item {
+      .talent-bar-container {
+        position: relative;
+        height: 35px;
+        background: rgba($white, 0.6);
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid rgba(#ffd54f, 0.3);
+
+        .talent-bar {
+          height: 100%;
+          border-radius: 10px;
+          position: relative;
+          @include transition(width);
+
+          &.blue-bar {
+            background: linear-gradient(90deg, #4fc3f7 0%, #29b6f6 100%);
+            width: 85%;
+          }
+
+          &.yellow-bar {
+            background: linear-gradient(90deg, #ffd54f 0%, #ffca28 100%);
+            width: 70%;
+          }
+
+          &.purple-bar {
+            background: linear-gradient(90deg, #ba68c8 0%, #ab47bc 100%);
+            width: 65%;
+          }
+        }
+
+        .talent-name {
+          position: absolute;
+          right: $spacing-sm;
+          top: 50%;
+          transform: translateY(-50%);
+          font-weight: 600;
+          color: $text-dark;
+          font-size: $font-size-small;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
+
+// Activities Card - Light Pink/Peach
+.activities-card {
+  background: linear-gradient(135deg, #fff0f5 0%, #ffe4e1 100%);
+  border-color: #ffcdd2;
+
+  .card-header {
+    border-bottom-color: rgba(#f48fb1, 0.3);
+  }
+
+  .activities-title {
+    font-weight: 700;
+    color: $text-dark;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-base;
+  }
+
+  .activities-desc {
+    font-size: $font-size-small;
+    color: $text-dark;
+    line-height: 1.6;
+    margin-bottom: $spacing-md;
+  }
+
+  .view-btn {
+    background: $primary-color;
+    color: $white;
+    border: none;
+    padding: $spacing-xs $spacing-lg;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: $font-size-small;
+    cursor: pointer;
+    @include transition(all);
+
+    &:hover {
+      background: darken($primary-color, 8%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba($primary-color, 0.4);
+    }
+  }
+}
+
+// Teacher Name Card - Turquoise/Mint
+.teacher-name-card {
+  background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%);
+  border-color: #80cbc4;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card-content {
+    .teacher-avatar-large {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #26a69a, #4db6ac);
+      margin: 0 auto $spacing-md;
+      border: 4px solid $white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .teacher-name-text {
+      font-size: $font-size-large;
+      font-weight: 700;
+      color: $text-dark;
+      margin: 0;
+    }
+  }
+}
+
+// Reports Card - Light Cream/Yellow
+.reports-card {
+  background: linear-gradient(135deg, #fffbf0 0%, #fff8e1 100%);
+  border-color: #fff59d;
+
+  .card-header {
+    border-bottom-color: rgba(#ffd54f, 0.3);
+  }
+
+  .card-content {
+    .report-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-sm 0;
+      border-bottom: 1px solid rgba(#ffd54f, 0.2);
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      .report-date {
+        font-size: $font-size-small;
+        color: $text-dark;
+        font-weight: 600;
+      }
+
+      .report-btn {
+        background: #ffb74d;
+        color: $white;
+        border: none;
+        padding: $spacing-xs $spacing-md;
+        border-radius: 8px;
+        font-size: $font-size-small;
+        font-weight: 600;
+        cursor: pointer;
+        @include transition(all);
+
+        &:hover {
+          background: #ffa726;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(#ff9800, 0.4);
+        }
+      }
+    }
+
+    .report-footer {
+      margin-top: $spacing-md;
+      padding-top: $spacing-sm;
+      border-top: 2px solid rgba(#ffd54f, 0.3);
+      text-align: center;
+
+      .view-all-reports {
+        color: #ff9800;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: $font-size-small;
+        @include transition(color);
+
+        &:hover {
+          color: #f57c00;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include respond-to(mobile) {
+  .card {
+    padding: $spacing-md;
+
+    .card-header {
+      h2 {
+        font-size: 15px;
+      }
+
+      .icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .talents-card .talents-content .talent-item .talent-bar-container {
+    height: 30px;
+
+    .talent-name {
+      font-size: 12px;
+    }
+  }
+
+  .teacher-name-card .card-content .teacher-avatar-large {
+    width: 70px;
+    height: 70px;
+  }
+}

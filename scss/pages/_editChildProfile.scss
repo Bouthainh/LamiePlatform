@@ -2,8 +2,9 @@
   direction: rtl;
   font-family: $primary-font;
   min-height: 100vh;
-  padding: $spacing-md;
+  background-color: $light-bg;
   color: $text-color;
+  padding: $spacing-md;
 
   .main-container {
     width: 100%;
@@ -14,11 +15,13 @@
   .main-content {
     background: linear-gradient(135deg, $child-light-pink 0%, $child-light-blue 50%, $child-light-yellow 100%);
     border-radius: 22px;
-    padding: $spacing-lg;
+    padding: $spacing-xl;
     @include card-shadow;
     box-sizing: border-box;
 
     .form-container {
+      max-width: 700px;
+      margin: 0 auto;
         
       .form-header {
         text-align: center;
@@ -56,32 +59,19 @@
 
       // Form sections
       .form-section {
-        margin-bottom: $spacing-xl;
-        padding: $spacing-lg;
+        margin-bottom: $spacing-lg;
+        padding: $spacing-xl;
         background: $white;
         border-radius: 18px;
-        border: 2px solid #f0f0f0;
-        @include card-shadow;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
         h2 {
           color: $tirquaz-color;
-          font-size: 22px;
+          font-size: 20px;
           font-weight: 700;
           margin: 0 0 $spacing-lg;
-          position: relative;
-          padding-right: $spacing-sm;
-
-          &::before {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 4px;
-            height: 70%;
-            background-color: $tirquaz-color;
-            border-radius: 2px;
-          }
+          padding-bottom: $spacing-sm;
+          border-bottom: 2px solid rgba($tirquaz-color, 0.2);
         }
 
         // Form groups
@@ -90,27 +80,28 @@
 
           label {
             display: block;
-            font-size: $font-size-base;
+            font-size: $font-size-small;
             font-weight: 600;
-            color: $text-dark;
+            color: $text-light;
             margin-bottom: $spacing-xs;
           }
 
           .form-control {
             width: 100%;
-            padding: 12px $spacing-sm;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            padding: 12px $spacing-md;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
             font-size: $font-size-base;
             font-family: $primary-font;
-            background-color: $white;
-            @include transition(border-color);
+            background-color: #fafafa;
+            @include transition(all);
             box-sizing: border-box;
 
             &:focus {
               outline: none;
               border-color: $secondary-color;
-              box-shadow: 0 0 0 3px rgba(92, 196, 209, 0.1);
+              background-color: $white;
+              box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
             }
 
             &::placeholder {
@@ -121,7 +112,7 @@
           select.form-control {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: left 12px center;
             padding-left: 36px;
@@ -147,53 +138,60 @@
         }
       }
 
-      // Form actions (updated for two buttons)
+      // Form actions
       .form-actions {
         display: flex;
         justify-content: center;
         align-items: center;
         gap: $spacing-md;
-        margin-top: $spacing-lg;
+        margin-top: $spacing-xl;
 
         .submit-btn {
-          @include button-style($primary-color, $white);
-          font-size: 18px;
-          font-weight: 700;
+          background-color: $primary-green;
+          color: $white;
+          font-size: 16px;
+          font-weight: 600;
           padding: 14px 50px;
-          min-width: 180px;
-          border-radius: 18px;
-          box-shadow: 0 4px 12px rgba(233, 139, 154, 0.3);
+          min-width: 160px;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba($primary-green, 0.25);
+          @include transition(all);
 
           &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(233, 139, 154, 0.4);
+            background-color: $primary-green-dark;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba($primary-green, 0.35);
           }
 
           &:active {
-            transform: translateY(-1px);
+            transform: translateY(0);
           }
         }
 
         .cancel-btn {
-          @include button-style($text-light, $white);
-          font-size: 18px;
-          font-weight: 700;
+          font-size: 16px;
+          font-weight: 600;
           padding: 14px 50px;
-          min-width: 180px;
-          border-radius: 18px;
+          min-width: 160px;
+          border-radius: 12px;
           text-decoration: none;
           display: inline-block;
           text-align: center;
-          box-shadow: 0 4px 12px rgba(127, 140, 141, 0.2);
+          background-color: #f5f5f5;
+          color: $text-light;
+          @include transition(all);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
           &:hover {
-            background-color: darken($text-light, 10%);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(127, 140, 141, 0.3);
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
           }
 
           &:active {
-            transform: translateY(-1px);
+            transform: translateY(0);
           }
         }
       }
@@ -205,19 +203,19 @@
     padding: $spacing-sm;
 
     .main-content {
-      padding: $spacing-md;
+      padding: $spacing-lg;
       border-radius: 18px;
 
       .form-container {
         .form-header h1 {
-          font-size: 28px;
+          font-size: 26px;
         }
 
         .form-section {
-          padding: $spacing-md;
+          padding: $spacing-lg;
 
           h2 {
-            font-size: 20px;
+            font-size: 18px;
           }
         }
 
@@ -237,25 +235,36 @@
 
   @include respond-to(mobile) {
     .main-content {
-      padding: $spacing-sm;
+      padding: $spacing-md;
+      border-radius: 16px;
 
       .form-container {
         .form-header h1 {
-          font-size: 24px;
+          font-size: 22px;
         }
 
         .form-section {
-          padding: $spacing-sm;
+          padding: $spacing-md;
 
           h2 {
-            font-size: 18px;
+            font-size: 16px;
           }
 
           .form-group {
+            margin-bottom: $spacing-sm;
+
             .form-control {
-              padding: 10px $spacing-xs;
+              padding: 10px $spacing-sm;
               font-size: $font-size-small;
             }
+
+            label {
+              font-size: 13px;
+            }
+          }
+
+          .form-row {
+            gap: $spacing-sm;
           }
         }
 
@@ -263,7 +272,7 @@
           .submit-btn,
           .cancel-btn {
             padding: 12px 30px;
-            font-size: $font-size-base;
+            font-size: $font-size-small;
           }
         }
       }
