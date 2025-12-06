@@ -312,18 +312,36 @@ namespace BadeePlatform.Controllers
                 return RedirectToAction("Login");
             }
 
-            var result = await _childService.GrantEducatorAccessAsync(parentId, childId);
-
-            if (result.Success)
+            try
             {
-                TempData["SuccessMessage"] = result.Message;
-            }
-            else
-            {
-                TempData["ErrorMessage"] = result.Message;
-            }
+                var result = await _childService.GrantEducatorAccessAsync(parentId, childId);
 
-            return RedirectToAction("ViewChildProfile", new { childId });
+                if (result.Success)
+                {
+                    TempData["SuccessMessage"] = result.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                }
+
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ أثناء منح الصلاحية في قاعدة البيانات.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = "العملية غير صالحة. الرجاء المحاولة مرة أخرى.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع. الرجاء المحاولة لاحقاً.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
         }
 
         [Authorize]
@@ -337,19 +355,38 @@ namespace BadeePlatform.Controllers
                 return RedirectToAction("Login");
             }
 
-            var result = await _childService.RevokeEducatorAccessAsync(parentId, childId);
-
-            if (result.Success)
+            try
             {
-                TempData["SuccessMessage"] = result.Message;
-            }
-            else
-            {
-                TempData["ErrorMessage"] = result.Message;
-            }
+                var result = await _childService.RevokeEducatorAccessAsync(parentId, childId);
 
-            return RedirectToAction("ViewChildProfile", new { childId });
+                if (result.Success)
+                {
+                    TempData["SuccessMessage"] = result.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                }
+
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ أثناء إلغاء الصلاحية في قاعدة البيانات.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = "العملية غير صالحة. الرجاء المحاولة مرة أخرى.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع. الرجاء المحاولة لاحقاً.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
         }
+
 
         [Authorize]
         [HttpGet]
