@@ -1,4 +1,4 @@
-﻿namespace BadeePlatform.ViewModels
+﻿namespace BadeePlatform.Models.ViewModels
 {
     public class ChildProfileViewModel
     {

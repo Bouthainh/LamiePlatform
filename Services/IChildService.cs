@@ -1,7 +1,6 @@
 ﻿using BadeePlatform.DTOs;
 using BadeePlatform.Models;
-using BadeePlatform.ViewModels;
-
+using BadeePlatform.Models.ViewModels;
 
 namespace BadeePlatform.Services
 {

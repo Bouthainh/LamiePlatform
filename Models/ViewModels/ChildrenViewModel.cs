@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BadeePlatform.Models
+namespace BadeePlatform.Models.ViewModels
 {
     public class ChildrenViewModel
     {

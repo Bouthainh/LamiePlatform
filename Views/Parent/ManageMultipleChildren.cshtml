@@ -1,4 +1,6 @@
-﻿@model List<ChildrenViewModel>
+@using BadeePlatform.Models.ViewModels
+
+@model List<ChildrenViewModel>
 
 @{
     ViewData["Title"] = "ماهر - إدارة الأطفال";
@@ -9,10 +11,34 @@
         <section class="main-content">
             <h2>أطفالي</h2>
 
-            @if (ViewBag.Message != null)
+            @* Success messages after adding children *@
+            @if (TempData["ChildSuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["ChildSuccessMessage"]
+                </div>
+            }
+
+            @if (TempData["LoginCode"] != null)
+            {
+                <div class="alert alert-info">
+                    كود الدخول للطفل: <strong>@TempData["LoginCode"]</strong>
+                </div>
+            }
+
+            @* No Dashboard Record, Errors in managing child *@
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+
+            @* NO Children Message *@
+            @if (Model == null || !Model.Any())
             {
                 <div class="empty-state">
-                    <p>@ViewBag.Message</p>
+                    <p>ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد</p>
                     <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
                         إضافة طفل جديد
                     </a>
@@ -26,7 +52,7 @@
                         <li class="child-card">
                             <div class="child-header">
                                 <div class="child-avatar">
-                                    <img src="@child.IconImgPath" alt="child icon">
+                                    <img src="@child.IconImgPath" alt="@child.ChildName">
                                 </div>
                                 <h3 class="child-name">@child.ChildName</h3>
                             </div>
@@ -34,12 +60,17 @@
                             <div class="child-actions">
                                 <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })" 
                                    class="action-btn view-btn">
-                                    عرض
+                                    عرض الملف الشخصي
                                 </a>
                                 
                                 <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })" 
                                    class="action-btn edit-btn">
-                                    تعديل
+                                    تعديل البيانات
+                                </a>
+
+                                <a href="@Url.Action("ViewChildDashboard", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn dashboard-btn">
+                                    لوحة التحكم
                                 </a>
                                 
                                 <form asp-action="DeleteChildProfile" asp-controller="Parent" method="post"

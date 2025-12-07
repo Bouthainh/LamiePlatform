@@ -1,5 +1,6 @@
 ﻿using BadeePlatform.DTOs;
 using BadeePlatform.Models;
+using BadeePlatform.Models.ViewModels;
 using BadeePlatform.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,11 +15,14 @@ namespace BadeePlatform.Controllers
     {
         private readonly IChildService _childService;
         private readonly IParentService _parentService;
+        private readonly IDashboardService _dashboardService;
 
-        public ParentController(IChildService childService, IParentService parentService)
+        public ParentController(IChildService childService, IParentService parentService, IDashboardService dashboardService)
         {
             _childService = childService;
             _parentService = parentService;
+            _dashboardService = dashboardService;
+
         }
 
         public IActionResult Index()
@@ -60,7 +64,7 @@ namespace BadeePlatform.Controllers
 
                 if (result.Success)
                 {
-                    TempData["SuccessMessage"] = result.Message;
+                    TempData["RegisterSuccessMessage"] = result.Message;
                     return RedirectToAction("Login");
                 }
                 else
@@ -156,7 +160,7 @@ namespace BadeePlatform.Controllers
 
             if (result.Success)
             {
-                TempData["SuccessMessage"] = result.Message;
+                TempData["ChildSuccessMessage"] = result.Message;
 
                 if (!string.IsNullOrEmpty(result.Data))
                 {
@@ -194,7 +198,7 @@ namespace BadeePlatform.Controllers
                     return RedirectToAction("ManageMultipleChildren");
                 }
 
-                TempData["SuccessMessage"] = "تم حذف الطفل برقم الهوية " + childId + " بنجاح";
+                TempData["ChildSuccessMessage"] = "تم حذف الطفل صاحب رقم الهوية " + childId + " بنجاح";
                 return RedirectToAction("ManageMultipleChildren");
             }
             catch (DbUpdateException ex)
@@ -308,18 +312,36 @@ namespace BadeePlatform.Controllers
                 return RedirectToAction("Login");
             }
 
-            var result = await _childService.GrantEducatorAccessAsync(parentId, childId);
-
-            if (result.Success)
+            try
             {
-                TempData["SuccessMessage"] = result.Message;
-            }
-            else
-            {
-                TempData["ErrorMessage"] = result.Message;
-            }
+                var result = await _childService.GrantEducatorAccessAsync(parentId, childId);
 
-            return RedirectToAction("ViewChildProfile", new { childId });
+                if (result.Success)
+                {
+                    TempData["SuccessMessage"] = result.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                }
+
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ أثناء منح الصلاحية في قاعدة البيانات.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = "العملية غير صالحة. الرجاء المحاولة مرة أخرى.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع. الرجاء المحاولة لاحقاً.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
         }
 
         [Authorize]
@@ -333,19 +355,38 @@ namespace BadeePlatform.Controllers
                 return RedirectToAction("Login");
             }
 
-            var result = await _childService.RevokeEducatorAccessAsync(parentId, childId);
-
-            if (result.Success)
+            try
             {
-                TempData["SuccessMessage"] = result.Message;
-            }
-            else
-            {
-                TempData["ErrorMessage"] = result.Message;
-            }
+                var result = await _childService.RevokeEducatorAccessAsync(parentId, childId);
 
-            return RedirectToAction("ViewChildProfile", new { childId });
+                if (result.Success)
+                {
+                    TempData["SuccessMessage"] = result.Message;
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = result.Message;
+                }
+
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ أثناء إلغاء الصلاحية في قاعدة البيانات.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = "العملية غير صالحة. الرجاء المحاولة مرة أخرى.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع. الرجاء المحاولة لاحقاً.";
+                return RedirectToAction("ViewChildProfile", new { childId });
+            }
         }
+
 
         [Authorize]
         [HttpGet]
@@ -406,7 +447,7 @@ namespace BadeePlatform.Controllers
 
             if (result.Success)
             {
-                TempData["SuccessMessage"] = result.Message;
+                TempData["ChildSuccessMessage"] = result.Message;
                 return RedirectToAction("ViewChildProfile", new { childId });
             }
             else
@@ -443,9 +484,18 @@ namespace BadeePlatform.Controllers
             return View(children);
         }
 
-        public IActionResult ViewChildDashboard(string childId)//////////////under construcion :)
+        [Authorize]
+        [HttpGet]
+        public IActionResult ViewChildDashboard(string childId) 
         {
-            return View();
+            var dashboardData = _dashboardService.GetChildDashboard(childId);
+
+            if (dashboardData == null) {
+                TempData["ErrorMessage"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
+                return RedirectToAction("ManageMultipleChildren");
+            }
+
+           return View("ViewChildDashboard", dashboardData);
         }
 
         [Authorize]
@@ -459,12 +509,6 @@ namespace BadeePlatform.Controllers
             }
 
             var children = await _childService.GetAllChildrenByParentIdAsync(parentId);
-
-            if (children == null || !children.Any())
-            {
-                ViewBag.Message = "ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد.";
-                return View (children);
-            }
 
             return View(children); 
         }
@@ -509,7 +553,7 @@ namespace BadeePlatform.Controllers
                 return View("ViewProfile", model);
             }
 
-            TempData["Success"] = "تم حفظ التعديلات بنجاح";
+            TempData["ProfileEditedSuccessMessage"] = "تم حفظ التعديلات بنجاح";
             return RedirectToAction("ViewProfile");
         }
 

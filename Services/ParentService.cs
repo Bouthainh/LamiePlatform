@@ -1,6 +1,7 @@
 ﻿using BadeePlatform.Data;
 using BadeePlatform.DTOs;
 using BadeePlatform.Models;
+using BadeePlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;

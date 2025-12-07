@@ -1,5 +1,5 @@
 ﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models;
+using BadeePlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BadeePlatform.Controllers
@@ -19,6 +19,8 @@ namespace BadeePlatform.Controllers
         public Task<IActionResult> EditChildProfile(string childId, EditChildDTO dto);
         public IActionResult ViewChildDashboard(string childId);
         public Task<IActionResult> ParentHomePage();
+        public Task<IActionResult> ViewProfile();
+        public Task<IActionResult> EditProfile(ParentProfileViewModel model);
         public Task<IActionResult> GetSchoolsByCity(string city);
         public Task<IActionResult> GetGradesBySchool(string schoolId);
         public Task<IActionResult> GetClassesByGrade(string gradeId);

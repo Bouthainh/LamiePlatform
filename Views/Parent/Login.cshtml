@@ -30,9 +30,9 @@
         <div class="login-right">
             <h1>مرحبا بعودتك إلى ماهر</h1>
 
-            @if (TempData["SuccessMessage"] != null)
+            @if (TempData["RegisterSuccessMessage"] != null)
             {
-                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                <div class="alert alert-success">@TempData["RegisterSuccessMessage"]</div>
             }
 
             @if (ViewData["ErrorMessage"] != null)
@@ -46,8 +46,10 @@
                 <div class="form-group">
                     <input asp-for="UsernameOrEmail"
                            type="text"
-                           placeholder="اسم المستخدم أو بريدك هنا"
-                           required />
+                           placeholder="أدخل اسم المستخدم أو بريدك هنا"
+                           required
+                           minlength="3"
+                           maxlength="100" />
                     <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
                 </div>
 
@@ -55,7 +57,9 @@
                     <input asp-for="Password"
                            type="password"
                            placeholder="أدخل كلمة المرور هنا"
-                           required />
+                           required
+                           minlength="8"
+                           maxlength="100" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 

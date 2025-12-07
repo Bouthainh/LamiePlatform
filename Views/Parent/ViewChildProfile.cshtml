@@ -1,4 +1,5 @@
-﻿@model BadeePlatform.ViewModels.ChildProfileViewModel
+﻿@using BadeePlatform.Models.ViewModels
+@model ChildProfileViewModel
 
 @{
     ViewData["Title"] = "ماهر - الملف الشخصي للطفل";
@@ -14,6 +15,12 @@
                         <img src="~/images/Maher_Logo.png" alt="MaherLogo">
                     </div>
                 </div>
+                @if (TempData["ChildSuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["ChildSuccessMessage"]
+                    </div>
+                }
 
                 @if (TempData["ChildProfileSuccess"] != null)
                 {

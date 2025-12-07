@@ -6,7 +6,6 @@
     Layout = null; 
 }
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -31,14 +30,11 @@
                 <h1>أهلاً بك في ماهر</h1>
                 <p>أنشئ حسابك الآن</p>
 
-                @if (TempData["Success"] != null)
-                {
-                    <div class="alert alert-success">@TempData["Success"]</div>
-                }
-                @if (TempData["Error"] != null)
-                {
-                    <div class="alert alert-danger">@TempData["Error"]</div>
-                }
+                    @if (ViewData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+                    }
+
             </div>
 
             <form class="signup-form" asp-controller="Parent" asp-action="Register" method="POST">
@@ -46,19 +42,19 @@
 
                 <div class="form-group full-width">
                     <label asp-for="ParentName">الاسم الكامل لولي الأمر</label>
-                    <input asp-for="ParentName" type="text" placeholder="أدخل اسمك هنا" required />
+                    <input asp-for="ParentName" type="text" placeholder="أدخل اسمك الكامل هنا" required maxlength="100" />
                     <span asp-validation-for="ParentName" class="text-danger"></span>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label asp-for="ParentId">الهوية الوطنية (رقم ولي الأمر)</label>
-                        <input asp-for="ParentId" type="text" placeholder="10 أرقام" maxlength="10" required />
+                        <input asp-for="ParentId" type="text" placeholder="أدخل رقم هويتك الوطنية هنا" required maxlength="10" pattern="\d{10}" title="يجب أن يتكون رقم الهوية من 10 أرقام" />
                         <span asp-validation-for="ParentId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="PhoneNumber">رقم الجوال</label>
-                        <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx" required />
+                        <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx" required maxlength="10" pattern="05\d{8}" title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
@@ -66,12 +62,12 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label asp-for="Email">البريد الإلكتروني</label>
-                        <input asp-for="Email" type="email" required />
+                        <input asp-for="Email" type="email" required maxlength="100" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Username">اسم المستخدم</label>
-                        <input asp-for="Username" type="text" placeholder="4-8 أحرف" required />
+                        <input asp-for="Username" type="text" placeholder="أدخل اسم المستخدم هنا" required minlength="3" maxlength="50" />
                         <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                 </div>
@@ -90,13 +86,13 @@
 
                 <div class="form-group full-width">
                     <label asp-for="Password">كلمة المرور</label>
-                    <input asp-for="Password" type="password" required />
+                    <input asp-for="Password" type="password" required minlength="8" maxlength="100" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
 
                 <div class="form-group full-width">
                     <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
-                    <input asp-for="ConfirmPassword" type="password" required />
+                    <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
