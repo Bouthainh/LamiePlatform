@@ -12,7 +12,7 @@
                 <div class="profile-header">
                     <h1>الملف الشخصي للطفل</h1>
                     <div class="logo-corner">
-                        <img src="~/images/MaherLogo.png" alt="MaherLogo">
+                        <img src="~/images/Maher_Logo.png" alt="MaherLogo">
                     </div>
                 </div>
                 @if (TempData["ChildSuccessMessage"] != null)
@@ -71,7 +71,7 @@
 
                                     <div class="contact-option active">
                                         <input type="checkbox" id="allow" checked disabled>
-                                        <label for="allow">سماح ✓</label>
+                                        <label for="allow">سماح </label>
                                     </div>
 
                                     <button type="submit" class="contact-option inactive-btn">
@@ -91,14 +91,14 @@
 
                                     <div class="contact-option active">
                                         <input type="checkbox" id="deny" checked disabled>
-                                        <label for="deny">منع ✓</label>
+                                        <label for="deny">منع </label>
                                     </div>
                                 </form>
                             }
                         </div>
                     </div>
 
-                    <div class="school-details">
+                    <div class="school-details" dir="rtl">
                         <h3>بيانات المدرسة</h3>
                         <div class="detail-row">
                             <span class="label">المدينة:</span>
@@ -138,13 +138,6 @@
                         </a>
                     </div>
 
-                    <div class="sidebar-navigation">
-                        <a asp-action="ParentHomePage" asp-controller="Parent" class="sidebar-item home-icon" title="الرئيسية">🏠</a>
-                        <a asp-action="ManageMultipleChildren" asp-controller="Parent" class="sidebar-item profile-icon" title="الأطفال">👤</a>
-                        <a href="#documents" class="sidebar-item documents-icon" title="المستندات">📄</a>
-                        <a href="#tasks" class="sidebar-item tasks-icon" title="المهام">☐</a>
-                        <a href="#settings" class="sidebar-item settings-icon" title="الإعدادات">⚙️</a>
-                    </div>
                 }
             </div>
         </section>

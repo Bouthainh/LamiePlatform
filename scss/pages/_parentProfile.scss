@@ -1,0 +1,204 @@
+// Parent Profile Page - View Profile Styling
+.view-profile-page {
+  direction: rtl;
+  font-family: $primary-font;
+  min-height: 100vh;
+  background-color: $light-bg;
+  color: $text-color;
+  padding: $spacing-md;
+
+  .main-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .main-content {
+    background: linear-gradient(135deg, $child-light-pink 0%, $child-light-blue 50%, $child-light-yellow 100%);
+    border-radius: 22px;
+    padding: $spacing-xl;
+    @include card-shadow;
+    box-sizing: border-box;
+  }
+
+  // Profile Header
+  .profile-header {
+    text-align: center;
+    margin-bottom: $spacing-xl;
+
+    h1 {
+      color: $purple-color;
+      font-size: 32px;
+      font-weight: 700;
+      margin: 0;
+    }
+  }
+
+  // Form Styling
+  form {
+    max-width: 700px;
+    margin: 0 auto;
+    background: $white;
+    padding: $spacing-xl;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+    input[type="hidden"] {
+      display: none;
+    }
+
+    label {
+      display: block;
+      font-size: $font-size-small;
+      font-weight: 600;
+      color: $text-light;
+      margin-bottom: $spacing-xs;
+      margin-top: $spacing-md;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px $spacing-md;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: $font-size-base;
+      font-family: $primary-font;
+      background-color: #fafafa;
+      @include transition(all);
+      box-sizing: border-box;
+      margin-bottom: $spacing-sm;
+
+      &:focus {
+        outline: none;
+        border-color: $secondary-color;
+        background-color: $white;
+        box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+      }
+
+      &::placeholder {
+        color: #bbb;
+      }
+
+      &:disabled,
+      &[readonly] {
+        background-color: #f0f0f0;
+        cursor: not-allowed;
+        color: $text-light;
+      }
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: $spacing-sm $spacing-xl;
+      margin-top: $spacing-xl;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: $font-size-base;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: $primary-green;
+      color: $white;
+      box-sizing: border-box;
+      @include transition(all);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+      &:hover {
+        background: $primary-green-dark;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba($primary-green, 0.4);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .text-danger,
+    .field-validation-error,
+    span[class*="validation"] {
+      display: block;
+      color: #d32f2f;
+      font-size: $font-size-small;
+      margin-top: $spacing-xs;
+      margin-bottom: $spacing-sm;
+    }
+  }
+
+  // Alerts
+  .alert {
+    padding: $spacing-md;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-bottom: $spacing-md;
+    text-align: center;
+
+    &-success {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+    }
+
+    &-danger {
+      background: #f8d7da;
+      border: 1px solid #f5c6cb;
+      color: #721c24;
+    }
+
+    &-warning {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+    }
+  }
+
+  // Responsive
+  @include respond-to(tablet) {
+    padding: $spacing-sm;
+
+    .main-content {
+      padding: $spacing-lg;
+      border-radius: 18px;
+
+      .profile-header h1 {
+        font-size: 26px;
+      }
+
+      form {
+        padding: $spacing-lg;
+      }
+    }
+  }
+
+  @include respond-to(mobile) {
+    .main-content {
+      padding: $spacing-md;
+      border-radius: 16px;
+
+      .profile-header h1 {
+        font-size: 22px;
+      }
+
+      form {
+        padding: $spacing-md;
+
+        label {
+          font-size: 13px;
+        }
+
+        .form-control {
+          padding: 10px $spacing-sm;
+          font-size: $font-size-small;
+        }
+
+        button[type="submit"] {
+          font-size: $font-size-small;
+        }
+      }
+    }
+  }
+}

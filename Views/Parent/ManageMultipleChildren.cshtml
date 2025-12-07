@@ -1,76 +1,95 @@
-﻿@using BadeePlatform.Models.ViewModels
+@using BadeePlatform.Models.ViewModels
 
 @model List<ChildrenViewModel>
 
-<h2>أطفالي</h2>
-
-<!-- Success messages after adding chilldren -->
-@if (TempData["ChildSuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["ChildSuccessMessage"]
-    </div>
+@{
+    ViewData["Title"] = "ماهر - إدارة الأطفال";
 }
 
-@if (TempData["LoginCode"] != null)
-{
-    <div class="alert alert-info">
-        كود الدخول للطفل: <strong>@TempData["LoginCode"]</strong>
-    </div>
-}
+<div class="manage-children-page">
+    <div class="main-container">
+        <section class="main-content">
+            <h2>أطفالي</h2>
 
-<!-- No Dashboard Record, Errors in managing child -->
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-
-<!-- NO Children Message -->
-@if (Model == null || !Model.Any())
-{
-    <div class="alert alert-warning">
-        ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد
-    </div>
-
-    <a href="@Url.Action("AddChild", "Parent")">
-        إضافة طفل جديد
-    </a>
-}
-else
-{
-    <ul>
-        @foreach (var child in Model)
-        {
-            <li>
-                @child.ChildName
-                <div class="child-avatar">
-                    <img src="@child.IconImgPath" alt="child icon">
+            @* Success messages after adding children *@
+            @if (TempData["ChildSuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["ChildSuccessMessage"]
                 </div>
-                | <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })">
-                   عرض الملف الشخصي للطفل
-                  </a>
+            }
 
-                | <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })">
-                     تعديل بيانات الطفل
-                  </a>
+            @if (TempData["LoginCode"] != null)
+            {
+                <div class="alert alert-info">
+                    كود الدخول للطفل: <strong>@TempData["LoginCode"]</strong>
+                </div>
+            }
 
-                | <a href="@Url.Action("ViewChildDashboard", "Parent", new { childId = child.ChildId })">
-                      عرض لوحة التحكم
-                </a>
+            @* No Dashboard Record, Errors in managing child *@
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
 
+            @* NO Children Message *@
+            @if (Model == null || !Model.Any())
+            {
+                <div class="empty-state">
+                    <p>ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد</p>
+                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                        إضافة طفل جديد
+                    </a>
+                </div>
+            }
+            else
+            {
+                <ul class="children-list">
+                    @foreach (var child in Model)
+                    {
+                        <li class="child-card">
+                            <div class="child-header">
+                                <div class="child-avatar">
+                                    <img src="@child.IconImgPath" alt="@child.ChildName">
+                                </div>
+                                <h3 class="child-name">@child.ChildName</h3>
+                            </div>
+                            
+                            <div class="child-actions">
+                                <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn view-btn">
+                                    عرض الملف الشخصي
+                                </a>
+                                
+                                <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn edit-btn">
+                                    تعديل البيانات
+                                </a>
 
-                | <form asp-action="DeleteChildProfile" asp-controller="Parent" 
-                        method="post" style="display:inline">
-                        <input type="hidden" name="childId" value="@child.ChildId" />
-                        <button type="submit">حذف</button>
-                  </form>
-            </li>
-        }
-    </ul>
+                                <a href="@Url.Action("ViewChildDashboard", "Parent", new { childId = child.ChildId })" 
+                                   class="action-btn dashboard-btn">
+                                    لوحة التحكم
+                                </a>
+                                
+                                <form asp-action="DeleteChildProfile" asp-controller="Parent" method="post"
+                                      onsubmit="return confirm('هل أنت متأكد من حذف ملف @child.ChildName؟');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="childId" value="@child.ChildId" />
+                                    <button type="submit" class="action-btn delete-btn">حذف</button>
+                                </form>
+                            </div>
+                        </li>
+                    }
+                </ul>
 
-    <a href="@Url.Action("AddChild", "Parent")">
-        إضافة طفل
-    </a>
-}
+                <div class="add-child-footer">
+                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                        إضافة طفل
+                    </a>
+                </div>
+            }
+        </section>
+    </div>
+</div>

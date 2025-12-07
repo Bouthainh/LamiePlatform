@@ -25,9 +25,16 @@ body {
 @import 'layout/header';
 @import 'layout/footer';
 @import 'layout/sidebar';
+
 @import 'pages/home';
 @import 'pages/auth';
 @import 'pages/ParentHomePage';
+@import 'pages/childProfile';
+@import 'pages/addChild';
+@import 'pages/editChildProfile';
+@import 'pages/parentProfile';
+@import 'pages/childDashboard';
+@import 'pages/manageMultipleChildren';
 
 
 .container {
