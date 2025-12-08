@@ -24,31 +24,46 @@
 
             <form asp-action="EditProfile" method="post">
                 <input type="hidden" asp-for="ParentId" />
-
-            <label>الاسم:</label>
-            <input asp-for="ParentName" class="form-control" required maxlength="100" />
-
-            <label>رقم الجوال:</label>
-            <input asp-for="PhoneNumber" class="form-control"
-             required maxlength="10" pattern="05\d{8}"
-            title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
-
-            <label>البريد الإلكتروني:</label>
-            <input asp-for="Email" class="form-control" type="email"
-           required maxlength="100" />
-
-            <label>اسم المستخدم:</label>
-            <input asp-for="Username" class="form-control"
-           required minlength="3" maxlength="50" />
-
-            <label>كلمة المرور</label>
-                <input asp-for="Password" type="password" minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
-                       title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +"
-                       class="form-control" placeholder="أدخل قيمة جديدة لإعادة تعيين كلمة المرور" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-
-            <button type="submit">حفظ التغييرات</button>
-</form>
+                
+                <div class="form-grid">
+                    <div class="form-group form-group--name">
+                        <label>الاسم </label>
+                        <input asp-for="ParentName" class="form-control" required maxlength="100" />
+                    </div>
+                    
+                    <div class="form-group form-group--phone">
+                        <label>رقم الجوال </label>
+                        <input asp-for="PhoneNumber" class="form-control"
+                               required maxlength="10" pattern="05\d{8}"
+                               title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
+                    </div>
+                    
+                    <div class="form-group form-group--email">
+                        <label>البريد الإلكتروني </label>
+                        <input asp-for="Email" class="form-control" type="email"
+                               required maxlength="100" />
+                    </div>
+                    
+                    <div class="form-group form-group--username">
+                        <label>اسم المستخدم </label>
+                        <input asp-for="Username" class="form-control"
+                               required minlength="3" maxlength="50" />
+                    </div>
+                    
+                      
+                    <div class="form-group form-group--password">
+                        <label>كلمة المرور</label>
+                        <input asp-for="Password" type="password" class="form-control"minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                               title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +"
+                               class="form-control" placeholder="أدخل قيمة جديدة لإعادة تعيين كلمة المرور" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-submit">
+                    <button type="submit">حفظ التغييرات</button>
+                </div>
+            </form>
         </section>
     </div>
 </div>
