@@ -3,179 +3,179 @@ $text-purple: #5b4d7e;
 $text-gray: #7a7a7a;   
 $line-color: #dcdcdc;  
 $icon-border: #dcdcdc;
-$wave-orange: #f4a261; 
+$wave-orange: #f4a261;
 
 .site-footer {
-  background: $footer-bg;
-  padding-top: 4rem;
-  margin-top: 4rem;
-  direction: rtl;
-  font-family: 'Cairo', sans-serif; 
-  position: relative;
-  overflow: hidden;
+    background: $footer-bg;
+    padding-top: 4rem;
+    margin-top: 4rem;
+    direction: rtl;
+    position: relative;
+    overflow: hidden;
 
-  .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 0rem;
-    padding-bottom: 4rem;
-    text-align: center;
-    gap: 4rem;
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0rem;
+        padding-bottom: 4rem;
+        text-align: center;
+        gap: 4rem;
 
-    @include respond-to(tablet) {
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
-
-  .footer-col {
-    flex: 1;
-    min-width: 200px;
-
-    .footer-title {
-      color: $text-purple;
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.8rem;
-      position: relative;
-      display: inline-block; 
-      min-width: 120px;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background-color: $line-color;
-      }
-    }
-
-    &.logo-col {
-        .logo-wrapper {
-             margin-bottom: 1rem;
-             padding-bottom: 1rem;
-             border-bottom: 1px solid $line-color;
-             display: inline-block;
-             min-width: 150px;
-             margin-top: -30px;
-        }
-        .footer-logo {
-            height: 80px;
-            width: auto;
-        }
-        .footer-desc {
-            color: $text-purple;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            max-width: 280px;
-            margin: 0 auto;
-        }
-    }
-
-    .footer-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      li {
-        margin-bottom: 0.8rem;
-        
-        a {
-          color: $text-gray;
-          text-decoration: none;
-          font-size: 1rem;
-          transition: color 0.3s;
-
-          &:hover {
-            color: $text-purple;
-          }
-        }
-      }
-    }
-    // social media
-
-    &.social-col {
-        .social-icons {
-            display: flex;
+        @include respond-to(tablet) {
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+        }
+    }
+
+    .footer-col {
+        flex: 1;
+        min-width: 200px;
+
+        .footer-title {
+            color: $text-purple;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            position: relative;
+            display: inline-block;
+            min-width: 120px;
 
-            .icon-box {
-                width: 35px;
-                height: 35px;
-                border: 1px solid $text-purple; 
-                border-radius: 6px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: $text-purple;
-                text-decoration: none;
-                transition: all 0.3s;
-                background-color: transparent;
-
-                i {
-                    font-size: 1.1rem;
-                }
-
-                &:hover {
-                    background-color: $text-purple;
-                    color: white;
-                }
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background-color: $line-color;
             }
         }
 
-        .contact-info {
-            p {
-                color: $text-gray;
-                font-size: 0.95rem;
-                margin-bottom: 0.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 8px; 
+        &.logo-col {
+            .logo-wrapper {
+                margin-bottom: 1rem;
+                padding-bottom: 1rem;
+                border-bottom: 1px solid $line-color;
+                display: inline-block;
+                min-width: 150px;
+                margin-top: -30px;
+            }
 
-                i {
-                    color: $text-purple; 
-                    font-size: 1.1rem;
+            .footer-logo {
+                height: 80px;
+                width: auto;
+            }
+
+            .footer-desc {
+                color: $text-purple;
+                font-size: 0.95rem;
+                line-height: 1.8;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 0.8rem;
+
+                a {
+                    color: $text-gray;
+                    text-decoration: none;
+                    font-size: 1rem;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: $text-purple;
+                    }
+                }
+            }
+        }
+        // social media
+
+        &.social-col {
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 1.5rem;
+
+                .icon-box {
+                    width: 35px;
+                    height: 35px;
+                    border: 1px solid $text-purple;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: $text-purple;
+                    text-decoration: none;
+                    transition: all 0.3s;
+                    background-color: transparent;
+
+                    i {
+                        font-size: 1.1rem;
+                    }
+
+                    &:hover {
+                        background-color: $text-purple;
+                        color: white;
+                    }
+                }
+            }
+
+            .contact-info {
+                p {
+                    color: $text-gray;
+                    font-size: 0.95rem;
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+
+                    i {
+                        color: $text-purple;
+                        font-size: 1.1rem;
+                    }
                 }
             }
         }
     }
-  }
 
-.footer-bottom {
-      position: relative;
-      text-align: center;
-      padding-bottom: 30px; 
+    .footer-bottom {
+        position: relative;
+        text-align: center;
+        padding-bottom: 30px;
 
-      .copyrights {
-          position: relative;
-          padding-bottom: 8px;
-          z-index: 2;
-          p {
-              color: $text-purple;
-              font-size: 0.85rem;
-              margin: 2px 0;
-          }
-      }
+        .copyrights {
+            position: relative;
+            padding-bottom: 8px;
+            z-index: 2;
 
-      .wave-line {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 30px; 
-          
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30' preserveAspectRatio='none'%3E%3Cpath d='M0,15 Q25,28 50,15 T100,15' fill='none' stroke='%23f4a261' stroke-width='2'/%3E%3C/svg%3E");
-          
-          background-repeat: repeat-x; 
-          background-size: 55px 30px; 
-      }
-  }
+            p {
+                color: $text-purple;
+                font-size: 0.85rem;
+                margin: 2px 0;
+            }
+        }
+
+        .wave-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 30' preserveAspectRatio='none'%3E%3Cpath d='M0,15 Q25,28 50,15 T100,15' fill='none' stroke='%23f4a261' stroke-width='2'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 55px 30px;
+        }
+    }
 }
