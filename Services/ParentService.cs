@@ -2,6 +2,7 @@
 using BadeePlatform.DTOs;
 using BadeePlatform.Models;
 using BadeePlatform.Models.ViewModels;
+using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -110,7 +111,7 @@ namespace BadeePlatform.Services
                 ParentName = parent.ParentName,
                 PhoneNumber = parent.PhoneNumber,
                 Email = parent.Email,
-                Username = parent.Username
+                Username = parent.Username,
             };
         }
 
@@ -126,6 +127,11 @@ namespace BadeePlatform.Services
             parent.PhoneNumber = model.PhoneNumber;
             parent.Email = model.Email;
             parent.Username = model.Username;
+
+            if (!string.IsNullOrEmpty(model.Password)) 
+            { string hashedPassword = _passwordHasher.HashPassword(parent, model.Password); 
+                parent.Password = hashedPassword; 
+            }
 
             await _db.SaveChangesAsync();
             return true;

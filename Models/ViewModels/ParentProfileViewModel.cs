@@ -22,13 +22,14 @@ namespace BadeePlatform.Models.ViewModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "اسم المستخدم مطلوب")]
-        [MinLength(8, ErrorMessage = "اسم المستخدم يجب أن لا يقل عن 8 أحرف")]
+        [MinLength(3, ErrorMessage = "اسم المستخدم يجب أن لا يقل عن 3 أحرف")]
         public string Username { get; set; }
 
-        [Required(ErrorMessage = "كلمة المرور مطلوبة")]
         [MinLength(8, ErrorMessage = "كلمة المرور يجب أن تكون 8 أحرف على الأقل")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$",
+    ErrorMessage = "يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @ # $ % ^ & * ( ) _ - +")]
+        public string? Password { get; set; }
     }
     }
 

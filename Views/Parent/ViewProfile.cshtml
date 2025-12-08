@@ -41,6 +41,12 @@
             <input asp-for="Username" class="form-control"
            required minlength="3" maxlength="50" />
 
+            <label>كلمة المرور</label>
+                <input asp-for="Password" type="password" minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                       title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +"
+                       class="form-control" placeholder="أدخل قيمة جديدة لإعادة تعيين كلمة المرور" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+
             <button type="submit">حفظ التغييرات</button>
 </form>
         </section>

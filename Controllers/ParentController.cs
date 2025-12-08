@@ -459,7 +459,7 @@ namespace BadeePlatform.Controllers
             }
         }
 
-      
+
         private string GetCurrentParentId()
         {
             return User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -471,11 +471,12 @@ namespace BadeePlatform.Controllers
             ViewBag.Cities = cities;
         }
 
-     
+
         public async Task<IActionResult> ParentHomePage()
         {
             var parentId = GetCurrentParentId();
-            if (string.IsNullOrEmpty(parentId)) {   
+            if (string.IsNullOrEmpty(parentId))
+            {
                 return RedirectToAction("Login");
             }
 
@@ -486,16 +487,17 @@ namespace BadeePlatform.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult ViewChildDashboard(string childId) 
+        public IActionResult ViewChildDashboard(string childId)
         {
             var dashboardData = _dashboardService.GetChildDashboard(childId);
 
-            if (dashboardData == null) {
+            if (dashboardData == null)
+            {
                 TempData["ErrorMessage"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
                 return RedirectToAction("ManageMultipleChildren");
             }
 
-           return View("ViewChildDashboard", dashboardData);
+            return View("ViewChildDashboard", dashboardData);
         }
 
         [Authorize]
@@ -510,7 +512,7 @@ namespace BadeePlatform.Controllers
 
             var children = await _childService.GetAllChildrenByParentIdAsync(parentId);
 
-            return View(children); 
+            return View(children);
         }
 
         [Authorize]
@@ -545,18 +547,31 @@ namespace BadeePlatform.Controllers
             if (!ModelState.IsValid)
                 return View("ViewProfile", model);
 
-            var success = await _parentService.UpdateParentProfileAsync(model);
-
-            if (!success)
+            try
             {
-                TempData["Error"] = "حدث خطأ أثناء حفظ البيانات";
+                var success = await _parentService.UpdateParentProfileAsync(model);
+
+                if (success)
+                {
+                    TempData["ProfileEditedSuccessMessage"] = "تم حفظ التعديلات بنجاح";
+                    return RedirectToAction("ViewProfile");
+                }
+
+                TempData["ErrorMessage"] = "حدث خطأ أثناء حفظ البيانات";
+                return View("ViewProfile", model);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+
+                TempData["ErrorMessage"] = "تعذر حفظ البيانات. قد يكون هناك بيانات مكررة أو مشكلة في قاعدة البيانات.";
+                return View("ViewProfile", model);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا.";
                 return View("ViewProfile", model);
             }
 
-            TempData["ProfileEditedSuccessMessage"] = "تم حفظ التعديلات بنجاح";
-            return RedirectToAction("ViewProfile");
         }
-
-
     }
 }
