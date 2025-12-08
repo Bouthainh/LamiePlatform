@@ -1,11 +1,13 @@
-﻿using FluentAssertions;
-using Xunit;
-using BadeePlatform.Services;
-using BadeePlatform.Models;
-using BadeePlatform.Data;
+﻿using BadeePlatform.Data;
 using BadeePlatform.DTOs;
+using BadeePlatform.Models;
+using BadeePlatform.Models.ViewModels;
+using BadeePlatform.Services;
+using FluentAssertions;
 using LamiePlatform.Tests.Helpers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
 
 namespace LamiePlatform.Tests.Services;
 
@@ -212,5 +214,84 @@ public class ParentServiceTests
         result.Success.Should().BeFalse();
         result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
         result.ParentId.Should().BeNull();
+    }
+ 
+    // Update Parent Profile - TC1: Parent exists - Success
+    [Fact]
+    public async Task UpdateParentProfileAsync_TC1()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+
+        // Create a parent in the database
+        var parent = new Parent
+        {
+            ParentId = "1119435366",
+            ParentName = "Omar Ali",
+            Username = "omar112233",
+            Email = "omar@email.com",
+            PhoneNumber = "0501234567",
+            IsVerified = true,
+            CreatedAt = DateTime.Now,
+            Role = "Father",
+            Password = "hashedpassword"
+        };
+
+        context.Parents.Add(parent);
+        await context.SaveChangesAsync();
+
+        // Create update model with new data
+        var updateModel = new ParentProfileViewModel
+        {
+            ParentId = "1119435366",
+            ParentName = "Omar Ali Updated",
+            Username = "omar_updated",
+            Email = "omar_new@email.com",
+            PhoneNumber = "0559876543"
+        };
+
+        // Act
+        var result = await service.UpdateParentProfileAsync(updateModel);
+
+        // Assert
+        result.Should().BeTrue();
+
+        // Verify the data was actually updated in the database
+        var updatedParent = await context.Parents.FirstOrDefaultAsync(p => p.ParentId == "1119435366");
+        updatedParent.Should().NotBeNull();
+        updatedParent.ParentName.Should().Be("Omar Ali Updated");
+        updatedParent.Username.Should().Be("omar_updated");
+        updatedParent.Email.Should().Be("omar_new@email.com");
+        updatedParent.PhoneNumber.Should().Be("0559876543");
+    }
+
+    // Update Parent Profile - TC2: Parent doesn't exist - Failure
+    [Fact]
+    public async Task UpdateParentProfileAsync_TC2()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+
+        // No parent added to database - empty database
+
+        // Try to update non-existent parent
+        var updateModel = new ParentProfileViewModel
+        {
+            ParentId = "9999999999",
+            ParentName = "Non Existent",
+            Username = "nonexistent",
+            Email = "nonexistent@email.com",
+            PhoneNumber = "0501111111"
+        };
+
+        // Act
+        var result = await service.UpdateParentProfileAsync(updateModel);
+
+        // Assert
+        result.Should().BeFalse();
+
+        // Verify no data was added to the database
+        var count = await context.Parents.CountAsync();
+        count.Should().Be(0);
     }
 }
