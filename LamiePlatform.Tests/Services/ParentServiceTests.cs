@@ -1,13 +1,216 @@
-﻿global using Xunit;
+﻿using FluentAssertions;
+using Xunit;
+using BadeePlatform.Services;
+using BadeePlatform.Models;
+using BadeePlatform.Data;
+using BadeePlatform.DTOs;
+using LamiePlatform.Tests.Helpers;
+using Microsoft.AspNetCore.Identity;
 
+namespace LamiePlatform.Tests.Services;
 
-namespace LamiePlatform.Tests.Services
+public class ParentServiceTests
 {
-    public class ParentServiceTests
+    // Helper method to create ParentService with PasswordHasher
+    private ParentService GetParentService(BadeedbContext context)
     {
-        [Fact]
-        public void Test1()
+        var passwordHasher = new PasswordHasher<Parent>();
+        return new ParentService(context, passwordHasher);
+    }
+
+    // Login Parent - TC1: Login with Username - Success
+    [Fact]
+    public async Task LoginParentAsync_TC1()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+        var passwordHasher = new PasswordHasher<Parent>();
+
+        // Create parent with username
+        var parent = new Parent
         {
-        }
+            ParentId = "1119435366",
+            ParentName = "Omar Ali",
+            Username = "omar112233",
+            Email = "omar@email.com",
+            PhoneNumber = "0501234567",
+            IsVerified = true,
+            CreatedAt = DateTime.Now,
+            Role = "Father"
+        };
+
+        // Hash the password
+        parent.Password = passwordHasher.HashPassword(parent, "Omar112233");
+
+        context.Parents.Add(parent);
+        await context.SaveChangesAsync();
+
+        var loginDto = new LoginParentDTO
+        {
+            UsernameOrEmail = "omar112233",  // Matches Username
+            Password = "Omar112233"
+        };
+
+        // Act
+        var result = await service.LoginParentAsync(loginDto);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Success.Should().BeTrue();
+        result.Message.Should().Be("تم تسجيل الدخول بنجاح.");
+        result.ParentId.Should().Be("1119435366");
+        result.Data.Should().Be("Father");
+    }
+
+    // Login Parent - TC2: Login with Email - Success
+    [Fact]
+    public async Task LoginParentAsync_TC2()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+        var passwordHasher = new PasswordHasher<Parent>();
+
+        // Create parent with email
+        var parent = new Parent
+        {
+            ParentId = "1119435366",
+            ParentName = "Omar Ali",
+            Username = "omar112233",
+            Email = "omar@email.com",  // This will be matched
+            PhoneNumber = "0551234567",
+            IsVerified = true,
+            CreatedAt = DateTime.Now,
+            Role = "Father"
+        };
+
+        // Hash the password
+        parent.Password = passwordHasher.HashPassword(parent, "Omar112233");
+
+        context.Parents.Add(parent);
+        await context.SaveChangesAsync();
+
+        var loginDto = new LoginParentDTO
+        {
+            UsernameOrEmail = "omar@email.com",  // Matches Email
+            Password = "Omar112233"
+        };
+
+        // Act
+        var result = await service.LoginParentAsync(loginDto);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Success.Should().BeTrue();
+        result.Message.Should().Be("تم تسجيل الدخول بنجاح.");
+        result.ParentId.Should().Be("1119435366");
+        result.Data.Should().Be("Father");
+    }
+
+    // Login Parent - TC3: User Not Found
+    [Fact]
+    public async Task LoginParentAsync_TC3()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+
+        // No parent added to database - empty database
+
+        var loginDto = new LoginParentDTO
+        {
+            UsernameOrEmail = "non-existent",
+            Password = "AnyPassword"
+        };
+
+        // Act
+        var result = await service.LoginParentAsync(loginDto);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Success.Should().BeFalse();
+        result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
+        result.ParentId.Should().BeNull();
+    }
+
+    // Login Parent - TC4: Parent Exists but Password Field is Null
+    [Fact]
+    public async Task LoginParentAsync_TC4()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+
+        // Create parent with NULL password
+        var parent = new Parent
+        {
+            ParentId = "1119435366",
+            ParentName = "Omar Ali",
+            Username = "omar112233",
+            Email = "omar@email.com",
+            PhoneNumber = "0561234567",
+            Password = null,  // Password is NULL (data corruption scenario)
+            IsVerified = true,
+            CreatedAt = DateTime.Now,
+            Role = "Father"
+        };
+
+        context.Parents.Add(parent);
+        await context.SaveChangesAsync();
+
+        var loginDto = new LoginParentDTO
+        {
+            UsernameOrEmail = "omar112233",
+            Password = "AnyPassword"
+        };
+
+        // Act
+        var result = await service.LoginParentAsync(loginDto);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Success.Should().BeFalse();
+        result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
+        result.ParentId.Should().BeNull();
+    }
+
+    // Login Parent - TC5: Wrong Password
+    [Fact]
+    public async Task LoginParentAsync_TC5()
+    {
+        var context = TestDbContextFactory.CreateInMemoryContext();
+        var service = GetParentService(context);
+        var passwordHasher = new PasswordHasher<Parent>();
+
+        // Create parent with correct password
+        var parent = new Parent
+        {
+            ParentId = "1119435366",
+            ParentName = "Omar Ali",
+            Username = "omar112233",
+            Email = "omar@email.com",
+            PhoneNumber = "0571234567",
+            IsVerified = true,
+            CreatedAt = DateTime.Now,
+            Role = "Father"
+        };
+
+        // Hash the CORRECT password
+        parent.Password = passwordHasher.HashPassword(parent, "Omar112233");
+
+        context.Parents.Add(parent);
+        await context.SaveChangesAsync();
+
+        var loginDto = new LoginParentDTO
+        {
+            UsernameOrEmail = "omar112233",
+            Password = "WrongPassword123"  // Wrong password
+        };
+
+        // Act
+        var result = await service.LoginParentAsync(loginDto);
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Success.Should().BeFalse();
+        result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
+        result.ParentId.Should().BeNull();
     }
 }
