@@ -92,7 +92,8 @@
 
                 <div class="form-group full-width">
                     <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
-                    <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100" />
+                        <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                               title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +" />
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
 
