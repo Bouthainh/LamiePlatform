@@ -75,7 +75,7 @@
       padding: 0;
       margin: 0 0 $spacing-xl;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns:repeat(3, 1fr);
       gap: $spacing-lg;
 
       .child-card {
@@ -185,16 +185,7 @@
           }
         }
       }
-
-      @include respond-to(tablet) {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      }
-
-      @include respond-to(mobile) {
-        grid-template-columns: 1fr;
-      }
     }
-
     // Add Child Button at Bottom
     .add-child-footer {
       text-align: center;
@@ -237,6 +228,9 @@
       h2 {
         font-size: 26px;
       }
+      .children-list {
+         grid-template-columns: repeat(2, 1fr);
+        }
     }
   }
 
@@ -248,7 +242,9 @@
       h2 {
         font-size: 22px;
       }
-
+      .children-list {
+       grid-template-columns: 1fr;
+      }
       .children-list .child-card {
         padding: $spacing-md;
 

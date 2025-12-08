@@ -34,7 +34,7 @@
     }
   }
 
-  // Form Styling
+  // Form Styling 
   form {
     max-width: 700px;
     margin: 0 auto;
@@ -46,6 +46,49 @@
     input[type="hidden"] {
       display: none;
     }
+    
+    // Grid layout
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-md $spacing-lg;
+      margin-bottom: $spacing-xl;
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group--name {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      
+      .form-group--phone {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      
+      .form-group--username {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      
+      .form-group--password {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      
+      .form-group--email {
+        grid-column: 1 / span 2;
+        grid-row: 3;
+      }
+    }
+    
+    // Form submit button container
+    .form-submit {
+      text-align: center;
+    }
 
     label {
       display: block;
@@ -53,11 +96,7 @@
       font-weight: 600;
       color: $text-light;
       margin-bottom: $spacing-xs;
-      margin-top: $spacing-md;
-
-      &:first-of-type {
-        margin-top: 0;
-      }
+      margin-top: 0;
     }
 
     .form-control {
@@ -70,7 +109,6 @@
       background-color: #fafafa;
       @include transition(all);
       box-sizing: border-box;
-      margin-bottom: $spacing-sm;
 
       &:focus {
         outline: none;
@@ -92,9 +130,8 @@
     }
 
     button[type="submit"] {
-      width: 100%;
       padding: $spacing-sm $spacing-xl;
-      margin-top: $spacing-xl;
+      min-width: 200px;
       border-radius: 12px;
       font-weight: 600;
       font-size: $font-size-base;
@@ -125,7 +162,6 @@
       color: #d32f2f;
       font-size: $font-size-small;
       margin-top: $spacing-xs;
-      margin-bottom: $spacing-sm;
     }
   }
 
@@ -156,7 +192,7 @@
     }
   }
 
-  // Responsive
+  // Responsive - Tablet
   @include respond-to(tablet) {
     padding: $spacing-sm;
 
@@ -170,10 +206,26 @@
 
       form {
         padding: $spacing-lg;
+        
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: $spacing-md;
+          
+          // All fields stack vertically and take full width
+          .form-group--name,
+          .form-group--phone,
+          .form-group--email,
+          .form-group--username,
+          .form-group--password {
+            grid-column: 1;
+            grid-row: auto;
+          }
+        }
       }
     }
   }
 
+  // Responsive - Mobile
   @include respond-to(mobile) {
     .main-content {
       padding: $spacing-md;
@@ -185,6 +237,20 @@
 
       form {
         padding: $spacing-md;
+        
+        .form-grid {
+          grid-template-columns: 1fr;
+          gap: $spacing-sm;
+          
+          .form-group--name,
+          .form-group--phone,
+          .form-group--email,
+          .form-group--username,
+          .form-group--password {
+            grid-column: 1;
+            grid-row: auto;
+          }
+        }
 
         label {
           font-size: 13px;
@@ -197,6 +263,7 @@
 
         button[type="submit"] {
           font-size: $font-size-small;
+          min-width: 180px;
         }
       }
     }

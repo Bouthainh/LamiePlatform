@@ -31,12 +31,9 @@
                 <li><a href="#how-it-works">كيفية العمل</a></li>
                 <li><a href="#faq">الأسئلة الشائعة</a></li>
             </ul>
-
-            <div class="auth-buttons">
-                <a asp-controller="Parent" asp-action="Login" class="login-btn">تسجيل الدخول</a>
-            </div>
         </nav>
     </header>
+    
 <div class=" sidebar-container">
 @if (ViewData["ShowSidebar"] == null || (bool)ViewData["ShowSidebar"] == true)
 {
