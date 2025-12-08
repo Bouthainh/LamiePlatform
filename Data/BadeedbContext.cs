@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BadeePlatform.Models;
 using Microsoft.EntityFrameworkCore;
+using BadeePlatform.Models;
 
 namespace BadeePlatform.Data;
 
@@ -53,10 +53,8 @@ public partial class BadeedbContext : DbContext
     public virtual DbSet<School> Schools { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        if (!optionsBuilder.IsConfigured)
-        {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-            optionsBuilder.UseSqlServer("Server=.;Database=badeedb;Trusted_Connection=True;TrustServerCertificate=true");
+        if (!optionsBuilder.IsConfigured) {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263. optionsBuilder.UseSqlServer("Server=.;Database=badeedb;Trusted_Connection=True;TrustServerCertificate=true"); 
         }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -254,6 +252,12 @@ public partial class BadeedbContext : DbContext
             entity.HasKey(e => e.EducatorId).HasName("PK__Educator__5C2A4BF6D06CDF20");
 
             entity.ToTable("Educator");
+
+            entity.HasIndex(e => e.Email, "UQ_Educator_Email").IsUnique();
+
+            entity.HasIndex(e => e.PhoneNumber, "UQ_Educator_Phone").IsUnique();
+
+            entity.HasIndex(e => e.Username, "UQ_Educator_Username").IsUnique();
 
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
@@ -515,6 +519,12 @@ public partial class BadeedbContext : DbContext
             entity.HasKey(e => e.ParentId).HasName("PK__Parent__F2D91411F41356B7");
 
             entity.ToTable("Parent");
+
+            entity.HasIndex(e => e.Email, "UQ_Parent_Email").IsUnique();
+
+            entity.HasIndex(e => e.PhoneNumber, "UQ_Parent_Phone").IsUnique();
+
+            entity.HasIndex(e => e.Username, "UQ_Parent_Username").IsUnique();
 
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
