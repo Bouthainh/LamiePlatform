@@ -30,6 +30,8 @@
         [Required(ErrorMessage = "كلمة المرور مطلوبة.")]
         [DataType(DataType.Password)]
         [StringLength(100, MinimumLength = 8, ErrorMessage = "يجب أن تكون كلمة المرور 8 أحرف على الأقل.")]
+        [RegularExpression(@"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$",
+    ErrorMessage = "يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @ # $ % ^ & * ( ) _ - +")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
