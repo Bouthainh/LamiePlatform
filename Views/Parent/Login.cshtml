@@ -29,6 +29,9 @@
         </div>
         <div class="login-right">
             <h1>مرحبا بعودتك إلى ماهر</h1>
+            <br>
+            <h2>معلومات ولي الأمر</h2>
+            <br>
 
             @if (TempData["RegisterSuccessMessage"] != null)
             {
@@ -44,6 +47,7 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-group">
+                    <label asp-for="UsernameOrEmail">اسم المستخدم أو البريد الألكتروني</label>
                     <input asp-for="UsernameOrEmail"
                            type="text"
                            placeholder="أدخل اسم المستخدم أو بريدك هنا"
@@ -54,6 +58,7 @@
                 </div>
 
                 <div class="form-group">
+                    <label asp-for="Password">كلمة المرور</label>
                     <input asp-for="Password"
                            type="password"
                            placeholder="أدخل كلمة المرور هنا"
