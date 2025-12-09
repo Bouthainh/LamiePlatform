@@ -1,5 +1,3 @@
-// AUTH PAGES STYLES (Login & Register)
-// MAIN CONTAINER
 .login-container,
 .signup-container {
   display: flex;
@@ -13,7 +11,6 @@
   }
 }
 
-// Login: reverse layout (illustration on right)
 .login-container {
   flex-direction: row-reverse;
 
@@ -22,7 +19,21 @@
   }
 }
 
-// ILLUSTRATION SECTION (Side Image)
+.signup-container {
+  .signup-form-section {
+    flex: 1.1; // WIDER: Changed from 1 to 1.2 (20% wider)
+    min-width: 0; // Allows flex item to shrink
+    
+    @include respond-to(tablet) {
+      flex: 1;
+    }
+  }
+  
+  .illustration-section {
+    flex: 0.8; // Narrower image section
+  }
+}
+
 .login-left,
 .illustration-section {
   flex: 1;
@@ -32,14 +43,11 @@
   position: relative;
   overflow: hidden;
 
-  // Decorative gradient overlay
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: 
-      radial-gradient(circle at 30% 50%, rgba($primary-color, 0.08), transparent 50%),
-      radial-gradient(circle at 70% 30%, rgba($secondary-color, 0.08), transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba($primary-color, 0.08), transparent 50%), radial-gradient(circle at 70% 30%, rgba($secondary-color, 0.08), transparent 50%);
     pointer-events: none;
   }
 
@@ -72,7 +80,6 @@
   }
 }
 
-// FORM SECTION
 .login-right,
 .signup-form-section {
   flex: 1;
@@ -90,10 +97,9 @@
   }
 }
 
-// Form Header
 .form-header {
   text-align: center;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-xl;
 
   h1 {
     font-size: 2.5rem;
@@ -120,60 +126,71 @@
   }
 }
 
-// Standalone heading (login page)
 .login-right h1,
 .signup-form-section h1 {
   font-size: 2.5rem;
   color: $text-color;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-xl;
   font-weight: 700;
   text-align: center;
 
   @include respond-to(tablet) {
     font-size: 2rem;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
   }
 
   @include respond-to(mobile) {
     font-size: 1.75rem;
   }
 }
-// Form wrapper
-.login-right form,
-.signup-form-section form,
-.signup-form {
+
+.login-right form {
   width: 100%;
   max-width: 500px;
   background-color: $form-background-color;
-  padding: 40px;
+  padding: 45px 40px;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 
   @include respond-to(mobile) {
     max-width: 100%;
-    padding: $spacing-lg;
+    padding: $spacing-xl;
   }
 }
 
-// FORM ELEMENTS
+.signup-form-section form,
+.signup-form {
+  width: 100%;
+  max-width: 570px; // WIDER for signup
+  background-color: $form-background-color;
+  padding: 50px 45px; // More padding
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+  @include respond-to(mobile) {
+    max-width: 100%;
+    padding: $spacing-xl $spacing-lg;
+  }
+}
+
 .form-group {
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-lg;
   position: relative;
 
   label {
     display: block;
     font-size: 0.95rem;
     color: $text-color;
-    margin-bottom: $spacing-xs;
+    margin-bottom: $spacing-sm;
     font-weight: 600;
   }
 
   input,
   select {
     width: 100%;
-    padding: 14px 16px;
+    padding: 15px 18px;
     border: 2px solid #e5e7eb;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 1rem;
     font-family: $primary-font;
     background-color: $white;
@@ -202,15 +219,15 @@
   }
 }
 
-// Two-column form row (Register page)
 .form-row {
   display: flex;
-  gap: $spacing-md;
-  margin-bottom: $spacing-md;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-xl;
 
   @include respond-to(tablet) {
     flex-direction: column;
     gap: 0;
+    margin-bottom: $spacing-lg;
   }
 
   .form-group {
@@ -218,11 +235,21 @@
     margin-bottom: 0;
 
     @include respond-to(tablet) {
-      margin-bottom: $spacing-md;
+      margin-bottom: $spacing-lg;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
-// VALIDATION & ALERTS
+
+.form-group.full-width {
+  width: 100%;
+  flex: 0 0 100%;
+  margin-bottom: $spacing-lg;
+}
+
 .text-danger,
 .error {
   display: block;
@@ -233,7 +260,7 @@
 
 .alert {
   padding: $spacing-sm $spacing-md;
-  margin-bottom: $spacing-md;
+  margin-bottom: $spacing-xl;
   border-radius: 8px;
   font-size: 0.95rem;
   
@@ -250,12 +277,11 @@
   }
 }
 
-// FORM OPTIONS ( Forgot Password)
 .form-options {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: $spacing-lg;
+  margin-bottom: $spacing-xl;
 
   @include respond-to(mobile) {
     flex-direction: column;
@@ -284,6 +310,8 @@
 }
 
 .forgot-password {
+  margin-bottom: $spacing-lg;
+  
   a {
     color: $secondary-color;
     text-decoration: none;
@@ -298,11 +326,10 @@
   }
 }
 
-// SUBMIT BUTTON
 .login-button,
 .signup-btn {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: linear-gradient(135deg, $primary-color, darken($primary-color, 5%));
   color: $white;
   border: none;
@@ -313,7 +340,8 @@
   font-family: $primary-font;
   @include transition(all);
   box-shadow: 0 4px 15px rgba($primary-color, 0.3);
-  margin-top: $spacing-sm;
+  margin-top: $spacing-xl;
+  margin-bottom: $spacing-lg;
 
   &:hover {
     transform: translateY(-2px);
@@ -331,10 +359,9 @@
   }
 }
 
-// SIGNUP/LOGIN LINK
 .signup-link,
 .login-link {
-  margin-top: $spacing-md;
+  margin-top: $spacing-xl;
   text-align: center;
 
   p {
@@ -355,7 +382,6 @@
   }
 }
 
-// PASSWORD TOGGLE BUTTON (Optional)
 .toggle-password {
   position: absolute;
   left: 15px;

@@ -1050,6 +1050,25 @@ header nav .nav-menu li a:hover {
   }
 }
 
+.signup-container .signup-form-section {
+  -webkit-box-flex: 1.1;
+      -ms-flex: 1.1;
+          flex: 1.1;
+  min-width: 0;
+}
+@media (max-width: 768px) {
+  .signup-container .signup-form-section {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+}
+.signup-container .illustration-section {
+  -webkit-box-flex: 0.8;
+      -ms-flex: 0.8;
+          flex: 0.8;
+}
+
 .login-left,
 .illustration-section {
   -webkit-box-flex: 1;
@@ -1156,7 +1175,7 @@ header nav .nav-menu li a:hover {
 
 .form-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
 }
 .form-header h1 {
   font-size: 2.5rem;
@@ -1188,7 +1207,7 @@ header nav .nav-menu li a:hover {
 .signup-form-section h1 {
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
   font-weight: 700;
   text-align: center;
 }
@@ -1196,7 +1215,7 @@ header nav .nav-menu li a:hover {
   .login-right h1,
   .signup-form-section h1 {
     font-size: 2rem;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
 }
 @media (max-width: 480px) {
@@ -1206,43 +1225,57 @@ header nav .nav-menu li a:hover {
   }
 }
 
-.login-right form,
-.signup-form-section form,
-.signup-form {
+.login-right form {
   width: 100%;
   max-width: 500px;
   background-color: #f8f9f3;
-  padding: 40px;
+  padding: 45px 40px;
   border-radius: 20px;
   -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
           box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 @media (max-width: 480px) {
-  .login-right form,
+  .login-right form {
+    max-width: 100%;
+    padding: 48px;
+  }
+}
+
+.signup-form-section form,
+.signup-form {
+  width: 100%;
+  max-width: 570px;
+  background-color: #f8f9f3;
+  padding: 50px 45px;
+  border-radius: 20px;
+  -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 480px) {
   .signup-form-section form,
   .signup-form {
     max-width: 100%;
-    padding: 32px;
+    padding: 48px 32px;
   }
 }
 
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   position: relative;
 }
 .form-group label {
   display: block;
   font-size: 0.95rem;
   color: #333;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   font-weight: 600;
 }
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 14px 16px;
+  padding: 15px 18px;
   border: 2px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 1rem;
   font-family: "IBM Plex Sans", "Cairo", "Segoe UI", Tahoma, sans-serif;
   background-color: #fff;
@@ -1290,8 +1323,8 @@ header nav .nav-menu li a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 48px;
+  margin-bottom: 48px;
 }
 @media (max-width: 768px) {
   .form-row {
@@ -1300,6 +1333,7 @@ header nav .nav-menu li a:hover {
         -ms-flex-direction: column;
             flex-direction: column;
     gap: 0;
+    margin-bottom: 32px;
   }
 }
 .form-row .form-group {
@@ -1310,8 +1344,19 @@ header nav .nav-menu li a:hover {
 }
 @media (max-width: 768px) {
   .form-row .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
   }
+  .form-row .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-group.full-width {
+  width: 100%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  margin-bottom: 32px;
 }
 
 .text-danger,
@@ -1324,7 +1369,7 @@ header nav .nav-menu li a:hover {
 
 .alert {
   padding: 16px 24px;
-  margin-bottom: 24px;
+  margin-bottom: 48px;
   border-radius: 8px;
   font-size: 0.95rem;
 }
@@ -1349,7 +1394,7 @@ header nav .nav-menu li a:hover {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
 }
 @media (max-width: 480px) {
   .form-options {
@@ -1385,6 +1430,9 @@ header nav .nav-menu li a:hover {
   cursor: pointer;
 }
 
+.forgot-password {
+  margin-bottom: 32px;
+}
 .forgot-password a {
   color: #5cc4d1;
   text-decoration: none;
@@ -1401,7 +1449,7 @@ header nav .nav-menu li a:hover {
 .login-button,
 .signup-btn {
   width: 100%;
-  padding: 15px;
+  padding: 16px;
   background: linear-gradient(135deg, #e98b9a, rgb(228.9347826087, 117.5652173913, 135.3369565217));
   color: #fff;
   border: none;
@@ -1414,7 +1462,8 @@ header nav .nav-menu li a:hover {
   transition: all 0.3s ease-in-out;
   -webkit-box-shadow: 0 4px 15px rgba(233, 139, 154, 0.3);
           box-shadow: 0 4px 15px rgba(233, 139, 154, 0.3);
-  margin-top: 16px;
+  margin-top: 48px;
+  margin-bottom: 32px;
 }
 .login-button:hover,
 .signup-btn:hover {
@@ -1440,7 +1489,7 @@ header nav .nav-menu li a:hover {
 
 .signup-link,
 .login-link {
-  margin-top: 24px;
+  margin-top: 48px;
   text-align: center;
 }
 .signup-link p,
@@ -3712,7 +3761,7 @@ body, main, .container {
   width: 100% !important;
   max-width: 100% !important;
   padding: 0 !important;
-  margin: 6 !important;
+  margin: 0 !important;
 }
 
 section {
