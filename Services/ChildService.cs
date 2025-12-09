@@ -208,7 +208,7 @@ namespace BadeePlatform.Services
             var newChild = new Child
             {
                 ChildId = dto.ChildId,
-                ChildName = dto.ChildName,
+                ChildName = string.Join(" ",dto.FirstName,dto.FatherName,dto.GrandFatherName, dto.LastName).Trim(),
                 Gender = dto.Gender,
                 Age = dto.Age,
                 LoginCode = loginCode,
@@ -300,6 +300,8 @@ namespace BadeePlatform.Services
                     .Where(r => r.ParentId == parentId && r.ChildId == childId && r.RequestStatus == "Pending")
                     .OrderByDescending(r => r.SentAt)
                     .FirstOrDefaultAsync();
+
+
 
                 var viewModel = new ChildProfileViewModel
                 {
@@ -412,7 +414,7 @@ namespace BadeePlatform.Services
                 }
 
                 // Update child data
-                child.ChildName = dto.ChildName;
+                child.ChildName = string.Join(" ", dto.FirstName, dto.FatherName, dto.GrandFatherName, dto.LastName).Trim();
                 child.Gender = dto.Gender;
                 child.Age = dto.Age;
                 child.SchoolId = dto.SchoolId;
@@ -488,9 +490,19 @@ namespace BadeePlatform.Services
                     return null;
                 }
 
+                var fullName = child.ChildName?.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                string first = fullName.Length > 0 ? fullName[0] : "";
+                string father = fullName.Length > 1 ? fullName[1] : "";
+                string grandfather = fullName.Length > 2 ? fullName[2] : "";
+                string last = fullName.Length > 3 ? fullName[3] : "";
+
                 var dto = new EditChildDTO
                 {
-                    ChildName = child.ChildName,
+                    FirstName = first,
+                    FatherName = father,
+                    GrandFatherName = grandfather,
+                    LastName = last,
                     Gender = child.Gender,
                     Age = child.Age ?? 0,
                     City = child.School?.City,

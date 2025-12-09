@@ -244,7 +244,8 @@ public class ParentServiceTests
         var updateModel = new ParentProfileViewModel
         {
             ParentId = "1119435366",
-            ParentName = "Omar Ali Updated",
+            FirstName = "Omar",
+            LastName = "Updated",
             Username = "omar_updated",
             Email = "omar_new@email.com",
             PhoneNumber = "0559876543"
@@ -259,7 +260,7 @@ public class ParentServiceTests
         // Verify the data was actually updated in the database
         var updatedParent = await context.Parents.FirstOrDefaultAsync(p => p.ParentId == "1119435366");
         updatedParent.Should().NotBeNull();
-        updatedParent.ParentName.Should().Be("Omar Ali Updated");
+        updatedParent.ParentName.Should().Be("Omar Updated");
         updatedParent.Username.Should().Be("omar_updated");
         updatedParent.Email.Should().Be("omar_new@email.com");
         updatedParent.PhoneNumber.Should().Be("0559876543");
@@ -278,7 +279,8 @@ public class ParentServiceTests
         var updateModel = new ParentProfileViewModel
         {
             ParentId = "9999999999",
-            ParentName = "Non Existent",
+            FirstName = "Non Existent",
+            LastName = "Non Existent",
             Username = "nonexistent",
             Email = "nonexistent@email.com",
             PhoneNumber = "0501111111"
