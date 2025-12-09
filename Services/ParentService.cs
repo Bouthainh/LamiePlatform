@@ -31,7 +31,7 @@ namespace BadeePlatform.Services
             var parent = new Parent
             {
                 ParentId = dto.ParentId,
-                ParentName = dto.ParentName,
+                ParentName = $"{dto.FirstName} {dto.LastName}",
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 Username = dto.Username,
