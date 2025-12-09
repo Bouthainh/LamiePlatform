@@ -9,12 +9,10 @@
         [RegularExpression(@"^\d{10}$", ErrorMessage = "يجب أن يتكون رقم الهوية من أرقام فقط.")]
         public string ParentId { get; set; }
 
-        // NEW: First Name
         [Required(ErrorMessage = "الاسم الأول مطلوب.")]
         [StringLength(50, ErrorMessage = "الاسم الأول لا يمكن أن يتجاوز 50 حرف.")]
         public string FirstName { get; set; }
 
-        // NEW: Last Name
         [Required(ErrorMessage = "اللقب مطلوب.")]
         [StringLength(50, ErrorMessage = "اللقب لا يمكن أن يتجاوز 50 حرف.")]
         public string LastName { get; set; }
