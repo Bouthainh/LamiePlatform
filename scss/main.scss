@@ -15,38 +15,46 @@
 
 
 
+
 body, main, .container {
     display: block !important;
     width: 100% !important;
     max-width: 100% !important;
     padding: 0 !important;
-    margin: 0 !important;
-}
+    margin: 6 !important;
 
-section {
-    display: block !important;
-    width: 100% !important;
-}
+    body, main, .container {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 
-.features-section,
-.process-section,
-.cta-section,
-.main-section {
-    display: flex !important;
-    flex-direction: row;
-    justify-content: center;
-}
+    section {
+        display: block !important;
+        width: 100% !important;
+    }
 
-@media (max-width: 992px) {
     .features-section,
     .process-section,
     .cta-section,
     .main-section {
-        flex-direction: column !important;
-        align-items: center;
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
     }
 
-    .main-section {
-        flex-direction: column-reverse !important;
+    @media (max-width: 992px) {
+        .features-section,
+        .process-section,
+        .cta-section,
+        .main-section {
+            flex-direction: column !important;
+            align-items: center;
+        }
+
+        .main-section {
+            flex-direction: column-reverse !important;
+        }
     }
-}
