@@ -3,9 +3,15 @@
 @model List<ChildrenViewModel>
 
 @{
-    ViewData["Title"] = "ماهر - إدارة الأطفال";
+    ViewData["Title"] = "لامع - إدارة الأطفال";
 }
-
+@{
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 <div class="manage-children-page">
     <div class="main-container">
         <section class="main-content">

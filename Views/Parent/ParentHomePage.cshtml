@@ -2,8 +2,15 @@
 @model List<ChildrenViewModel>
 
 @{
-    ViewData["Title"] = "ماهر -صفحة ولي الأمر ";
+    ViewData["Title"] = "لامع -صفحة ولي الأمر ";
 }
+@{
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 
     <main class="parent-home-page">
         <div class="main-container">
@@ -12,7 +19,7 @@
                 <div class="page-header">
                     <h1>الصفحة الرئيسية</h1>
                     <div class="logo-corner">
-                        <img src="~/images/Maher_Logo.png" alt="MaherLogo">
+                    <img src="~/images/LamieLogo.png" alt="LamieLogo">
                     </div>
                 </div>
 

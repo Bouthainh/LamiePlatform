@@ -14,7 +14,13 @@
         @TempData["ErrorMessage"]
     </div>
 }
-
+@{
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 <div class="view-profile-page">
     <div class="main-container">
         <section class="main-content">
