@@ -14,6 +14,7 @@
 @import 'pages/manageMultipleChildren';
 
 
+<<<<<<< HEAD
 
 body, main, .container {
     display: block !important; 
@@ -21,6 +22,15 @@ body, main, .container {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 6 !important;
+=======
+Ù
+body, main, .container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+>>>>>>> origin/master
 }
 
 section {
@@ -28,25 +38,48 @@ section {
     width: 100% !important;
 }
 
+<<<<<<< HEAD
 .features-section, 
 .process-section, 
 .cta-section,
 .main-section { 
     display: flex !important;
     flex-direction: row; 
+=======
+.features-section,
+.process-section,
+.cta-section,
+.main-section {
+    display: flex !important;
+    flex-direction: row;
+>>>>>>> origin/master
     justify-content: center;
 }
 
 @media (max-width: 992px) {
+<<<<<<< HEAD
     .features-section, 
     .process-section, 
+=======
+    .features-section,
+    .process-section,
+>>>>>>> origin/master
     .cta-section,
     .main-section {
         flex-direction: column !important;
         align-items: center;
+<<<<<<< HEAD
     }
     
     .main-section {
         flex-direction: column-reverse !important;
     }
 }
+=======
+    }
+
+    .main-section {
+        flex-direction: column-reverse !important;
+    }
+}
+>>>>>>> origin/master

@@ -31,7 +31,7 @@ namespace BadeePlatform.Services
             var parent = new Parent
             {
                 ParentId = dto.ParentId,
-                ParentName = dto.ParentName,
+                ParentName = $"{dto.FirstName} {dto.LastName}",
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
                 Username = dto.Username,
@@ -104,11 +104,13 @@ namespace BadeePlatform.Services
 
             if (parent == null)
                 return null;
+            var nameParts = parent.ParentName?.Split(' ', 2) ?? new[] { "", "" };
 
             return new ParentProfileViewModel
             {
                 ParentId = parent.ParentId,
-                ParentName = parent.ParentName,
+                FirstName = nameParts[0],
+                LastName = nameParts.Length > 1 ? nameParts[1] : "",
                 PhoneNumber = parent.PhoneNumber,
                 Email = parent.Email,
                 Username = parent.Username,
@@ -123,7 +125,7 @@ namespace BadeePlatform.Services
             if (parent == null)
                 return false;
 
-            parent.ParentName = model.ParentName;
+            parent.ParentName = $"{model.FirstName} {model.LastName}".Trim();
             parent.PhoneNumber = model.PhoneNumber;
             parent.Email = model.Email;
             parent.Username = model.Username;
