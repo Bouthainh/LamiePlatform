@@ -1,61 +1,74 @@
 ﻿@using BadeePlatform.Models.ViewModels
 @model ChildDashboardViewModel
 
-<div class="dashboard-header">
-    <h2>@Model.ChildName</h2>
-    <p>العمر: @Model.Age سنوات</p>
-    <div class="child-avatar">
-        <img src="@Model.IconImgPath" alt="child icon">
+<div class="manage-dashbord-page" dir="rtl">
+    <div class="top-bar">
+        <div class="stats-wrapper">
+            <div class="challenges-box">
+                <h4>التحديات المكتملة</h4>
+                <p>@Model.challenges</p>
+            </div> 
+
+            <div class="challenges-box level-box">
+                <h4>المستوى العام</h4>
+                <p>@Model.level</p>
+            </div>
+        </div>
+
+        <div class="dashboard-header">
+            <div class="child-info">
+                <h2>@Model.ChildName</h2>
+                <p>العمر: @Model.Age سنوات</p>
+            </div>
+            
+            <div class="child-avatar">
+                <img src="@Model.IconImgPath" alt="child icon">
+            </div>
+        </div>
+    </div>
+
+    <div class="charts-grid">
+        <div class="chart-box">
+            <h4>أعلى 3 ذكاءات</h4>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h4>نتائج مرحلة الاكتشاف</h4>
+            <canvas id="radarChart"></canvas>
+        </div>
+    </div>
+
+    <div class="cards-grid">
+    
+        <div class="box">
+            <h4>أنشطة مخصصة</h4>
+            <ul>
+                @foreach (var a in Model.Activities)
+                {
+                    <li>@a</li>
+                }
+            </ul>
+        </div>
+
+          <div class="educator-box">
+            <h4>المعلم</h4>
+            <p>@Model.EducatorName</p>
+            <small>@Model.EducatorEmail</small>
+            <button>للتواصل مع المعلم</button>
+        </div>
+
+        <div class="box">
+            <h4>آخر التقارير</h4>
+            <ul>
+                @foreach (var r in Model.Reports)
+                {
+                    <li>@r</li>
+                }
+            </ul>
+        </div>
     </div>
 </div>
-
-<div class="challenges-box">
-    <h4>التحديات المكتملة</h4>
-    <p>@Model.challenges</p>
-</div> 
-
-<div class="challenges-box">
-    <h4>المستوى العام</h4>
-    <p>@Model.level</p>
-</div>
-
-<div class="educator-box">
-    <h4>المعلم</h4>
-    <p>@Model.EducatorName</p>
-    <small>@Model.EducatorEmail</small>
-    <button>للتواصل مع المعلم </button>
-</div>
-
-<div class="box">
-    <h4>أنشطة مخصصة</h4>
-    <ul>
-        @foreach (var a in Model.Activities)
-        {
-            <li>@a</li>
-        }
-    </ul>
-</div>
-
-<div class="box">
-    <h4>آخر التقارير</h4>
-    <ul>
-        @foreach (var r in Model.Reports)
-        {
-            <li>@r</li>
-        }
-    </ul>
-</div>
-
-<div class="chart-box">
-    <h4>أعلى 3 ذكاءات</h4>
-    <canvas id="barChart"></canvas>
-</div>
-
-<div class="chart-box">
-    <h4>نتائج مرحلة الاكتشاف</h4>
-    <canvas id="radarChart"></canvas>
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/js/dashboard.js"></script>
