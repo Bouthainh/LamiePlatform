@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BadeePlatform</title>
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
@@ -22,7 +23,7 @@
     <header>
         <nav>
             <div class="logo">
-                <img src="~/images/Maher_Logo.png" alt="MaherLogo">
+                <img src="~/images/LamieLogo.png" alt="LamieLogo">
             </div>
 
             <ul class="nav-menu">
@@ -37,21 +38,45 @@
 <div class=" sidebar-container">
 @if (ViewData["ShowSidebar"] == null || (bool)ViewData["ShowSidebar"] == true)
 {
-    <aside class="sidebar">
-        <div class="sidebar-links">
-           <a asp-controller="Parent" asp-action="ParentHomePage" class="sidebar-item home-icon">
-                        🏠
-           </a>
-           <a asp-controller="Parent" asp-action="ViewProfile" class="sidebar-item profile-icon">
-                        👤
-            </a>
-             <a asp-controller="Parent" asp-action="ManageMultipleChildren" class="sidebar-item documents-icon">📄</a>
-            <a href="#tasks" class="sidebar-item tasks-icon">☐</a>
-            <a asp-controller="Parent" asp-action="Logout" class="sidebar-item logout">
-                        ➡
+            <aside class="sidebar">
+                <div class="sidebar-links">
+                    <a asp-controller="Parent" asp-action="ParentHomePage" class="sidebar-item home-icon" title="الصفحة الرئيسية">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house">
+                            <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
+                            <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        </svg>
                     </a>
-        </div>
-    </aside>
+                    <a asp-controller="Parent" asp-action="ViewProfile" class="sidebar-item profile-icon" title="الملف الشخصي لولي الأمر">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user">
+                            <circle cx="12" cy="12" r="10" />
+                            <circle cx="12" cy="10" r="3" />
+                            <path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662" />
+                        </svg>
+                    </a>
+                    <a asp-controller="Parent" asp-action="ManageMultipleChildren" class="sidebar-item documents-icon" title="إدارة الأطفال">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-cog">
+                            <path d="M13.85 22H18a2 2 0 0 0 2-2V8a2 2 0 0 0-.586-1.414l-4-4A2 2 0 0 0 14 2H6a2 2 0 0 0-2 2v6.6" />
+                            <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+                            <path d="m3.305 19.53.923-.382" />
+                            <path d="m4.228 16.852-.924-.383" />
+                            <path d="m5.852 15.228-.383-.923" />
+                            <path d="m5.852 20.772-.383.924" />
+                            <path d="m8.148 15.228.383-.923" />
+                            <path d="m8.53 21.696-.382-.924" />
+                            <path d="m9.773 16.852.922-.383" />
+                            <path d="m9.773 19.148.922.383" />
+                            <circle cx="7" cy="18" r="3" />
+                        </svg>
+                    </a>
+                    <a asp-controller="Parent" asp-action="Logout" class="sidebar-item logout" title="تسجيل الخروج">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out">
+                            <path d="m16 17 5-5-5-5" />
+                            <path d="M21 12H9" />
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        </svg>
+                    </a>
+                </div>
+            </aside>
 }
 
     <div class="container">
@@ -67,7 +92,7 @@
         
         <div class="footer-col logo-col">
             <div class="logo-wrapper">
-                <img src="~/images/Maher_Logo.png" alt="Maher Logo" class="footer-logo">
+                    <img src="~/images/LamieLogo.png" alt="LamieLogo" class="footer-logo">
             </div>
             <p class="footer-desc">
                 ماهر – منصة ذكية لاكتشاف وتنمية مواهب الأطفال من خلال ألعاب تفاعلية مبنية على نظرية الذكاءات المتعددة.
@@ -105,7 +130,7 @@
 
             <div class="contact-info">
                 <p>السعودية ، جدة <i class="bi bi-geo-alt"></i></p>
-                <p>maher22@gmail.com <i class="bi bi-envelope"></i></p>
+                <p>Lamie2025@gmail.com <i class="bi bi-envelope"></i></p>
             </div>
         </div>
 
@@ -113,8 +138,8 @@
 
     <div class="footer-bottom">
         <div class="copyrights">
-            <p>جميع الحقوق محفوظة لفريق ماهر</p>
-            <p>تاريخ آخر تعديل: 04/12/2025</p>
+            <p>جميع الحقوق محفوظة لفريق لامع</p>
+            <p>تاريخ آخر تعديل: 09/12/2025</p>
         </div>
         <div class="wave-line"></div>
         </div>
@@ -123,6 +148,18 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    delay: { show: 300, hide: 100 }, // Smooth delay
+                    animation: true,
+                    customClass: 'modern-tooltip' // Optional: use glassmorphism style
+                });
+            });
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
