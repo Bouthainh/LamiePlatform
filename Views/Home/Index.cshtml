@@ -7,134 +7,142 @@
 }
 
 
-    <!-- SECTION 1 – MAIN SECTION -->
-    <section id="main" class="main-section">
-        <div class="main-text">
-            <h1>ماهر</h1>
-            <p>
-                منصّة ماهر تساعدك على اكتشاف مواهب طفلك من خلال ألعاب ممتعة
-                تعتمد على الذكاءات المتعددة، وتُظهر لك نقاط قوته بطريقة بسيطة
-                وذكية. ابدأ الآن واكتشف عالم طفلك المميز!
-            </p>
+<!-- SECTION 1 – MAIN SECTION -->
+<section id="main" class="main-section">
+
+    <div class="squiggle-orange"></div>
+    <div class="blob-pink"></div>
+    <div class="blob-yellow"></div>
+    <div class="blob-blue"></div>
+    <div class="circle-green"></div>
+    <div class="blob-yellow-outline"></div>
+    <div class="main-text">
+        <h1>لامع </h1>
+        <p>
+            منصّة لامع تساعدك على اكتشاف مواهب طفلك من خلال ألعاب ممتعة
+            تعتمد على الذكاءات المتعددة، وتُظهر لك نقاط قوته بطريقة بسيطة
+            وذكية. ابدأ الآن واكتشف عالم طفلك المميز!
+        </p>
         <a asp-controller="Parent" asp-action="Register" class="hero-btn">
             سجّل الآن!
         </a>
     </div>
 
-        <div class="main-image">
-            <img src="~/images/ChildwPrize.png" alt="الشخصية الرئيسية">
+    <div class="main-image">
+        <img src="~/images/ChildwPrize.png" alt="الشخصية الرئيسية">
+    </div>
+</section>
+
+<!-- SECTION 2 – ABOUT -->
+<section id="about" class="about-section">
+    <h2>من نحن ؟</h2>
+    <p>
+        نحن منصّة تعليمية ذكية تساعد الآباء والمعلّمين على اكتشاف مواهب
+        الأطفال في وقت مبكر، من خلال ألعاب تفاعلية مبنية على نظرية
+        الذكاءات المتعددة.
+    </p>
+</section>
+
+<!-- SECTION 3 – FEATURE CARDS -->
+<section class="features-section">
+
+    <!-- Family Card -->
+    <div class="feature-card">
+        <img src="~/images/ParentsPic.jpg" alt="منصة الأهل">
+        <h3>منصة الأهل</h3>
+        <p>تمكّن الوالدين من متابعة موهبة طفلهم، رؤية تقدّمه، واستلام توصيات وأنشطة لتنمية ذكائه.</p>
+        <div class="feature-tags">
+            <span>8 ذكاءات</span>
+            <span>تقارير فورية</span>
+            <span>توصيات مخصصة</span>
         </div>
-    </section>
+    </div>
 
-    <!-- SECTION 2 – ABOUT -->
-    <section id="about" class="about-section">
-        <h2>من نحن ؟</h2>
-        <p>
-            نحن منصّة تعليمية ذكية تساعد الآباء والمعلّمين على اكتشاف مواهب
-            الأطفال في وقت مبكر، من خلال ألعاب تفاعلية مبنية على نظرية
-            الذكاءات المتعددة.
-        </p>
-    </section>
+    <!-- Educators Card -->
+    <div class="feature-card">
+        <img src="~/images/EducatorsPic.jpg" alt="منصة المعلّمين">
+        <h3>منصة المعلّمين</h3>
+        <p>أدوات لمتابعة ذكاءات الطلاب، إنشاء مجموعات تعليمية، واقتراح أنشطة مبنية على البيانات.</p>
+        <div class="feature-tags">
+            <span>تقييم ذكي</span>
+            <span>متابعة مستمرة</span>
+            <span>أنشطة مخصصة</span>
+        </div>
+    </div>
 
-    <!-- SECTION 3 – FEATURE CARDS -->
-    <section class="features-section">
-        
-        <!-- Family Card -->
-        <div class="feature-card">
-            <img src="~/images/ParentsPic.jpg" alt="منصة الأهل">
-            <h3>منصة الأهل</h3>
-            <p>تمكّن الوالدين من متابعة موهبة طفلهم، رؤية تقدّمه، واستلام توصيات وأنشطة لتنمية ذكائه.</p>
-            <div class="feature-tags">
-                <span>8 ذكاءات</span>
-                <span>تقارير فورية</span>
-                <span>توصيات مخصصة</span>
-            </div>
+    <!-- Children Card -->
+    <div class="feature-card">
+        <img src="~/images/LearningPic.jpg" alt="ألعاب تفاعلية">
+        <h3>ألعاب تفاعلية</h3>
+        <p>لعبة استكشافية ممتعة تكشف مواهب الطفل من خلال مراحل وعوالم متنوعة. دون أي إختبار مباشر.</p>
+        <div class="feature-tags">
+            <span>عوالم متعددة</span>
+            <span>مستويات تدريجية</span>
+            <span>جوائز محفّزة</span>
+        </div>
+    </div>
+
+</section>
+
+<!-- SECTION 4 – PROCESS STEPS -->
+<section id="how-it-works" class="process-section">
+
+    <div class="process-step">
+        <div class="step-number">1</div>
+        <img src="~/images/MedalIcon.png">
+        <h3>قياس المهارات</h3>
+        <p>يبدأ الطفل باللعب في مجموعة من الألعاب التفاعلية المصممة خصيصًا لقياس الذكاءات المتنوعة مثل المنطق، الإبداع، الذكاء اللغوي، والحركي. كل لعبة تعطي مؤشرات دقيقة عن أسلوب تفكير الطفل وطريقة تعلّمه، دون أن يشعر أنه يخضع لاختبار.</p>
+    </div>
+
+    <div class="process-step">
+        <div class="step-number">2</div>
+        <h3>تحليل النتائج</h3>
+        <p>بعد انتهاء الطفل من اللعب، تقوم المنصة تلقائيًا بتحليل أداءه اعتمادًا على خوارزميات ذكاء اصطناعي تربط بين السلوك داخل اللعبة ونوع الذكاء الظاهر. يتم إنشاء ملف موهبة شخصي يحتوي على نقاط القوة، الذكاءات الأبرز، ونسبة التقدّم في كل جانب.</p>
+    </div>
+
+    <div class="process-step">
+        <div class="step-number">3</div>
+        <h3>توصيات مخصصة</h3>
+        <p> بناءً على نتائج التحليل، يحصل الأهل والمعلم على قائمة مقترحات عملية مثل أنشطة تعليمية داخل المنزل أو المدرسة وألعاب إضافية مناسبة لتنمية ذكاء محدد</p>
+    </div>
+
+
+</section>
+
+<!-- SECTION 5 – FAQ -->
+<section id="faq" class="faq-section">
+    <h2>الأسئلة الشائعة</h2>
+
+    <div class="faq-items">
+
+        <div class="faq-item">
+            <h3>هل المنصّة مجانية؟</h3>
+            <p>نعم، يوجد نسخة مجانية مع مزايا أساسية.</p>
         </div>
 
-        <!-- Educators Card -->
-        <div class="feature-card">
-            <img src="~/images/EducatorsPic.jpg" alt="منصة المعلّمين">
-            <h3>منصة المعلّمين</h3>
-            <p>أدوات لمتابعة ذكاءات الطلاب، إنشاء مجموعات تعليمية، واقتراح أنشطة مبنية على البيانات.</p>
-            <div class="feature-tags">
-                <span>تقييم ذكي</span>
-                <span>متابعة مستمرة</span>
-                <span>أنشطة مخصصة</span>
-            </div>
+        <div class="faq-item">
+            <h3>هل يحتاج طفلي اللعب كثيرًا؟</h3>
+            <p>نعم، فكل لعبة مصممة لتنمية مهارة مختلفة.</p>
         </div>
 
-        <!-- Children Card -->
-        <div class="feature-card">
-            <img src="~/images/LearningPic.jpg" alt="ألعاب تفاعلية">
-            <h3>ألعاب تفاعلية</h3>
-            <p>لعبة استكشافية ممتعة تكشف مواهب الطفل من خلال مراحل وعوالم متنوعة. دون أي إختبار مباشر.</p>
-            <div class="feature-tags">
-                <span>عوالم متعددة</span>
-                <span>مستويات تدريجية</span>
-                <span>جوائز محفّزة</span>
-            </div>
+        <div class="faq-item">
+            <h3>متى أستطيع رؤية تقارير الذكاءات؟</h3>
+            <p>بعد إنتهاء الطفل من المرحلة الاستكشافية.</p>
         </div>
 
-    </section>
+    </div>
+</section>
 
-    <!-- SECTION 4 – PROCESS STEPS -->
-    <section id="how-it-works" class="process-section">
-
-        <div class="process-step">
-            <div class="step-number">1</div>
-            <img src="~/images/MedalIcon.png">
-            <h3>قياس المهارات</h3>
-            <p>يبدأ الطفل باللعب في مجموعة من الألعاب التفاعلية المصممة خصيصًا لقياس الذكاءات المتنوعة مثل المنطق، الإبداع، الذكاء اللغوي، والحركي. كل لعبة تعطي مؤشرات دقيقة عن أسلوب تفكير الطفل وطريقة تعلّمه، دون أن يشعر أنه يخضع لاختبار.</p>
-        </div>
-
-        <div class="process-step">
-            <div class="step-number">2</div>
-            <h3>تحليل النتائج</h3>
-            <p>بعد انتهاء الطفل من اللعب، تقوم المنصة تلقائيًا بتحليل أداءه اعتمادًا على خوارزميات ذكاء اصطناعي تربط بين السلوك داخل اللعبة ونوع الذكاء الظاهر. يتم إنشاء ملف موهبة شخصي يحتوي على نقاط القوة، الذكاءات الأبرز، ونسبة التقدّم في كل جانب.</p>
-        </div>
-
-        <div class="process-step">
-            <div class="step-number">3</div>
-            <h3>توصيات مخصصة</h3>
-            <p> بناءً على نتائج التحليل، يحصل الأهل والمعلم على قائمة مقترحات عملية مثل أنشطة تعليمية داخل المنزل أو المدرسة وألعاب إضافية مناسبة لتنمية ذكاء محدد</p>
-        </div>
-
-
-    </section>
-
-    <!-- SECTION 5 – FAQ -->
-    <section id="faq" class="faq-section">
-        <h2>الأسئلة الشائعة</h2>
-
-        <div class="faq-items">
-
-            <div class="faq-item">
-                <h3>هل المنصّة مجانية؟</h3>
-                <p>نعم، يوجد نسخة مجانية مع مزايا أساسية.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>هل يحتاج طفلي اللعب كثيرًا؟</h3>
-                <p>نعم، فكل لعبة مصممة لتنمية مهارة مختلفة.</p>
-            </div>
-
-            <div class="faq-item">
-                <h3>متى أستطيع رؤية تقارير الذكاءات؟</h3>
-                <p>بعد إنتهاء الطفل من المرحلة الاستكشافية.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SECTION 6 – CALL TO ACTION -->
-    <section class="cta-section">
-        <div>
-            <h2>ابدأ رحلة اكتشاف ذكاء طفلك اليوم!</h2>
-            <p>امنح طفلك فرصة لمعرفة نقاط قوته بطريقة ممتعة وذكية.</p>
+<!-- SECTION 6 – CALL TO ACTION -->
+<section class="cta-section">
+    <div>
+        <h2>ابدأ رحلة اكتشاف ذكاء طفلك اليوم!</h2>
+        <p>امنح طفلك فرصة لمعرفة نقاط قوته بطريقة ممتعة وذكية.</p>
         <a asp-controller="Parent" asp-action="Register" class="register-btn">التسجيل</a>
-        </div>
+    </div>
 
-        <div class="cta-image">
-            <img src="~/images/ChildwPrize2.png" alt="طفل مع جوائز">
-        </div>
-    </section>
+    <div class="cta-image">
+        <img src="~/images/ChildwPrize2.png" alt="طفل مع جوائز">
+    </div>
+</section>
+

@@ -1,31 +1,5 @@
 @import 'base/variables';
 @import 'base/mixins';
-
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: $primary-font;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-family: $primary-font;
-}
-
-body {
-    font-family: $primary-font;
-    font-size: $font-size-base;
-    color: $text-color;
-    line-height: 1.6;
-    background-color: $white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
 @import 'layout/header';
 @import 'layout/footer';
 @import 'layout/sidebar';
@@ -39,20 +13,40 @@ body {
 @import 'pages/childDashboard';
 @import 'pages/manageMultipleChildren';
 
-.container {
-    flex: 1;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 $spacing-md;
 
-    @include respond-to(mobile) {
-        padding: 0 $spacing-sm;
+Ù
+body, main, .container {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+section {
+    display: block !important;
+    width: 100% !important;
+}
+
+.features-section,
+.process-section,
+.cta-section,
+.main-section {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media (max-width: 992px) {
+    .features-section,
+    .process-section,
+    .cta-section,
+    .main-section {
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .main-section {
+        flex-direction: column-reverse !important;
     }
 }
-
-main {
-    flex: 1;
-    padding: 0;
-}
-

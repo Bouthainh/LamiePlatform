@@ -9,11 +9,26 @@ namespace BadeePlatform.DTOs
         [RegularExpression(@"^\d{10}$", ErrorMessage = "رقم الهوية يجب أن يحتوي على أرقام فقط")]
         public string ChildId { get; set; }
 
-        [Required(ErrorMessage = "اسم الطفل مطلوب")]
-        [StringLength(100, ErrorMessage = "الاسم لا يمكن أن يتجاوز 100 حرف")]
-        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "الاسم يجب أن يحتوي على حروف فقط")]
+        [Required(ErrorMessage = "الاسم الأول مطلوب")]
+        [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "الاسم الأول يجب أن يحتوي على حروف فقط")]
+        public string FirstName { get; set; }
 
-        public string? ChildName { get; set; }
+        [Required(ErrorMessage = "اسم الأب مطلوب")]
+        [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "اسم الأب يجب أن يحتوي على حروف فقط")]
+        public string FatherName { get; set; }
+
+        [Required(ErrorMessage = "اسم الجد مطلوب")]
+        [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "اسم الجد يجب أن يحتوي على حروف فقط")]
+        public string GrandFatherName { get; set; }
+
+        [Required(ErrorMessage = "اسم العائلة مطلوب")]
+        [StringLength(50)]
+        [RegularExpression(@"^[a-zA-Z\u0600-\u06FF\s]+$", ErrorMessage = "اسم العائلة يجب أن يحتوي على حروف فقط")]
+        public string LastName { get; set; }
+
 
         [Required(ErrorMessage = "الجنس مطلوب")]
         public string? Gender { get; set; } 
