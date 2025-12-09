@@ -42,11 +42,21 @@
             <form class="signup-form" asp-controller="Parent" asp-action="Register" method="POST">
                 @Html.AntiForgeryToken()
 
-                <div class="form-group full-width">
-                    <label asp-for="ParentName">الاسم الكامل لولي الأمر</label>
-                    <input asp-for="ParentName" type="text" placeholder="أدخل اسمك الكامل هنا" required maxlength="100" />
-                    <span asp-validation-for="ParentName" class="text-danger"></span>
-                </div>
+                    <!-- UPDATED NAME SECTION -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="FirstName">الاسم الأول</label>
+                            <input asp-for="FirstName" type="text" placeholder="أدخل اسمك الأول" required maxlength="50" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName">اللقب</label>
+                            <input asp-for="LastName" type="text" placeholder="أدخل لقبك" required maxlength="50" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <!-- END UPDATED NAME SECTION -->
 
                 <div class="form-row">
                     <div class="form-group">
