@@ -37,15 +37,35 @@
 
                         <div class="form-group">
                             <label asp-for="ChildId">رقم هوية الطفل</label>
-                            <input asp-for="ChildId" type="text" class="form-control" placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" />
+                            <input asp-for="ChildId" type="text" class="form-control" required placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" />
                             <span asp-validation-for="ChildId" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="ChildName">اسم الطفل الكامل</label>
-                            <input asp-for="ChildName" type="text" class="form-control" placeholder="اكتب اسم الطفل كامل" />
-                            <span asp-validation-for="ChildName" class="text-danger"></span>
+                            <label asp-for="FirstName">الاسم الأول</label>
+                            <input asp-for="FirstName" type="text" class="form-control" required placeholder="أدخل الاسم الأول" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label asp-for="FatherName">اسم الأب</label>
+                            <input asp-for="FatherName" type="text" class="form-control" required placeholder="أدخل اسم الأب" />
+                            <span asp-validation-for="FatherName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="GrandFatherName">اسم الجد</label>
+                            <input asp-for="GrandFatherName" type="text" class="form-control" required placeholder="أدخل اسم الجد" />
+                            <span asp-validation-for="GrandFatherName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName">اسم العائلة</label>
+                            <input asp-for="LastName" type="text" class="form-control" required placeholder="أدخل اسم العائلة" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+
 
                         <div class="form-row">
                             <div class="form-group">

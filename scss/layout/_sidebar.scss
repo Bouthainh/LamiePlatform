@@ -4,9 +4,11 @@
   gap: $spacing-lg; // space between sidebar and main content
   padding: $spacing-lg;
   background-color: $light-bg;
+  direction: ltr; 
   main {
     flex: 1; 
   }
+
 .sidebar {
     width: 90px;
     background: $white;

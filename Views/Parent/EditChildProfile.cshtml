@@ -26,10 +26,29 @@
                         <h2>بيانات الطفل</h2>
 
                         <div class="form-group">
-                            <label asp-for="ChildName">اسم الطفل الكامل</label>
-                            <input asp-for="ChildName" type="text" class="form-control" />
-                            <span asp-validation-for="ChildName" class="text-danger"></span>
+                            <label asp-for="FirstName">الاسم الأول</label>
+                            <input asp-for="FirstName" type="text" class="form-control" required placeholder="أدخل الاسم الأول" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label asp-for="FatherName">اسم الأب</label>
+                            <input asp-for="FatherName" type="text" class="form-control" required placeholder="أدخل اسم الأب" />
+                            <span asp-validation-for="FatherName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="GrandFatherName">اسم الجد</label>
+                            <input asp-for="GrandFatherName" type="text" class="form-control" required placeholder="أدخل اسم الجد" />
+                            <span asp-validation-for="GrandFatherName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="LastName">اسم العائلة</label>
+                            <input asp-for="LastName" type="text" class="form-control" required placeholder="أدخل اسم العائلة" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
 
                         <div class="form-row">
                             <div class="form-group">
@@ -115,9 +134,17 @@
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 
     <script>
         $(document).ready(function () {
+            const originalCity = '@Html.Raw(Model.City)';
+            const originalSchoolId = '@Html.Raw(Model.SchoolId)';
+            const originalGradeId = '@Html.Raw(Model.GradeId)';
+            const originalClassId = '@Html.Raw(Model.ClassId)';
+
+            let isInitialLoad = true;
+
             $('#cityDropdown').change(function () {
                 var city = $(this).val();
                 var $schoolDropdown = $('#schoolDropdown');
@@ -134,19 +161,17 @@
                         type: 'GET',
                         data: { city: city },
                         success: function (schools) {
-                            if (schools && schools.length > 0) {
-                                $.each(schools, function (i, school) {
-                                    var selected = school.id == '@Model.SchoolId' ? 'selected' : '';
-                                    $schoolDropdown.append($('<option>', {
-                                        value: school.id,
-                                        text: school.name,
-                                        selected: selected
-                                    }));
-                                });
+                            $.each(schools, function (i, school) {
+                                $schoolDropdown.append(
+                                    $('<option>', { value: school.id, text: school.name })
+                                );
+                            });
 
-                                if ('@Model.SchoolId' != '00000000-0000-0000-0000-000000000000') {
+                            if (isInitialLoad && originalSchoolId) {
+                                setTimeout(function() {
+                                    $schoolDropdown.val(originalSchoolId);
                                     $schoolDropdown.trigger('change');
-                                }
+                                }, 100);
                             }
                         }
                     });
@@ -167,19 +192,17 @@
                         type: 'GET',
                         data: { schoolId: schoolId },
                         success: function (grades) {
-                            if (grades && grades.length > 0) {
-                                $.each(grades, function (i, grade) {
-                                    var selected = grade.id == '@Model.GradeId' ? 'selected' : '';
-                                    $gradeDropdown.append($('<option>', {
-                                        value: grade.id,
-                                        text: grade.name,
-                                        selected: selected
-                                    }));
-                                });
+                            $.each(grades, function (i, grade) {
+                                $gradeDropdown.append(
+                                    $('<option>', { value: grade.id, text: grade.name })
+                                );
+                            });
 
-                                if ('@Model.GradeId' != '00000000-0000-0000-0000-000000000000') {
+                            if (isInitialLoad && originalGradeId) {
+                                setTimeout(function() {
+                                    $gradeDropdown.val(originalGradeId);
                                     $gradeDropdown.trigger('change');
-                                }
+                                }, 100);
                             }
                         }
                     });
@@ -198,32 +221,33 @@
                         type: 'GET',
                         data: { gradeId: gradeId },
                         success: function (classes) {
-                            if (classes && classes.length > 0) {
-                                $.each(classes, function (i, cls) {
-                                    var displayText = cls.name;
-                                    if (cls.educator) {
-                                        displayText += ' - معلم: ' + cls.educator;
-                                    }
-                                    var selected = cls.id == '@Model.ClassId' ? 'selected' : '';
-                                    $classDropdown.append($('<option>', {
-                                        value: cls.id,
-                                        text: displayText,
-                                        selected: selected
-                                    }));
-                                });
+                            $.each(classes, function (i, cls) {
+                                var displayText = cls.name;
+                                if (cls.educator)
+                                    displayText += ' - المعلم/ة: ' + cls.educator;
+
+                                $classDropdown.append(
+                                    $('<option>', { value: cls.id, text: displayText })
+                                );
+                            });
+
+                            if (isInitialLoad && originalClassId) {
+                                setTimeout(function() {
+                                    $classDropdown.val(originalClassId);
+                                    isInitialLoad = false;
+                                }, 100);
                             }
                         }
                     });
                 }
             });
 
-            if ('@Model.City') {
-                $('#cityDropdown').trigger('change');
+            if (originalCity && originalCity !== '') {
+                setTimeout(function() {
+                    $('#cityDropdown').val(originalCity);
+                    $('#cityDropdown').trigger('change');
+                }, 200);
             }
         });
     </script>
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
 }
