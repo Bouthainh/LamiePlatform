@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 </head>
-
 <style>
     * {
         font-family: 'IBM Plex Sans', 'Cairo', 'Segoe UI', Tahoma, sans-serif !important;
@@ -20,24 +19,38 @@
 </style>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="~/images/LamieLogo.png" alt="LamieLogo">
-            </div>
+    @if (ViewData["HideHeader"] == null || !(bool)ViewData["HideHeader"])
+    {
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="~/images/LamieLogo.png" alt="LamieLogo">
+                </div>
 
-            <ul class="nav-menu">
-                <li><a href="#main">الرئيسية</a></li>
-                <li><a href="#about">من نحن؟</a></li>
-                <li><a href="#how-it-works">كيفية العمل</a></li>
-                <li><a href="#faq">الأسئلة الشائعة</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-<div class=" sidebar-container">
-@if (ViewData["ShowSidebar"] == null || (bool)ViewData["ShowSidebar"] == true)
-{
+                <ul class="nav-menu">
+                    <li><a href="#main">الرئيسية</a></li>
+                    <li><a href="#about">من نحن؟</a></li>
+                    <li><a href="#how-it-works">كيفية العمل</a></li>
+                    <li><a href="#faq">الأسئلة الشائعة</a></li>
+                </ul>
+            </nav>
+        </header>
+    }
+    @if (ViewData["SpicalHeader"] != null && (bool)ViewData["SpicalHeader"])
+    {
+        <header>
+            <nav>
+                <div class="logo">
+                    <img src="~/images/LamieLogo.png" alt="LamieLogo">
+                </div>
+            </nav>
+        </header>
+    }
+
+
+    <div class=" sidebar-container">
+        @if (ViewData["ShowSidebar"] == null || (bool)ViewData["ShowSidebar"] == true)
+        {
             <aside class="sidebar">
                 <div class="sidebar-links">
                     <a asp-controller="Parent" asp-action="ParentHomePage" class="sidebar-item home-icon" title="الصفحة الرئيسية">
@@ -77,73 +90,15 @@
                     </a>
                 </div>
             </aside>
-}
+        }
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-</div>
-
-<footer class="site-footer">
-    <div class="footer-container">
-        
-        <div class="footer-col logo-col">
-            <div class="logo-wrapper">
-                    <img src="~/images/LamieLogo.png" alt="LamieLogo" class="footer-logo">
-            </div>
-            <p class="footer-desc">
-                ماهر – منصة ذكية لاكتشاف وتنمية مواهب الأطفال من خلال ألعاب تفاعلية مبنية على نظرية الذكاءات المتعددة.
-            </p>
-        </div>
-
-        <div class="footer-col links-col">
-            <h3 class="footer-title">روابط مهمة</h3>
-            <ul class="footer-links">
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#">من نحن ؟</a></li>
-                <li><a href="#">كيف نقيس الذكاءات؟</a></li>
-                <li><a href="#">الاسئلة الشائعة</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-col contact-col">
-            <h3 class="footer-title">الاتصال والدعم</h3>
-            <ul class="footer-links">
-                <li><a href="#">مركز العملاء</a></li>
-                <li><a href="#">تواصل معنا</a></li>
-                <li><a href="#">شارك معنا</a></li>
-                <li><a href="#">تقديم شكوى</a></li>
-                <li><a href="#">الإبلاغ عن الفساد</a></li>
-            </ul>
-        </div>
-
-        <div class="footer-col social-col">
-            <h3 class="footer-title">تابعنا على</h3>
-            
-            <div class="social-icons">
-                <a href="#" class="icon-box"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="icon-box"><i class="bi bi-linkedin"></i></a>
-                <a href="#" class="icon-box"><i class="bi bi-twitter-x"></i></a> </div>
-
-            <div class="contact-info">
-                <p>السعودية ، جدة <i class="bi bi-geo-alt"></i></p>
-                <p>Lamie2025@gmail.com <i class="bi bi-envelope"></i></p>
-            </div>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
 
     </div>
-
-    <div class="footer-bottom">
-        <div class="copyrights">
-            <p>جميع الحقوق محفوظة لفريق لامع</p>
-            <p>تاريخ آخر تعديل: 09/12/2025</p>
-        </div>
-        <div class="wave-line"></div>
-        </div>
-</footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -162,4 +117,120 @@
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+    <!-- Main content -->
+    @if (ViewData["HideFooter"] == null || !(bool)ViewData["HideFooter"])
+    {
+        <footer class="site-footer">
+            <div class="footer-container">
+
+                <div class="footer-col logo-col">
+                    <div class="logo-wrapper">
+                        <img src="~/images/LamieLogo.png" alt="LamieLogo" class="footer-logo">
+                    </div>
+                    <p class="footer-desc">
+                        لامع – منصة ذكية لاكتشاف وتنمية مواهب الأطفال من خلال ألعاب تفاعلية مبنية على نظرية الذكاءات المتعددة.
+                    </p>
+                </div>
+
+                <div class="footer-col links-col">
+                    <h3 class="footer-title">روابط مهمة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">الرئيسية</a></li>
+                        <li><a href="#">من نحن ؟</a></li>
+                        <li><a href="#">كيف نقيس الذكاءات؟</a></li>
+                        <li><a href="#">الاسئلة الشائعة</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col contact-col">
+                    <h3 class="footer-title">الاتصال والدعم</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">مركز العملاء</a></li>
+                        <li><a href="#">تواصل معنا</a></li>
+                        <li><a href="#">شارك معنا</a></li>
+                        <li><a href="#">تقديم شكوى</a></li>
+                        <li><a href="#">الإبلاغ عن الفساد</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col social-col">
+                    <h3 class="footer-title">تابعنا على</h3>
+
+                    <div class="social-icons">
+                        <a href="#" class="icon-box"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="icon-box"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="icon-box"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+
+                    <div class="contact-info">
+                        <p>السعودية ، جدة <i class="bi bi-geo-alt"></i></p>
+                        <p>Lamie2025@gmail.com <i class="bi bi-envelope"></i></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyrights">
+                    <p>جميع الحقوق محفوظة لفريق لامع</p>
+                    <p>تاريخ آخر تعديل: 09/12/2025</p>
+                </div>
+                <div class="wave-line"></div>
+            </div>
+        </footer>
+    }
+
+@if (ViewData["SpicalFooter"] != null && (bool)ViewData["SpicalFooter"])
+{
+    <footer class="site-footer">
+        <div class="footer-container">
+
+                <div class="footer-col logo-col">
+                    <div class="logo-wrapper">
+                        <img src="~/images/LamieLogo.png" alt="LamieLogo" class="footer-logo">
+                    </div>
+                    <p class="footer-desc">
+                        لامع – منصة ذكية لاكتشاف وتنمية مواهب الأطفال من خلال ألعاب تفاعلية مبنية على نظرية الذكاءات المتعددة.
+                    </p>
+                </div>
+
+                <div class="footer-col contact-col">
+                    <h3 class="footer-title">الاتصال والدعم</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">مركز العملاء</a></li>
+                        <li><a href="#">تواصل معنا</a></li>
+                        <li><a href="#">شارك معنا</a></li>
+                        <li><a href="#">تقديم شكوى</a></li>
+                        <li><a href="#">الإبلاغ عن الفساد</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col social-col">
+                    <h3 class="footer-title">تابعنا على</h3>
+
+                    <div class="social-icons">
+                        <a href="#" class="icon-box"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="icon-box"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="icon-box"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+
+                    <div class="contact-info">
+                        <p>السعودية ، جدة <i class="bi bi-geo-alt"></i></p>
+                        <p>Lamie2025@gmail.com <i class="bi bi-envelope"></i></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="copyrights">
+                    <p>جميع الحقوق محفوظة لفريق لامع</p>
+                    <p>تاريخ آخر تعديل: 09/12/2025</p>
+                </div>
+                <div class="wave-line"></div>
+            </div>
+        </footer>
+        }
+
+  
 </html>
