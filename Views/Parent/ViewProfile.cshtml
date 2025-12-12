@@ -32,20 +32,18 @@
                 <input type="hidden" asp-for="ParentId" />
                 
                 <div class="form-grid">
-                    
-                    <div class="form-row">
-                        <div class="form-group form-group--name">
+
+                    <div class="form-group form-group--fname">
                             <label asp-for="FirstName">الاسم الأول</label>
-                            <input asp-for="FirstName" type="text" required maxlength="50" />
+                            <input asp-for="FirstName" class="form-control" type="text" required maxlength="50" />
                             <span asp-validation-for="FirstName" class="text-danger"></span>
                         </div>
 
-                        <div class="form-group">
+                    <div class="form-group form-group--lname">
                             <label asp-for="LastName">اسم العائلة</label>
-                            <input asp-for="LastName" type="text" required maxlength="50" />
+                            <input asp-for="LastName" class="form-control" type="text" required maxlength="50" />
                             <span asp-validation-for="LastName" class="text-danger"></span>
                         </div>
-                    </div>
                     
                     <div class="form-group form-group--phone">
                         <label>رقم الجوال </label>
