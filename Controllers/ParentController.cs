@@ -142,13 +142,6 @@ namespace BadeePlatform.Controllers
                 return View(dto);
             }
 
-            if (dto.SchoolId == null || dto.GradeId == null || dto.ClassId == null)
-            {
-                ViewData["ErrorMessage"] = "الرجاء اختيار المدرسة والمرحلة والفصل.";
-                await LoadCitiesForDropdown();
-                return View(dto);
-            }
-
             var parentId = GetCurrentParentId();
             if (string.IsNullOrEmpty(parentId))
             {
