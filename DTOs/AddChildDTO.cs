@@ -6,7 +6,7 @@ namespace BadeePlatform.DTOs
     {
         [Required(ErrorMessage = "رقم هوية الطفل مطلوب")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "رقم الهوية يجب أن يتكون من 10 أرقام")]
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "رقم الهوية يجب أن يحتوي على أرقام فقط")]
+        [RegularExpression(@"^\d+$", ErrorMessage = "رقم الهوية يجب أن يحتوي على أرقام فقط")]
         public string ChildId { get; set; }
 
         [Required(ErrorMessage = "الاسم الأول مطلوب")]
