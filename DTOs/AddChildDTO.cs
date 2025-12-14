@@ -44,13 +44,13 @@ namespace BadeePlatform.DTOs
         public string? City { get; set; } 
 
         [Required(ErrorMessage = "يجب اختيار المدرسة")]
-        public Guid SchoolId { get; set; }
+        public Guid? SchoolId { get; set; }
 
         [Required(ErrorMessage = "يجب اختيار المرحلة الدراسية")]
-        public Guid GradeId { get; set; }
+        public Guid? GradeId { get; set; }
 
         [Required(ErrorMessage = "يجب اختيار الفصل")]
-        public Guid ClassId { get; set; }
+        public Guid? ClassId { get; set; }
 
         public bool AllowEducatorAccess { get; set; } = false;
     }
