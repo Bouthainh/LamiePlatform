@@ -175,9 +175,9 @@ namespace BadeePlatform.Services
             string relationshipType)
         {
             // Update child info
-            existingChild.SchoolId = dto.SchoolId;
-            existingChild.GradeId = dto.GradeId;
-            existingChild.ClassId = dto.ClassId;
+            existingChild.SchoolId = dto.SchoolId.Value;
+            existingChild.GradeId = dto.GradeId.Value;
+            existingChild.ClassId = dto.ClassId.Value;
             existingChild.Age = dto.Age;
 
             // Add relationship
@@ -194,7 +194,7 @@ namespace BadeePlatform.Services
             // Grant educator access if requested
             if (dto.AllowEducatorAccess)
             {
-                await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId);
+                await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId.Value);
             }
 
             return new ServiceResult(true, "تم إضافة الطفل بنجاح إلى قائمتك.");
@@ -212,9 +212,9 @@ namespace BadeePlatform.Services
                 Gender = dto.Gender,
                 Age = dto.Age,
                 LoginCode = loginCode,
-                SchoolId = dto.SchoolId,
-                GradeId = dto.GradeId,
-                ClassId = dto.ClassId,
+                SchoolId = dto.SchoolId.Value,
+                GradeId = dto.GradeId.Value,
+                ClassId = dto.ClassId.Value,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -232,7 +232,7 @@ namespace BadeePlatform.Services
 
             if (dto.AllowEducatorAccess)
             {
-                await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId);
+                await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId.Value);
             }
 
             return new ServiceResult(true, "تم إضافة الطفل بنجاح.", parentId: null, data: loginCode);
@@ -417,9 +417,9 @@ namespace BadeePlatform.Services
                 child.ChildName = string.Join(" ", dto.FirstName, dto.FatherName, dto.GrandFatherName, dto.LastName).Trim();
                 child.Gender = dto.Gender;
                 child.Age = dto.Age;
-                child.SchoolId = dto.SchoolId;
-                child.GradeId = dto.GradeId;
-                child.ClassId = dto.ClassId;
+                child.SchoolId = dto.SchoolId.Value;
+                child.GradeId = dto.GradeId.Value;
+                child.ClassId = dto.ClassId.Value;
 
                 await _db.SaveChangesAsync();
 
