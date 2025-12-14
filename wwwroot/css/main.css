@@ -64,6 +64,33 @@ header nav .nav-menu li a:hover {
   color: #e98b9a;
 }
 
+.header-actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.header-actions .header-btn {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  padding: 0.75rem 2rem;
+  background: #5cc4d1;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+}
+.header-actions .header-btn:hover {
+  background: rgb(55.023923445, 179.4258373206, 194.976076555);
+  -webkit-transform: translateY(-2px);
+          transform: translateY(-2px);
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 .site-footer {
   background: -webkit-gradient(linear, right top, left top, from(#EDFEFC), to(#FEF6EC));
   background: linear-gradient(to left, #EDFEFC 0%, #FEF6EC 100%);
@@ -2896,21 +2923,25 @@ main {
       -ms-flex-direction: column;
           flex-direction: column;
 }
-.view-profile-page form .form-grid .form-group--name {
+.view-profile-page form .form-grid .form-group--fname {
   grid-column: 1;
+  grid-row: 1;
+}
+.view-profile-page form .form-grid .form-group--lname {
+  grid-column: 2;
   grid-row: 1;
 }
 .view-profile-page form .form-grid .form-group--phone {
-  grid-column: 2;
-  grid-row: 1;
-}
-.view-profile-page form .form-grid .form-group--username {
   grid-column: 1;
   grid-row: 2;
 }
-.view-profile-page form .form-grid .form-group--password {
+.view-profile-page form .form-grid .form-group--username {
   grid-column: 2;
   grid-row: 2;
+}
+.view-profile-page form .form-grid .form-group--password {
+  grid-column: 3;
+  grid-row: 3;
 }
 .view-profile-page form .form-grid .form-group--email {
   grid-column: 1/span 2;
@@ -3044,7 +3075,8 @@ main {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  .view-profile-page .main-content form .form-grid .form-group--name,
+  .view-profile-page .main-content form .form-grid .form-group--fname,
+  .view-profile-page .main-content form .form-grid .form-group--lname,
   .view-profile-page .main-content form .form-grid .form-group--phone,
   .view-profile-page .main-content form .form-grid .form-group--email,
   .view-profile-page .main-content form .form-grid .form-group--username,
@@ -3068,7 +3100,8 @@ main {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .view-profile-page .main-content form .form-grid .form-group--name,
+  .view-profile-page .main-content form .form-grid .form-group--fname,
+  .view-profile-page .main-content form .form-grid .form-group--lname,
   .view-profile-page .main-content form .form-grid .form-group--phone,
   .view-profile-page .main-content form .form-grid .form-group--email,
   .view-profile-page .main-content form .form-grid .form-group--username,
