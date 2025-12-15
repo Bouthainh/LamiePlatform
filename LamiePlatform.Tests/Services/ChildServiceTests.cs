@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using FluentAssertions;
-using Xunit;
-using BadeePlatform.Services;
-using BadeePlatform.Models;
 using BadeePlatform.Data;
+using BadeePlatform.DTOs;
+using BadeePlatform.Models;
+using BadeePlatform.Services;
+using FluentAssertions;
 using LamiePlatform.Tests.Helpers;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
 namespace LamiePlatform.Tests.Services;
 
 public class ChildServiceTests
@@ -259,7 +260,7 @@ public class ChildServiceTests
             ClassId = classId,
             GradeId = gradeId,
             ClassName = "Class A",
-            EducatorId = null 
+            EducatorId = null
         });
 
         context.Children.Add(new Child
@@ -337,25 +338,7 @@ public class ChildServiceTests
         deletedPermission.Should().BeNull();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // add child test 
 
     private (BadeedbContext context, ChildService service) CreateTestEnvironment()
     {
@@ -365,7 +348,7 @@ public class ChildServiceTests
     }
 
     private async Task<(Guid schoolId, Guid gradeId, Guid classId)> SetupSchoolDataAsync(
-        BadeedbContext context, 
+        BadeedbContext context,
         string city = "Jeddah")
     {
         var schoolId = Guid.NewGuid();
@@ -410,41 +393,31 @@ public class ChildServiceTests
         return parentId;
     }
 
-    private AddChildDTO CreateValidDTO(string childId, Guid schoolId, Guid gradeId, Guid classId, string city = "Jeddah")
-    {
-        return new AddChildDTO
-        {
-            ChildId = childId,
-            ChildName = "Test Child",
-            Gender = "Male",
-            Age = 8,
-            City = city,
-            SchoolId = schoolId,
-            GradeId = gradeId,
-            ClassId = classId,
-            AllowEducatorAccess = false
-        };
-    }
-
-    // testing AddChildAsync  
-
-    // TC1: Parent Not Found
     [Fact]
     public async Task AddChildAsync_TC1_ParentNotFound_ReturnsFalse()
     {
-        // Arrange
         var (context, service) = CreateTestEnvironment();
-        var dto = new AddChildDTO { ChildId = "1234567890" };
+        var dto = new AddChildDTO
+        {
+            ChildId = "1234567890",
+            FirstName = "أحمد",
+            FatherName = "محمد",
+            GrandFatherName = "علي",
+            LastName = "الأحمدي",
+            Gender = "Male",
+            Age = 7,
+            City = "Jeddah",
+            SchoolId = Guid.NewGuid(),
+            GradeId = Guid.NewGuid(),
+            ClassId = Guid.NewGuid()
+        };
 
-        // Act
         var result = await service.AddChildAsync("invalid_parent", dto, "Father");
 
-        // Assert
         result.Success.Should().BeFalse();
         result.Message.Should().Be("معلومات ولي الأمر غير موجودة.");
     }
 
-    // TC2: Parent Exists, Continue to Validation
     [Fact]
     public async Task AddChildAsync_TC2_ParentExists_ContinuesToValidation()
     {
@@ -453,8 +426,16 @@ public class ChildServiceTests
         var dto = new AddChildDTO
         {
             ChildId = "1234567890",
-            SchoolId = Guid.NewGuid(), 
-            City = "Jeddah"
+            FirstName = "سارة",
+            FatherName = "خالد",
+            GrandFatherName = "عبدالله",
+            LastName = "السعيد",
+            Gender = "Female",
+            Age = 6,
+            City = "Jeddah",
+            SchoolId = Guid.NewGuid(),
+            GradeId = Guid.NewGuid(),
+            ClassId = Guid.NewGuid()
         };
 
         var result = await service.AddChildAsync(parentId, dto, "Father");
@@ -463,7 +444,6 @@ public class ChildServiceTests
         result.Message.Should().Contain("المدرسة");
     }
 
-    // TC3: Validation Fails
     [Fact]
     public async Task AddChildAsync_TC3_InvalidSchoolData_ReturnsError()
     {
@@ -472,8 +452,16 @@ public class ChildServiceTests
         var dto = new AddChildDTO
         {
             ChildId = "1234567890",
+            FirstName = "فاطمة",
+            FatherName = "أحمد",
+            GrandFatherName = "حسن",
+            LastName = "الزهراني",
+            Gender = "Female",
+            Age = 5,
+            City = "Jeddah",
             SchoolId = Guid.NewGuid(),
-            City = "Jeddah"
+            GradeId = Guid.NewGuid(),
+            ClassId = Guid.NewGuid()
         };
 
         var result = await service.AddChildAsync(parentId, dto, "Father");
@@ -482,14 +470,13 @@ public class ChildServiceTests
         result.Message.Should().Be("المدرسة المختارة غير صحيحة.");
     }
 
-    // TC4: Validation Success
     [Fact]
     public async Task AddChildAsync_TC4_ValidationSuccess_ContinuesToRelationshipCheck()
     {
         var (context, service) = CreateTestEnvironment();
         var parentId = await SetupParentAsync(context);
         var (schoolId, gradeId, classId) = await SetupSchoolDataAsync(context);
-        
+
         var childId = "1234567890";
         context.ParentChildren.Add(new ParentChild
         {
@@ -499,7 +486,20 @@ public class ChildServiceTests
         });
         await context.SaveChangesAsync();
 
-        var dto = CreateValidDTO(childId, schoolId, gradeId, classId);
+        var dto = new AddChildDTO
+        {
+            ChildId = childId,
+            FirstName = "عمر",
+            FatherName = "سعد",
+            GrandFatherName = "محمد",
+            LastName = "القحطاني",
+            Gender = "Male",
+            Age = 8,
+            City = "Jeddah",
+            SchoolId = schoolId,
+            GradeId = gradeId,
+            ClassId = classId
+        };
 
         var result = await service.AddChildAsync(parentId, dto, "Father");
 
@@ -507,46 +507,57 @@ public class ChildServiceTests
         result.Message.Should().Be("هذا الطفل مضاف مسبقاً في قائمتك.");
     }
 
-    // TC5: Relationship Exists
     [Fact]
     public async Task AddChildAsync_TC5_RelationshipExists_ReturnsError()
     {
         var (context, service) = CreateTestEnvironment();
         var parentId = await SetupParentAsync(context);
         var (schoolId, gradeId, classId) = await SetupSchoolDataAsync(context);
-        
-        var childId = "1234567890";
+
+        var childId = "9876543210";
         context.ParentChildren.Add(new ParentChild
         {
             ParentId = parentId,
             ChildId = childId,
-            RelationshipType = "Father"
+            RelationshipType = "Mother"
         });
         await context.SaveChangesAsync();
 
-        var dto = CreateValidDTO(childId, schoolId, gradeId, classId);
+        var dto = new AddChildDTO
+        {
+            ChildId = childId,
+            FirstName = "نورة",
+            FatherName = "فهد",
+            GrandFatherName = "عبدالرحمن",
+            LastName = "العتيبي",
+            Gender = "Female",
+            Age = 7,
+            City = "Jeddah",
+            SchoolId = schoolId,
+            GradeId = gradeId,
+            ClassId = classId
+        };
 
-        var result = await service.AddChildAsync(parentId, dto, "Father");
+        var result = await service.AddChildAsync(parentId, dto, "Mother");
 
         result.Success.Should().BeFalse();
         result.Message.Should().Be("هذا الطفل مضاف مسبقاً في قائمتك.");
     }
 
-    // TC6: No Relationship Exists
     [Fact]
     public async Task AddChildAsync_TC6_NoRelationship_ContinuesToChildCheck()
     {
         var (context, service) = CreateTestEnvironment();
         var parentId = await SetupParentAsync(context);
         var (schoolId, gradeId, classId) = await SetupSchoolDataAsync(context);
-        
-        var childId = "1234567890";
+
+        var childId = "5555555555";
         context.Children.Add(new Child
         {
             ChildId = childId,
-            ChildName = "Existing",
+            ChildName = "خالد محمد علي السالم",
             Gender = "Male",
-            Age = 8,
+            Age = 6,
             LoginCode = "12345678",
             SchoolId = schoolId,
             GradeId = gradeId,
@@ -554,7 +565,20 @@ public class ChildServiceTests
         });
         await context.SaveChangesAsync();
 
-        var dto = CreateValidDTO(childId, schoolId, gradeId, classId);
+        var dto = new AddChildDTO
+        {
+            ChildId = childId,
+            FirstName = "خالد",
+            FatherName = "محمد",
+            GrandFatherName = "علي",
+            LastName = "السالم",
+            Gender = "Male",
+            Age = 6,
+            City = "Jeddah",
+            SchoolId = schoolId,
+            GradeId = gradeId,
+            ClassId = classId
+        };
 
         var result = await service.AddChildAsync(parentId, dto, "Father");
 
@@ -562,55 +586,78 @@ public class ChildServiceTests
         result.Message.Should().Be("تم إضافة الطفل بنجاح إلى قائمتك.");
     }
 
-    // TC7: Child Exists - Update
     [Fact]
     public async Task AddChildAsync_TC7_ChildExists_UpdatesAndAddsRelationship()
     {
         var (context, service) = CreateTestEnvironment();
         var parentId = await SetupParentAsync(context);
         var (schoolId, gradeId, classId) = await SetupSchoolDataAsync(context);
-        
-        var childId = "1234567890";
+
+        var childId = "7777777777";
         context.Children.Add(new Child
         {
             ChildId = childId,
-            ChildName = "Old Name",
-            Gender = "Male",
-            Age = 8,
-            LoginCode = "12345678",
+            ChildName = "ريم أحمد حسن الغامدي",
+            Gender = "Female",
+            Age = 5,
+            LoginCode = "87654321",
             SchoolId = schoolId,
             GradeId = gradeId,
             ClassId = classId
         });
         await context.SaveChangesAsync();
 
-        var dto = CreateValidDTO(childId, schoolId, gradeId, classId);
-        dto.Age = 10; 
+        var dto = new AddChildDTO
+        {
+            ChildId = childId,
+            FirstName = "ريم",
+            FatherName = "أحمد",
+            GrandFatherName = "حسن",
+            LastName = "الغامدي",
+            Gender = "Female",
+            Age = 6,
+            City = "Jeddah",
+            SchoolId = schoolId,
+            GradeId = gradeId,
+            ClassId = classId
+        };
 
         var result = await service.AddChildAsync(parentId, dto, "Father");
 
         result.Success.Should().BeTrue();
         result.Message.Should().Be("تم إضافة الطفل بنجاح إلى قائمتك.");
-        
+
         var relationship = await context.ParentChildren
             .FirstOrDefaultAsync(pc => pc.ParentId == parentId && pc.ChildId == childId);
         relationship.Should().NotBeNull();
-        
+
         var updatedChild = await context.Children.FindAsync(childId);
-        updatedChild.Age.Should().Be(10);
+        updatedChild.Age.Should().Be(6);
     }
 
-    // TC8: Child Not Found - Create New
     [Fact]
     public async Task AddChildAsync_TC8_ChildNotFound_CreatesNew()
     {
         var (context, service) = CreateTestEnvironment();
         var parentId = await SetupParentAsync(context);
         var (schoolId, gradeId, classId) = await SetupSchoolDataAsync(context);
-        
-        var childId = "1234567890";
-        var dto = CreateValidDTO(childId, schoolId, gradeId, classId);
-  
+
+        var childId = "3333333333";
+        var dto = new AddChildDTO
+        {
+            ChildId = childId,
+            FirstName = "يوسف",
+            FatherName = "عبدالله",
+            GrandFatherName = "سعيد",
+            LastName = "الشهري",
+            Gender = "Male",
+            Age = 4,
+            City = "Jeddah",
+            SchoolId = schoolId,
+            GradeId = gradeId,
+            ClassId = classId
+        };
+
         var result = await service.AddChildAsync(parentId, dto, "Father");
 
         result.Success.Should().BeTrue();
@@ -626,6 +673,9 @@ public class ChildServiceTests
             .FirstOrDefaultAsync(pc => pc.ParentId == parentId && pc.ChildId == childId);
         relationship.Should().NotBeNull();
     }
-}
 
+
+
+
+}
 

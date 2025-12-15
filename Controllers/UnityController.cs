@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using BadeePlatform.Data;
-using System.Text.Json.Serialization; 
+using System.Text.Json.Serialization;
+
 namespace BadeePlatform.Controllers
 {
     [ApiController]
@@ -28,6 +29,9 @@ namespace BadeePlatform.Controllers
             [JsonPropertyName("ChildId")]
             public string ChildId { get; set; }
 
+            [JsonPropertyName("Gender")]
+            public string Gender { get; set; }
+
             [JsonPropertyName("Message")]
             public string Message { get; set; }
         }
@@ -44,6 +48,7 @@ namespace BadeePlatform.Controllers
                 {
                     Success = false,
                     ChildId = "",
+                    Gender = "",
                     Message = "Wrong code"
                 });
             }
@@ -52,6 +57,7 @@ namespace BadeePlatform.Controllers
             {
                 Success = true,
                 ChildId = child.ChildId,
+                Gender = child.Gender,
                 Message = "Login successful"
             });
         }
