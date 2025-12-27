@@ -1,298 +1,303 @@
 .manage-dashbord-page {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: $spacing-md;
-  
-  @include respond-to(mobile) {
-    padding: $spacing-sm;
-  }
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: $spacing-md;
+
+    @include respond-to(mobile) {
+        padding: $spacing-sm;
+    }
 }
 
 // ROW 1: Top Bar
 .top-bar {
-  flex-direction: row-reverse;
-  @include flex-between;
-  background: linear-gradient(135deg, $white 0%, $child-light-blue 100%);
-  padding: $spacing-lg $spacing-xl;
-  border-radius: 20px;
-  border-color: $tirquaz-color;
-  @include card-shadow;
-  margin-bottom: $spacing-md;
-  gap: $spacing-md;
-
-  @include respond-to(tablet) {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: $spacing-lg;
-  }
-
-  @include respond-to(mobile) {
-    flex-direction: column;
-    padding: $spacing-md;
+    flex-direction: row-reverse;
+    @include flex-between;
+    background: $white;
+    padding: $spacing-lg $spacing-xl;
+    border-radius: 20px;
+    border: 2px solid lighten($secondary-color, 40%);
+    @include card-shadow;
+    margin-bottom: $spacing-md;
     gap: $spacing-md;
-  }
+
+    @include respond-to(tablet) {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: $spacing-lg;
+    }
+
+    @include respond-to(mobile) {
+        flex-direction: column;
+        padding: $spacing-md;
+        gap: $spacing-md;
+    }
 }
 
 .stats-wrapper {
-  flex-direction: row-reverse;
-  display: flex;
-  gap: $spacing-sm;
+    flex-direction: row-reverse;
+    display: flex;
+    gap: $spacing-sm;
 
-  @include respond-to(mobile) {
-    width: 100%;
-    order: 2;
-  }
+    @include respond-to(mobile) {
+        width: 100%;
+        order: 2;
+    }
 }
 
 // Challenges Box
 .challenges-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $spacing-md $spacing-lg;
-  border-radius: 15px;
-  min-width: 140px;
-  background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
-  border: 2px solid rgba($yellow-accent, 0.3);
-  @include transition;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-md $spacing-lg;
+    border-radius: 15px;
+    min-width: 140px;
+    background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
+    border: 2px solid rgba($yellow-accent, 0.3);
+    @include transition;
 
-  @include respond-to(mobile) {
-    width: calc(50% - 6px);
-    min-width: 0;
-  }
-
-  &::before {
-    content: '📋';
-    font-size: 32px;
-    margin-bottom: $spacing-xs;
-  }
-
-  h4 {
-    font-size: $font-size-small;
-    margin: 0;
-    color: $orange-text;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  p {
-    font-size: 20px;
-    margin: 4px 0 0 0;
-    color: $orange-text;
-    font-weight: 700;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $box-shadow-hover;
-  }
-
-  &.level-box {
-    background: linear-gradient(135deg, lighten($secondary-color, 35%), lighten($secondary-color, 25%));
-    border: 2px solid rgba($secondary-color, 0.3);
-
-    h4, p {
-      color: darken($secondary-color, 20%);
+    @include respond-to(mobile) {
+        width: calc(50% - 6px);
+        min-width: 0;
     }
 
     &::before {
-      content: '👑';
-    }
-  }
-}
-.dashboard-header {
-  flex-direction: row-reverse;
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
-
-  @include respond-to(mobile) {
-    flex-direction: column-reverse;
-    width: 100%;
-    order: 1;
-  }
-
-  .child-info {
-    text-align: right;
-
-    @include respond-to(mobile) {
-      text-align: center;
+        content: '📋';
+        font-size: 32px;
+        margin-bottom: $spacing-xs;
     }
 
-    h2 {
-      font-size: 22px;
-      color: $purple-color;
-      margin: 0 0 4px 0;
-      font-weight: 700;
+    h4 {
+        font-size: $font-size-small;
+        margin: 0;
+        color: $orange-text;
+        font-weight: 600;
+        text-align: center;
     }
 
     p {
-      font-size: $font-size-small;
-      color: $text-light;
-      margin: 0;
+        font-size: 20px;
+        margin: 4px 0 0 0;
+        color: $orange-text;
+        font-weight: 700;
     }
-  }
 
-  .child-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 3px solid $purple-color;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba($purple-color, 0.25);
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-hover;
+    }
+
+    &.level-box {
+        background: linear-gradient(135deg, $turquoise-gradient-light, $turquoise-gradient-dark);
+        border: 2px solid rgba($secondary-color, 0.3);
+
+        h4, p {
+            color: $turquoise-text;
+        }
+
+        &::before {
+            content: '👑';
+        }
+    }
+}
+
+.dashboard-header {
+    flex-direction: row-reverse;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
 
     @include respond-to(mobile) {
-      width: 65px;
-      height: 65px;
+        flex-direction: column-reverse;
+        width: 100%;
+        order: 1;
     }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .child-info {
+        text-align: right;
+
+        @include respond-to(mobile) {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 22px;
+            color: $purple-color;
+            margin: 0 0 4px 0;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: $font-size-small;
+            color: $text-light;
+            margin: 0;
+        }
     }
-  }
+
+    .child-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        border: 3px solid $purple-color;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba($purple-color, 0.25);
+
+        @include respond-to(mobile) {
+            width: 65px;
+            height: 65px;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
 }
 
 // ROW 2: Charts Grid (2 columns)
 .charts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-md;
-
-  @include respond-to(tablet) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: $spacing-md;
-  }
 
-  @include respond-to(mobile) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
+    @include respond-to(tablet) {
+        gap: $spacing-md;
+    }
+
+    @include respond-to(mobile) {
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+    }
 }
 
 // ROW 3: Cards Grid (3 columns)
 .cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-md;
-  margin-top: $spacing-md;
-  margin-bottom: $spacing-md;
-
-  @include respond-to(tablet) {
-    grid-template-columns: repeat(2, 1fr);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: $spacing-md;
-  }
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
 
-  @include respond-to(mobile) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
-}
-
-// Educator Box - Light Blue Theme (Matches button color)
-.educator-box {
-  background: linear-gradient(135deg, lighten($secondary-color, 40%), lighten($secondary-color, 30%));
-  padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($secondary-color, 0.2);
-  @include transition;
-
-  &:hover {
-    box-shadow: 0 4px 15px rgba($secondary-color, 0.15);
-  }
-
-  h4 {
-    color: darken($secondary-color, 25%);
-    margin: 0 0 $spacing-lg 0;
-    font-weight: 700;
-    font-size: $font-size-large;
-  }
-
-  p {
-    margin: $spacing-xs 0;
-    color: darken($secondary-color, 35%);
-    font-size: $font-size-base;
-  }
-
-  small {
-    color: darken($secondary-color, 20%);
-    font-size: $font-size-small;
-    display: block;
-    margin-top: $spacing-xs;
-  }
-
-  button {
-    @include button-style($secondary-color);
-    width: 100%;
-    margin-top: $spacing-lg;
-  }
-}
-
-// Regular Content Box - Pink Theme
-.box {
-  background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
-  padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($yellow-accent, 0.3);
-  @include transition;
-
-  &:hover {
-    box-shadow: 0 4px 15px rgba($yellow-accent, 0.25);
-  }
-
-  h4 {
-    color: $orange-text;
-    margin: 0 0 $spacing-lg 0;
-    font-weight: 700;
-    font-size: $font-size-large;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      padding: $spacing-sm;
-      border-bottom: 1px solid rgba($yellow-accent, 0.2);
-      color: $orange-text-dark;
-      @include transition;
-
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &:hover {
-        background: rgba($yellow-accent, 0.15);
-        padding-right: $spacing-md;
-      }
+    @include respond-to(tablet) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: $spacing-md;
     }
-  }
+
+    @include respond-to(mobile) {
+        grid-template-columns: 1fr;
+        gap: $spacing-md;
+    }
 }
+
+// Educator Box - Light Blue Theme
+.educator-box {
+    background: linear-gradient(135deg, $turquoise-gradient-light, $turquoise-gradient-dark);
+    padding: $spacing-md;
+    border-radius: 18px;
+    @include card-shadow;
+    border: 2px solid rgba($secondary-color, 0.3);
+    @include transition;
+
+    &:hover {
+        box-shadow: 0 6px 20px rgba($secondary-color, 0.2);
+        transform: translateY(-2px);
+    }
+
+    h4 {
+        color: $turquoise-text;
+        margin: 0 0 $spacing-lg 0;
+        font-weight: 700;
+        font-size: $font-size-large;
+    }
+
+    p {
+        margin: $spacing-xs 0;
+        color: darken($turquoise-text, 10%);
+        font-size: $font-size-base;
+    }
+
+    small {
+        color: $turquoise-text;
+        font-size: $font-size-small;
+        display: block;
+        margin-top: $spacing-xs;
+    }
+
+    button {
+        @include button-style($secondary-color);
+        width: 100%;
+        margin-top: $spacing-lg;
+    }
+}
+
+// Regular Content Box - Yellow Theme
+.box {
+    background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
+    padding: $spacing-md;
+    border-radius: 18px;
+    @include card-shadow;
+    border: 2px solid rgba($yellow-accent, 0.3);
+    @include transition;
+
+    &:hover {
+        box-shadow: 0 6px 20px rgba($yellow-accent, 0.25);
+        transform: translateY(-2px);
+    }
+
+    h4 {
+        color: $orange-text;
+        margin: 0 0 $spacing-lg 0;
+        font-weight: 700;
+        font-size: $font-size-large;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: $spacing-sm;
+            border-bottom: 1px solid rgba($yellow-accent, 0.2);
+            color: $orange-text-dark;
+            @include transition;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            &:hover {
+                background: rgba($yellow-accent, 0.15);
+                padding-right: $spacing-md;
+            }
+        }
+    }
+}
+
 // Chart Box - Purple Theme
 .chart-box {
-  background: linear-gradient(135deg, lighten($child-purple, 40%), lighten($purple-color, 30%));
-  padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($purple-color, 0.2);
-  @include transition;
+    background: linear-gradient(135deg, $purple-gradient-light, $purple-gradient-dark);
+    padding: $spacing-md;
+    border-radius: 18px;
+    @include card-shadow;
+    border: 2px solid rgba($purple-color, 0.3);
+    @include transition;
 
-  &:hover {
-    box-shadow: 0 4px 15px rgba($purple-color, 0.15);
-  }
+    &:hover {
+        box-shadow: 0 6px 20px rgba($purple-color, 0.2);
+        transform: translateY(-2px);
+    }
 
-  h4 {
-    color: darken($purple-color, 15%);
-    margin: 0 0 $spacing-lg 0;
-    font-weight: 700;
-    font-size: $font-size-large;
-  }
+    h4 {
+        color: $purple-text;
+        margin: 0 0 $spacing-lg 0;
+        font-weight: 700;
+        font-size: $font-size-large;
+    }
 
-  canvas {
-    max-width: 100%;
-    height: auto !important;
-  }
+    canvas {
+        max-width: 100%;
+        height: auto !important;
+    }
 }

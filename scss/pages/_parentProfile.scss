@@ -14,11 +14,12 @@
     }
 
     .main-content {
-        background: linear-gradient(135deg, $child-light-pink 0%, $child-light-blue 50%, $child-light-yellow 100%);
+        background: $white;
         border-radius: 22px;
         padding: $spacing-xl;
         @include card-shadow;
         box-sizing: border-box;
+        border: 2px solid #f0f0f0;
     }
     // Profile Header
     .profile-header {
@@ -36,10 +37,10 @@
     form {
         max-width: 700px;
         margin: 0 auto;
-        background: $white;
+        background: #fafafa;
         padding: $spacing-xl;
         border-radius: 18px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border: 2px solid #f0f0f0;
 
         input[type="hidden"] {
             display: none;
@@ -103,11 +104,11 @@
         .form-control {
             width: 100%;
             padding: 12px $spacing-md;
-            border: 1px solid #e0e0e0;
+            border: 2px solid #e8e8e8;
             border-radius: 10px;
             font-size: $font-size-base;
             font-family: $primary-font;
-            background-color: #fafafa;
+            background-color: $white;
             @include transition(all);
             box-sizing: border-box;
 
@@ -139,16 +140,16 @@
             text-align: center;
             cursor: pointer;
             border: none;
-            background: $primary-green;
+            background: $accent-green;
             color: $white;
             box-sizing: border-box;
             @include transition(all);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba($accent-green, 0.25);
 
             &:hover {
                 background: $primary-green-dark;
                 transform: translateY(-2px);
-                box-shadow: 0 4px 16px rgba($primary-green, 0.4);
+                box-shadow: 0 6px 20px rgba($accent-green, 0.35);
             }
 
             &:active {
@@ -160,7 +161,7 @@
         .field-validation-error,
         span[class*="validation"] {
             display: block;
-            color: #d32f2f;
+            color: $primary-color;
             font-size: $font-size-small;
             margin-top: $spacing-xs;
         }
@@ -174,21 +175,21 @@
         text-align: center;
 
         &-success {
-            background: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
+            background: lighten($accent-green, 45%);
+            border: 1px solid lighten($accent-green, 30%);
+            color: darken($accent-green, 20%);
         }
 
         &-danger {
-            background: #f8d7da;
-            border: 1px solid #f5c6cb;
-            color: #721c24;
+            background: lighten($primary-color, 42%);
+            border: 1px solid lighten($primary-color, 30%);
+            color: darken($primary-color, 15%);
         }
 
         &-warning {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            color: #856404;
+            background: lighten($accent-yellow, 35%);
+            border: 1px solid lighten($accent-yellow, 25%);
+            color: darken($accent-yellow, 30%);
         }
     }
     // Responsive - Tablet

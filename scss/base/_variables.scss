@@ -1,56 +1,105 @@
-$primary-color: #e98b9a;
-$secondary-color: #5cc4d1;
+// ============================================
+// PRIMARY BRAND COLORS
+// ============================================
+$primary-color: #FF3C4B;
+$primary-light: #FF96AA;
+$secondary-color: #32C8C3;
+$purple-color: #A03CC8;
+$accent-orange: #FF622E;
+$accent-yellow: #FFB90F;
+$accent-green: #a4c83c;
+
+// ============================================
+// TEXT COLORS
+// ============================================
 $text-color: #333;
 $text-dark: #2c3e50;
 $text-light: #7f8c8d;
+
+// ============================================
+// BACKGROUND COLORS
+// ============================================
 $light-bg: #f8f8f8;
 $white: #fff;
 $dark: #2b2b2b;
-$form-background-color:#f8f9f3;
-$primary-green: #00a651;
-$primary-green-dark: #008f45;
-$tirquaz-color:#358785;
-$purple-color:#8f52a4;
+$form-background-color: #f8f9f3;
 
-// Soft background colors for child cards
+// ============================================
+// BUTTON & STATE COLORS
+// ============================================
+$primary-green: #a4c83c;
+$primary-green-dark: #92b333;
+$tirquaz-color: #32C8C3;
+
+// ============================================
+// CHILD CARD BACKGROUNDS (LIGHT)
+// ============================================
 $child-blue: #e6f4ff;
 $child-light-blue: #f0f8ff;
 $child-purple: #f3e5ff;
 $child-pink: #ffd4e5;
-$child-light-pink:#ffe8f0;
+$child-light-pink: #ffe8f0;
 $child-yellow: #fff4cc;
-$child-light-yellow:#fffae6;
-// colors for the dashbord 
-$yellow-gradient-light: #fffae6;
-$yellow-gradient-dark: #fff4cc;
-$yellow-accent: #ffd966;
-$orange-text: #f57f17;
-$orange-text-dark: #e65100;
-// Borders + shadows
-$card-shadow: 0 4px 8px rgba(0,0,0,0.08);
+$child-light-yellow: #fffae6;
 
+// ============================================
+// DASHBOARD COLORS (UPDATED)
+// ============================================
+$yellow-gradient-light: #FFFAED;
+$yellow-gradient-dark: #FFF4D9;
+$yellow-accent: #FFB90F;
+$orange-text: #e69500;
+$orange-text-dark: #d68600;
+
+$turquoise-gradient-light: #E8FFFE;
+$turquoise-gradient-dark: #D5F7F5;
+$turquoise-text: #00968f;
+
+$purple-gradient-light: #F5EBFF;
+$purple-gradient-dark: #E8D5F5;
+$purple-text: #7a2a9f;
+
+// ============================================
+// BORDERS & SHADOWS
+// ============================================
+$card-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 $header-bg: $white;
 $footer-bg: $light-bg;
 $footer-text: #666;
 
+// ============================================
+// TYPOGRAPHY
+// ============================================
 $primary-font: 'IBM Plex Sans', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
 $font-size-base: 16px;
 $font-size-large: 18px;
 $font-size-small: 14px;
 
+// ============================================
+// SPACING
+// ============================================
 $spacing-xs: 8px;
 $spacing-sm: 16px;
 $spacing-md: 24px;
 $spacing-lg: 32px;
 $spacing-xl: 48px;
 
+// ============================================
+// BREAKPOINTS
+// ============================================
 $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
 $breakpoint-large: 1200px;
 
+// ============================================
+// BOX SHADOWS
+// ============================================
 $box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 $box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
 
+// ============================================
+// TRANSITIONS
+// ============================================
 $transition-speed: 0.3s;
 $transition-ease: ease-in-out;
