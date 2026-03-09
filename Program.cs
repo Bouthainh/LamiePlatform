@@ -17,7 +17,11 @@ builder.Services.AddScoped<BadeePlatform.Services.IParentService, BadeePlatform.
 
 builder.Services.AddScoped<BadeePlatform.Services.IDashboardService, BadeePlatform.Services.DashboardService>();
 
+builder.Services.AddScoped<BadeePlatform.Services.IEducatorService, BadeePlatform.Services.EducatorService>();
+
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
+builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
