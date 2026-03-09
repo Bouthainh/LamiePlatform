@@ -235,7 +235,7 @@ namespace BadeePlatform.Services
                 await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId.Value);
             }
 
-            return new ServiceResult(true, "تم إضافة الطفل بنجاح.", parentId: null, data: loginCode);
+            return new ServiceResult(true, "تم إضافة الطفل بنجاح.", userId: null, data: loginCode);
         }
 
         private async Task CreateEducatorPermissionAsync(string parentId, string childId, Guid classId)

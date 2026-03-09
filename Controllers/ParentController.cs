@@ -96,7 +96,7 @@ namespace BadeePlatform.Controllers
                 string relationshipType = result.Data ?? "Parent";
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.NameIdentifier, result.ParentId),
+                    new Claim(ClaimTypes.NameIdentifier, result.UserId),
                     new Claim(ClaimTypes.Name, dto.UsernameOrEmail),
                     new Claim("RelationshipType", relationshipType)
                 };
