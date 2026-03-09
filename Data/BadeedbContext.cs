@@ -123,7 +123,7 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ChildGroupId).HasColumnName("child_group_ID");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_name");
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.CreatedAt)
@@ -176,7 +176,7 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.GroupName)
                 .HasMaxLength(50)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("group_name");
             entity.Property(e => e.MatchScore).HasColumnName("match_score");
         });
@@ -202,7 +202,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("proficiency_score");
             entity.Property(e => e.Summary)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("summary");
 
             entity.HasOne(d => d.Child).WithMany(p => p.ChildIntelligences)
@@ -227,7 +227,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("class_ID");
             entity.Property(e => e.ClassName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("class_name");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
@@ -265,7 +265,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("educator_ID");
             entity.Property(e => e.EducatorName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_name");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
@@ -347,7 +347,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("character_description");
             entity.Property(e => e.CharacterName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("character_name");
         });
 
@@ -449,7 +449,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.GradeName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("grade_name");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
 
@@ -507,7 +507,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("Icon_img_path");
             entity.Property(e => e.IntelligenceName)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("intelligence_name");
             entity.Property(e => e.IntelligenceTypeDescription)
                 .IsUnicode(false)
@@ -542,7 +542,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("is_verified");
             entity.Property(e => e.ParentName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(256)
@@ -645,15 +645,15 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("school_ID");
             entity.Property(e => e.Branch)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("branch");
             entity.Property(e => e.City)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("city");
             entity.Property(e => e.SchoolName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("school_name");
         });
 
