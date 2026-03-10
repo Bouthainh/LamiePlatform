@@ -1,5 +1,4 @@
-﻿
-@model BadeePlatform.Models.ViewModels.EducatorProfileViewModel
+﻿@model BadeePlatform.Models.ViewModels.EducatorProfileViewModel
 
 @if (TempData["ProfileEditedSuccessMessage"] != null)
 {
@@ -42,12 +41,24 @@
         <div class="form-group form-group--school">
             <label asp-for="SchoolId">المدرسة</label>
             @Html.DropDownListFor(m => m.SchoolId,
-                ViewBag.Schools as SelectList,
-                "-- اختر المدرسة --",
-                new { @class = "form-control" })
+            ViewBag.Schools as SelectList,
+                                "-- اختر المدرسة --",
+                        new { @class = "form-control" })
             <span asp-validation-for="SchoolId" class="text-danger"></span>
         </div>
+        <div class="form-group">
+            <label>الصف الدراسي</label>
+            <select id="GradeId" name="GradeId" class="form-control">
+                <option value="">-- اختر الصف --</option>
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label>الفصل الدراسي</label>
+            <div id="ClassCheckboxes" style="border:1px solid #ced4da; border-radius:8px; padding:10px; background:#f9f9f9;">
+                <p class="text-muted">-- اختر الصف أولاً --</p>
+            </div>
+        </div>
         <div class="form-group form-group--email">
             <label>البريد الإلكتروني</label>
             <input asp-for="Email" class="form-control" type="email"
@@ -75,3 +86,67 @@
         <button type="submit">حفظ التغييرات</button>
     </div>
 </form>
+
+
+
+@section Scripts {
+    <script>
+        var currentGradeId = '@Model.GradeId';
+        var currentClassIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassIds));
+
+        $('#SchoolId').change(function () {
+            var schoolId = $(this).val();
+            $('#GradeId').html('<option value="">-- اختر الصف --</option>');
+            $('#ClassCheckboxes').html('<p class="text-muted">-- اختر الصف أولاً --</p>');
+
+            if (schoolId) {
+                $.getJSON('/Educator/GetGradesBySchool', { schoolId: schoolId }, function (data) {
+                    var options = '<option value="">-- اختر الصف --</option>';
+                    $.each(data, function (i, g) {
+                        var selected = g.id == currentGradeId ? 'selected' : '';
+                        options += '<option value="' + g.id + '" ' + selected + '>' + g.name + '</option>';
+                    });
+                    $('#GradeId').html(options);
+
+                    if (currentGradeId) {
+                        $('#GradeId').val(currentGradeId).trigger('change');
+                    }
+                });
+            }
+        });
+
+        $('#GradeId').change(function () {
+            var gradeId = $(this).val();
+            $('#ClassCheckboxes').html('');
+
+            if (gradeId) {
+                $.getJSON('/Educator/GetClassesByGrade', { gradeId: gradeId }, function (data) {
+                    if (data.length === 0) {
+                        $('#ClassCheckboxes').html('<p class="text-muted">لا توجد فصول متاحة</p>');
+                        return;
+                    }
+                    var html = '';
+                    $.each(data, function (i, c) {
+                        var checked = currentClassIds.includes(c.id) ? 'checked' : '';
+                        html += `
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="ClassIds" value="${c.id}" id="class_${c.id}" ${checked}>
+                                <label class="form-check-label" for="class_${c.id}">
+                                    ${c.name}
+                                </label>
+                            </div>`;
+                    });
+                    $('#ClassCheckboxes').html(html);
+                });
+            }
+        });
+
+        $(document).ready(function () {
+            var schoolId = $('#SchoolId').val();
+            if (schoolId) {
+                $('#SchoolId').trigger('change');
+            }
+        });
+    </script>
+}

@@ -1,6 +1,6 @@
 ﻿@model BadeePlatform.DTOs.RegisterEducatorDTO
 
-<h2>تسجيل معلم جديد</h2>
+<h2>هلا..تسجيل معلم جديد</h2>
 
 @if (ViewData["ErrorMessage"] != null)
 {
@@ -44,6 +44,21 @@
     </div>
 
     <div class="form-group">
+        <label>المرحلة الدراسية</label>
+        <select id="GradeId" name="GradeId" class="form-control" disabled>
+            <option value="">-- اختر المدرسة أولاً --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>الفصل الدراسي</label>
+        <div id="ClassCheckboxes" style="display:none; border:1px solid #ced4da; border-radius:8px; padding:10px; background:#f9f9f9;">
+            <p id="noClassMsg" class="text-muted" style="display:none;">لا توجد فصول متاحة</p>
+        </div>
+        <p id="classPlaceholder" class="text-muted" style="margin-top:5px;">-- المرحلة الدراسية أولاً --</p>
+    </div>
+
+    <div class="form-group">
         <label asp-for="Email">البريد الإلكتروني</label>
         <input asp-for="Email" type="email" placeholder="example@email.com" required maxlength="100" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
@@ -74,3 +89,57 @@
         <p>لديك حساب؟ <a asp-controller="Educator" asp-action="Login">سجل الدخول</a></p>
     </div>
 </form>
+
+@section Scripts {
+    <script>
+        $('#SchoolId').change(function () {
+            var schoolId = $(this).val();
+            $('#GradeId').prop('disabled', true)
+                         .html('<option value="">-- اختر الصف --</option>');
+            $('#ClassIds').prop('disabled', true)
+                          .html('<option value="">-- اختر الفصل --</option>');
+
+            if (schoolId) {
+                $.getJSON('/Educator/GetGradesBySchool', { schoolId: schoolId }, function (data) {
+                    var options = '<option value="">-- اختر الصف --</option>';
+                    $.each(data, function (i, g) {
+                        options += '<option value="' + g.id + '">' + g.name + '</option>';
+                    });
+                    $('#GradeId').html(options).prop('disabled', false);
+                });
+            }
+        });
+
+        $('#GradeId').change(function () {
+            var gradeId = $(this).val();
+            $('#ClassCheckboxes').hide().html('');
+            $('#classPlaceholder').show();
+
+            if (gradeId) {
+                $.getJSON('/Educator/GetClassesByGrade', { gradeId: gradeId }, function (data) {
+                    if (data.length === 0) {
+                        $('#ClassCheckboxes').show()
+                            .html('<p class="text-muted">لا توجد فصول متاحة</p>');
+                        $('#classPlaceholder').hide();
+                        return;
+                    }
+
+                    var html = '';
+                    $.each(data, function (i, c) {
+                        html += `
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="ClassIds" value="${c.id}" id="class_${c.id}">
+                                <label class="form-check-label" for="class_${c.id}">
+                                    ${c.name}
+                                </label>
+                            </div>`;
+                    });
+
+                    $('#ClassCheckboxes').show().html(html);
+                    $('#classPlaceholder').hide();
+                });
+            }
+        });
+    </script>
+}
