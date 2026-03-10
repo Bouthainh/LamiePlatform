@@ -11,6 +11,9 @@ namespace BadeePlatform.Controllers
             IActionResult Login();
             Task<IActionResult> Login(LoginEducatorDTO dto);
             Task<IActionResult> Logout();
+            Task<IActionResult> GetGradesBySchool(Guid schoolId);
+            Task<IActionResult> GetClassesByGrade(Guid gradeId);
+
 
     }
 }

@@ -12,11 +12,13 @@ namespace BadeePlatform.Controllers
 {
     public class EducatorController : Controller, IEducatorController
     {
-        private readonly IEducatorService _educatorService; 
+        private readonly IEducatorService _educatorService;
+        private readonly IChildService _childService;
 
-        public EducatorController(IEducatorService educatorService)
+        public EducatorController(IEducatorService educatorService, IChildService childService)
         {
             _educatorService = educatorService;
+            _childService = childService;
         }
 
         public IActionResult Index()
@@ -189,6 +191,12 @@ namespace BadeePlatform.Controllers
                 TempData["ErrorMessage"] = "تعذر حفظ البيانات. قد يكون هناك بيانات مكررة أو مشكلة في قاعدة البيانات.";
                 return View("ViewEducatorProfile", model);
             }
+            catch (InvalidOperationException ex)
+            {
+                await LoadSchoolsAsync();
+                TempData["ErrorMessage"] = ex.Message; 
+                return View("ViewEducatorProfile", model);
+            }
             catch (Exception ex)
             {
                 await LoadSchoolsAsync(); 
@@ -202,6 +210,20 @@ namespace BadeePlatform.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetGradesBySchool(Guid schoolId)
+        {
+            var grades = await _childService.GetGradesBySchoolIdAsync(schoolId);
+            return Json(grades.Select(g => new { id = g.GradeId, name = g.GradeName }));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetClassesByGrade(Guid gradeId)
+        {
+            var classes = await _childService.GetClassesByGradeIdAsync(gradeId);
+            return Json(classes.Select(c => new { id = c.ClassId, name = c.ClassName }));
         }
     }
 }
