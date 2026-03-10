@@ -46,7 +46,32 @@ namespace BadeePlatform.Services
             try
             {
                 _db.Educators.Add(eduator);
-                await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();// save the educator first
+                
+                if (dto.ClassIds != null && dto.ClassIds.Any())
+                {
+                    var occupiedClasses = await GetOccupiedClassNamesAsync(dto.ClassIds);
+                    if (occupiedClasses.Any())
+                    {
+                        
+                        _db.Educators.Remove(eduator);
+                        await _db.SaveChangesAsync();
+
+                        var names = string.Join("، ", occupiedClasses);
+                        return new ServiceResult(false, $"الفصول التالية مشغولة بمعلم آخر: {names}");
+                    }
+
+                    var selectedClasses = await _db.Classes
+                        .Where(c => dto.ClassIds.Contains(c.ClassId))
+                        .ToListAsync();
+
+                    foreach (var cls in selectedClasses)
+                    {
+                        cls.EducatorId = eduator.EducatorId;
+                    }
+
+                    await _db.SaveChangesAsync(); //save the educatorId to the selected classes
+                }
                 return new ServiceResult(true, "تم التسجيل بنجاح.", userId: eduator.EducatorId);
             }
             catch (Exception)
@@ -116,6 +141,14 @@ namespace BadeePlatform.Services
                 return null;
             var nameParts = educator.EducatorName?.Split(' ', 2) ?? new[] { "", "" };
 
+            var classes = await _db.Classes
+                .Where(c => c.EducatorId == eduactorId)
+                .ToListAsync();
+
+            var classIds = classes.Select(c => c.ClassId).ToList();
+            var gradeId = classes.FirstOrDefault()?.GradeId ?? Guid.Empty;
+
+
             return new EducatorProfileViewModel
             {
                 EducatorId = educator.EducatorId,
@@ -124,7 +157,10 @@ namespace BadeePlatform.Services
                 PhoneNumber = educator.PhoneNumber,
                 SchoolId = educator.SchoolId,
                 Email = educator.Email,
-                Username = educator.Username
+                Username = educator.Username,
+                Password= educator.Password,
+                GradeId = gradeId,      
+                ClassIds = classIds
 
             };
         }
@@ -149,9 +185,46 @@ namespace BadeePlatform.Services
                 educator.Password = hashedPassword;
             }
 
+            var occupiedClasses = await GetOccupiedClassNamesAsync(model.ClassIds, model.EducatorId);
+            if (occupiedClasses.Any())
+            {
+                var names = string.Join("، ", occupiedClasses);
+                throw new InvalidOperationException($"الفصول التالية مشغولة بمعلم آخر: {names}");
+            }
+            // clear old class associations 
+            var oldClasses = await _db.Classes
+                .Where(c => c.EducatorId == model.EducatorId)
+                .ToListAsync();
+            
+            foreach (var cls in oldClasses)
+            {
+                cls.EducatorId = null;
+            }
+            // assign new educator classes
+            if (model.ClassIds != null && model.ClassIds.Any())
+            {
+                var newClasses = await _db.Classes
+                    .Where(c => model.ClassIds.Contains(c.ClassId))
+                    .ToListAsync();
+
+                foreach (var cls in newClasses)
+                {
+                    cls.EducatorId = educator.EducatorId;
+                }
+            }
+
             await _db.SaveChangesAsync();
             return true;
         }
 
+        private async Task<List<string>> GetOccupiedClassNamesAsync(List<Guid> classIds, string currentEducatorId = null)
+        {
+            return await _db.Classes
+                .Where(c => classIds.Contains(c.ClassId)
+                         && c.EducatorId != null
+                         && c.EducatorId != currentEducatorId)
+                .Select(c => c.ClassName)
+                .ToListAsync();
+        }
     }
 }
