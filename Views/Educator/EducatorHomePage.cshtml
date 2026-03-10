@@ -2,3 +2,31 @@
 
 <a asp-controller="Educator" asp-action="ViewEducatorProfile">عرض الملف الشخصي</a>
 <a asp-controller="Educator" asp-action="Logout">الخروج من الحساب</a>
+<a href="@Url.Action("Chat", "Chat", new { educatorId = ViewBag.CurrentEducatorId, parentId = ViewBag.ParentId })"
+   class="btn btn-primary">
+    💬 مراسلة ولي الأمر
+</a>
+
+<div id="unreadBadge" style="display:none;">
+    <a href="@Url.Action("Index", "Chat")">
+        💬 لديك <span id="unreadCount"></span> رسالة غير مقروءة
+    </a>
+</div>
+
+@section Scripts {
+    <script>
+        function checkUnread() {
+            $.getJSON('/Chat/GetUnreadCount', function (data) {
+                if (data.count > 0) {
+                    $('#unreadCount').text(data.count);
+                    $('#unreadBadge').show();
+                } else {
+                    $('#unreadBadge').hide();
+                }
+            });
+        }
+
+        checkUnread();
+        setInterval(checkUnread, 30000);
+    </script>
+}

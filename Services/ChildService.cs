@@ -316,6 +316,7 @@ namespace BadeePlatform.Services
                     City = child.School?.City,
                     Grade = child.Grade?.GradeName,
                     Class = child.Class?.ClassName,
+                    EducatorId = child.Class?.EducatorId,
                     EducatorName = child.Class?.Educator?.EducatorName,
 
                     RelationshipType = parentChild.RelationshipType,

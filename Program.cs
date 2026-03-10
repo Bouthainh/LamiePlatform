@@ -19,6 +19,10 @@ builder.Services.AddScoped<BadeePlatform.Services.IDashboardService, BadeePlatfo
 
 builder.Services.AddScoped<BadeePlatform.Services.IEducatorService, BadeePlatform.Services.EducatorService>();
 
+builder.Services.AddScoped<BadeePlatform.Services.IChatService, BadeePlatform.Services.ChatService>();
+
+
+
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
 

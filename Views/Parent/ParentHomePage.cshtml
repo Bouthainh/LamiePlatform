@@ -69,10 +69,6 @@
                     <h2>الإشعارات</h2>
                     <div class="notifications-list">
                         <div class="notification-item">
-                            <div class="notification-icon">👧</div>
-                            <p>وصلت رسالة جديدة من معلمة لين</p>
-                        </div>
-                        <div class="notification-item">
                             <div class="notification-icon">🎯</div>
                             <p>تم اكتشاف تقدم في الذكاء البصري لدى عمر</p>
                         </div>
@@ -80,8 +76,32 @@
                             <div class="notification-icon">🔔</div>
                             <p>تقرير جديد متاح لطفلك</p>
                         </div>
+                        <div id="unreadBadge" style="display:none;" class="notification-item">
+                            <div class="notification-icon">💬</div>
+                            <a href="@Url.Action("Index", "Chat")">
+                                لديك <span id="unreadCount"></span> رسالة غير مقروءة
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </section>
         </div>
     </main>
+@section Scripts {
+    <script>
+        function checkUnread() {
+            $.getJSON('/Chat/GetUnreadCount', function (data) {
+                if (data.count > 0) {
+                    $('#unreadCount').text(data.count);
+                    $('#unreadBadge').show();
+                } else {
+                    $('#unreadBadge').hide();
+                }
+            });
+        }
+
+        checkUnread();
+        setInterval(checkUnread, 30000);
+    </script>
+}

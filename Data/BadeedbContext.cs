@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using BadeePlatform.Models;
 using BadeePlatform.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace BadeePlatform.Data;
 
@@ -51,6 +52,8 @@ public partial class BadeedbContext : DbContext
     public virtual DbSet<Request> Requests { get; set; }
 
     public virtual DbSet<School> Schools { get; set; }
+    public virtual DbSet<Conversation> Conversations { get; set; }
+    public virtual DbSet<Message> Messages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         if (!optionsBuilder.IsConfigured) {
@@ -655,6 +658,68 @@ public partial class BadeedbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(true)
                 .HasColumnName("school_name");
+        });
+
+        modelBuilder.Entity<Conversation>(entity =>
+        {
+            entity.HasKey(e => e.ConversationId).HasName("PK_Conversation");
+            entity.ToTable("Conversation");
+
+            entity.Property(e => e.ConversationId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("conversation_ID");
+            entity.Property(e => e.EducatorId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("educator_ID");
+            entity.Property(e => e.ParentId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("parent_ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("created_at");
+
+            entity.HasOne(d => d.Educator).WithMany()
+                .HasForeignKey(d => d.EducatorId)
+                .HasConstraintName("FK_Conversation_Educator");
+
+            entity.HasOne(d => d.Parent).WithMany()
+                .HasForeignKey(d => d.ParentId)
+                .HasConstraintName("FK_Conversation_Parent");
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.MessageId).HasName("PK_Message");
+            entity.ToTable("Message");
+
+            entity.Property(e => e.MessageId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("message_ID");
+            entity.Property(e => e.ConversationId).HasColumnName("conversation_ID");
+            entity.Property(e => e.SenderType)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_type");
+            entity.Property(e => e.SenderId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_ID");
+            entity.Property(e => e.Content)
+                .HasMaxLength(1000)
+                .IsUnicode(true)
+                .HasColumnName("content");
+            entity.Property(e => e.IsRead)
+                .HasDefaultValue(false)
+                .HasColumnName("is_read");
+            entity.Property(e => e.SentAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("sent_at");
+
+            entity.HasOne(d => d.Conversation).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.ConversationId)
+                .HasConstraintName("FK_Message_Conversation");
         });
 
         OnModelCreatingPartial(modelBuilder);
