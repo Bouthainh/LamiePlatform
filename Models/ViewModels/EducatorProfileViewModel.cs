@@ -27,6 +27,12 @@ namespace BadeePlatform.Models.ViewModels
         [Required(ErrorMessage = "يجب اختيار المدرسة")]
         public Guid? SchoolId { get; set; }
 
+        [Required(ErrorMessage = "يجب اختيار المرحلة")]
+        public Guid GradeId { get; set; }
+
+        [Required(ErrorMessage = "يجب اختيار الفصل")]
+        public List<Guid> ClassIds { get; set; } = new List<Guid>();
+
         [Required(ErrorMessage = "البريد الإلكتروني مطلوب.")]
         [EmailAddress(ErrorMessage = "صيغة البريد الإلكتروني غير صحيحة.")]
         [StringLength(100, ErrorMessage = "البريد الإلكتروني لا يمكن أن يتجاوز 100 حرف.")]
