@@ -142,6 +142,9 @@ namespace BadeePlatform.Services
                     .ThenInclude(c => c.Class)
                 .Include(p => p.Child)
                     .ThenInclude(c => c.School)
+                .Include(p => p.Child)
+                    .ThenInclude(c => c.ParentChildren)
+                             .ThenInclude(pc => pc.Parent)
                 .Where(p => p.EducatorId == educatorId)
                 .ToListAsync();
 

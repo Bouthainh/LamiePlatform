@@ -274,6 +274,8 @@ namespace BadeePlatform.Controllers
             if (string.IsNullOrEmpty(educatorId))
                 return RedirectToAction("Login");
 
+            ViewBag.CurrentEducatorId = educatorId;
+
             var students = await _requestService.GetEducatorStudentsAsync(educatorId);
             return View(students);
         }

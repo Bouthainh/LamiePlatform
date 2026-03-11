@@ -42,6 +42,17 @@
                                 عرض لوحة التحكم
                             </a>
                         </td>
+                        <td>
+                            @foreach (var pc in child.ParentChildren)
+                            {
+                                <a href="@Url.Action("Chat", "Chat", new { 
+                                       educatorId = ViewBag.CurrentEducatorId, 
+                                       parentId = pc.ParentId })"
+                                   class="btn btn-primary" style="margin:2px;">
+                                    💬 مراسلة ولي الأمر
+                                </a>
+                            }
+                        </td>
                     </tr>
                 }
             </tbody>
