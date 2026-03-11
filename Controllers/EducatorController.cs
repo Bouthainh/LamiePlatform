@@ -12,13 +12,15 @@ namespace BadeePlatform.Controllers
 {
     public class EducatorController : Controller, IEducatorController
     {
+        private readonly IRequestService _requestService;
         private readonly IEducatorService _educatorService;
         private readonly IChildService _childService;
 
-        public EducatorController(IEducatorService educatorService, IChildService childService)
+        public EducatorController(IEducatorService educatorService, IChildService childService, IRequestService requestService)
         {
             _educatorService = educatorService;
             _childService = childService;
+            _requestService = requestService;
         }
 
         public IActionResult Index()
@@ -224,6 +226,55 @@ namespace BadeePlatform.Controllers
         {
             var classes = await _childService.GetClassesByGradeIdAsync(gradeId);
             return Json(classes.Select(c => new { id = c.ClassId, name = c.ClassName }));
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> SearchChildren(string searchTerm)
+        {
+            var educatorId = GetCurrentEducatorId();
+            if (string.IsNullOrEmpty(educatorId))
+                return RedirectToAction("Login");
+
+            var sentRequests = await _requestService.GetSentRequestsByEducatorAsync(educatorId);
+            ViewBag.SentRequests = sentRequests;
+            ViewBag.SearchTerm = searchTerm;
+
+            if (string.IsNullOrEmpty(searchTerm))
+                return View(new List<BadeePlatform.Models.Child>());
+
+            var results = await _requestService.SearchChildrenAsync(searchTerm, educatorId);
+            return View(results);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SendRequest(string childId)
+        {
+            var educatorId = GetCurrentEducatorId();
+            if (string.IsNullOrEmpty(educatorId))
+                return RedirectToAction("Login");
+
+            var result = await _requestService.SendRequestAsync(educatorId, childId);
+
+            if (result.Success)
+                TempData["SuccessMessage"] = result.Message;
+            else
+                TempData["ErrorMessage"] = result.Message;
+
+            return RedirectToAction("SearchChildren");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> MyStudents()
+        {
+            var educatorId = GetCurrentEducatorId();
+            if (string.IsNullOrEmpty(educatorId))
+                return RedirectToAction("Login");
+
+            var students = await _requestService.GetEducatorStudentsAsync(educatorId);
+            return View(students);
         }
     }
 }

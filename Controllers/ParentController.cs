@@ -13,16 +13,17 @@ namespace BadeePlatform.Controllers
 {
     public class ParentController : Controller, IParentController
     {
+        private readonly IRequestService _requestService;
         private readonly IChildService _childService;
         private readonly IParentService _parentService;
         private readonly IDashboardService _dashboardService;
 
-        public ParentController(IChildService childService, IParentService parentService, IDashboardService dashboardService)
+        public ParentController(IChildService childService, IParentService parentService, IDashboardService dashboardService, IRequestService requestService)
         {
             _childService = childService;
             _parentService = parentService;
             _dashboardService = dashboardService;
-
+            _requestService = requestService;
         }
 
         public IActionResult Index()
@@ -565,6 +566,36 @@ namespace BadeePlatform.Controllers
                 return View("ViewProfile", model);
             }
 
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ParentRequests()
+        {
+            var parentId = GetCurrentParentId();
+            if (string.IsNullOrEmpty(parentId))
+                return RedirectToAction("Login");
+
+            var requests = await _requestService.GetPendingRequestsByParentAsync(parentId);
+            return View(requests);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RespondToRequest(Guid requestId, string status)
+        {
+            var parentId = GetCurrentParentId();
+            if (string.IsNullOrEmpty(parentId))
+                return RedirectToAction("Login");
+
+            var result = await _requestService.RespondToRequestAsync(requestId, status, parentId);
+
+            if (result.Success)
+                TempData["SuccessMessage"] = result.Message;
+            else
+                TempData["ErrorMessage"] = result.Message;
+
+            return RedirectToAction("ParentRequests");
         }
     }
 }
