@@ -16,12 +16,16 @@ namespace BadeePlatform.Controllers
         private readonly IRequestService _requestService;
         private readonly IEducatorService _educatorService;
         private readonly IChildService _childService;
+        private readonly IDashboardService _dashboardService;
 
-        public EducatorController(IEducatorService educatorService, IChildService childService, IRequestService requestService)
+
+
+        public EducatorController(IEducatorService educatorService, IChildService childService, IRequestService requestService, IDashboardService dashboardService)
         {
             _educatorService = educatorService;
             _childService = childService;
             _requestService = requestService;
+            _dashboardService = dashboardService;
         }
 
         public IActionResult Index()
@@ -321,6 +325,24 @@ namespace BadeePlatform.Controllers
                 TempData["ErrorMessage"] = "حدث خطأ غير متوقع أثناء عملية الحذف. الرجاء المحاولة لاحقاً.";
                 return RedirectToAction("ViewEducatorProfile");
             }
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult ViewStudentDashboard(string childId)
+        {
+            var educatorId = GetCurrentEducatorId();
+            if (string.IsNullOrEmpty(educatorId))
+                return RedirectToAction("Login");
+
+            var dashboardData = _dashboardService.GetChildDashboard(childId);
+
+            if (dashboardData == null)
+            {
+                TempData["ErrorMessage"] = "لا توجد بيانات متاحة لهذا الطالب";
+                return RedirectToAction("MyStudents");
+            }
+
+            return View(dashboardData);
         }
     }
 }
