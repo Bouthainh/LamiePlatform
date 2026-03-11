@@ -134,7 +134,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.Gender)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("gender");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
             entity.Property(e => e.IconImgPath)
