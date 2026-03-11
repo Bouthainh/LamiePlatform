@@ -76,6 +76,9 @@
                             <div class="notification-icon">🔔</div>
                             <p>تقرير جديد متاح لطفلك</p>
                         </div>
+                        <a asp-controller="Parent" asp-action="ParentRequests">
+                            طلبات المعلمين
+                        </a>
                         <div id="unreadBadge" style="display:none;" class="notification-item">
                             <div class="notification-icon">💬</div>
                             <a href="@Url.Action("Index", "Chat")">
