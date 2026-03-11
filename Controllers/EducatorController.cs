@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace BadeePlatform.Controllers
@@ -275,6 +276,49 @@ namespace BadeePlatform.Controllers
 
             var students = await _requestService.GetEducatorStudentsAsync(educatorId);
             return View(students);
+        }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteEducatorAccount()
+        {
+            var educatorId = GetCurrentEducatorId();
+            if (string.IsNullOrEmpty(educatorId))
+            {
+                return RedirectToAction("Login");
+            }
+            try
+            {
+                bool success = await _educatorService.DeleteEducatorAccountAsync(educatorId);
+                if (!success)
+                {
+                    TempData["ErrorMessage"] = "الحساب غير موجود";
+                    return RedirectToAction("Login");
+                }
+
+                await HttpContext.SignOutAsync();
+                TempData["SuccessMessage"] = "تم حذف حسابك بنجاح";
+                return RedirectToAction("Login");
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Database Error in DeleteEducatorAccount: {ex.Message}");
+                TempData["ErrorMessage"] = "حدث خطأ أثناء حذف البيانات من قاعدة البيانات.";
+                return RedirectToAction("ViewEducatorProfile");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Invalid Operation in DeleteEducatorAccount: {ex.Message}");
+                TempData["ErrorMessage"] = "العملية غير صالحة. الرجاء المحاولة مرة أخرى.";
+                return RedirectToAction("ViewEducatorProfile");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected Error in DeleteEducatorAccount: {ex.Message}");
+                TempData["ErrorMessage"] = "حدث خطأ غير متوقع أثناء عملية الحذف. الرجاء المحاولة لاحقاً.";
+                return RedirectToAction("ViewEducatorProfile");
+            }
         }
     }
 }

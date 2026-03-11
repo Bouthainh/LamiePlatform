@@ -11,5 +11,8 @@ namespace BadeePlatform.Services
         public Task<ServiceResult> LoginEducatorAsync(LoginEducatorDTO dto);
         public Task<EducatorProfileViewModel?> GetEducatorProfileAsync(string EducatorId);
         public Task<bool> UpdateEducatorProfileAsync(EducatorProfileViewModel model);
+
+        public  Task<bool> DeleteEducatorAccountAsync(string educatorId);
+
     }
 }

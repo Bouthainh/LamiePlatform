@@ -226,5 +226,18 @@ namespace BadeePlatform.Services
                 .Select(c => c.ClassName)
                 .ToListAsync();
         }
+
+        public async Task<bool> DeleteEducatorAccountAsync(string educatorId)
+        {
+            var educator = await _db.Educators
+                .FirstOrDefaultAsync(e => e.EducatorId == educatorId);
+
+            if (educator == null) return false;
+
+            _db.Educators.Remove(educator);
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

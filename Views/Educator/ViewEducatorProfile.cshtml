@@ -87,6 +87,15 @@
     </div>
 </form>
 
+<div class="action-buttons">
+    <form asp-controller="Educator" asp-action="DeleteEducatorAccount" method="post"
+          onsubmit="return confirm('هل أنت متأكد من حذف ملف @Model.FirstName؟');">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="EducatorId" value="@Model.EducatorId" />
+        <button type="submit" class="btn btn-delete">حذف الحساب</button>
+    </form>
+</div>
+
 
 
 @section Scripts {
