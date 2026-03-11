@@ -25,6 +25,7 @@ builder.Services.AddScoped<BadeePlatform.Services.IChatService, BadeePlatform.Se
 
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
+builder.Services.AddScoped<BadeePlatform.Services.IRequestService, BadeePlatform.Services.RequestService>();
 
 
 // Add services to the container.
