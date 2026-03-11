@@ -19,17 +19,13 @@ namespace BadeePlatform.Services
        
         public async Task<bool> DeleteChildProfileAsync(string parentId, string childId)
         {
-            var parentChildRecord = await _db.ParentChildren
-                .FirstOrDefaultAsync(pc => pc.ParentId == parentId && pc.ChildId == childId);
+            var childRecord = await _db.Children
+                  .FirstOrDefaultAsync(c => c.ChildId == childId);
 
-            if (parentChildRecord == null)
-            {
-                return false;
-            }
+            if (childRecord == null) return false;
 
-            _db.ParentChildren.Remove(parentChildRecord);
-            await _db.SaveChangesAsync();
-
+            _db.Children.Remove(childRecord);
+            await _db.SaveChangesAsync(); 
             return true;
         }
 
