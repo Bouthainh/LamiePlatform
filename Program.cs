@@ -10,6 +10,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Parent/Login";
         options.AccessDeniedPath = "/Parent/AccessDenied";
     });
+// register HttpClient for OpenAI API
+builder.Services.AddHttpClient("OpenAI", client =>
+{
+    var apiKey = builder.Configuration["OpenAI:ApiKey"]
+        ?? throw new InvalidOperationException("OpenAI:ApiKey not set in appsettings.json.");
+
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+});
 
 builder.Services.AddScoped<BadeePlatform.Services.IChildService, BadeePlatform.Services.ChildService>();
 
@@ -20,6 +28,8 @@ builder.Services.AddScoped<BadeePlatform.Services.IDashboardService, BadeePlatfo
 builder.Services.AddScoped<BadeePlatform.Services.IEducatorService, BadeePlatform.Services.EducatorService>();
 
 builder.Services.AddScoped<BadeePlatform.Services.IChatService, BadeePlatform.Services.ChatService>();
+builder.Services.AddScoped<BadeePlatform.Services.IRecommendationService, BadeePlatform.Services.RecommendationService>();
+
 
 
 
