@@ -72,15 +72,15 @@ public partial class BadeedbContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("recommendation_ID");
             entity.Property(e => e.ActivityDescription)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_description");
             entity.Property(e => e.ActivityName)
                 .HasMaxLength(3000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_name");
             entity.Property(e => e.Category)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("category");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
