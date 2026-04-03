@@ -182,6 +182,10 @@ public partial class BadeedbContext : DbContext
                 .IsUnicode(true)
                 .HasColumnName("group_name");
             entity.Property(e => e.MatchScore).HasColumnName("match_score");
+
+            entity.HasOne(d => d.Class).WithMany(p => p.ChildGroups)
+                .HasForeignKey(d => d.ClassId)
+              .HasConstraintName("FK_ChildGroup_Class");
         });
 
         modelBuilder.Entity<ChildIntelligence>(entity =>

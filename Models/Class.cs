@@ -22,4 +22,5 @@ public partial class Class
     public virtual Educator? Educator { get; set; }
 
     public virtual Grade? Grade { get; set; }
+    public virtual ICollection<ChildGroup> ChildGroups { get; set; } = new List<ChildGroup>();
 }
