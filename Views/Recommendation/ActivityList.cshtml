@@ -1,0 +1,53 @@
+@model LamiePlatform.Models.ViewModels.RecommendationViewModel
+
+@{
+    ViewData["Title"] = "التوصيات";
+}
+
+<h2>التوصيات النشاطية</h2>
+
+@if (TempData["Success"] != null)
+{
+    <p style="color:green;">@TempData["Success"]</p>
+}
+@if (TempData["Error"] != null)
+{
+    <p style="color:red;">@TempData["Error"]</p>
+}
+
+@if (!Model.Recommendations.Any())
+{
+    <p>لا توجد توصيات بعد. اضغط على الزر أدناه لتوليد أول توصية.</p>
+}
+else
+{
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>اسم النشاط</th>
+                <th>الفئة</th>
+                <th>التفاصيل</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Recommendations)
+            {
+                <tr>
+                    <td>@item.ActivityName</td>
+                    <td>@item.Category</td>
+                    <td>
+                        <a asp-action="ActivityDetail" asp-route-id="@item.RecommendationId">عرض</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<br />
+
+<form asp-action="GenerateForChild" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="childId" value="@Model.ChildId" />
+    <button type="submit">توليد توصية جديدة</button>
+</form>
