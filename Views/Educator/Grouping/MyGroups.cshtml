@@ -1,0 +1,76 @@
+﻿@model List<BadeePlatform.Models.ChildGroup>
+@{
+    ViewData["Title"] = "مجموعاتي";
+    var classId = ViewBag.ClassId;
+    var notGroupedYet = ViewBag.NotGroupedYet ?? false;
+}
+<div class="container mt-4" dir="rtl">
+    <h2 class="mb-4">مجموعات الفصل</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">تم إنشاء المجموعات بنجاح!</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    @if (notGroupedYet)
+    {
+        <div class="text-center py-5">
+            <h5 class="text-muted mb-4">لم يتم إنشاء مجموعات لهذا الفصل بعد.</h5>
+            <form method="post" action="/Grouping/CreateGroups">
+                <input type="hidden" name="classId" value="@classId" />
+                <button type="submit" class="btn btn-primary btn-lg">
+                    إنشاء المجموعات
+                </button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @{
+                int groupNumber = 1;
+            }
+            @foreach (var group in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header">
+                            <strong>المجموعة @groupNumber</strong>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-muted mb-3">الأطفال (@group.Children.Count)</h6>
+                            <ul class="list-group list-group-flush">
+                                @foreach (var child in group.Children)
+                                {
+                                    var top1 = child.ChildIntelligences
+                                    .OrderByDescending(ci => ci.ProficiencyScore)
+                                    .FirstOrDefault();
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>@child.ChildName</span>
+                                        @if (top1 != null)
+                                        {
+                                            <span>@top1.Intelligence?.IntelligenceName (@top1.ProficiencyScore)</span>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                            <div class="mt-3">
+                                <a asp-controller="Recommendation"
+                                   asp-action="GetRecommendation"
+                                   asp-route-groupId="@group.ChildGroupId"
+                                   class="btn btn-primary w-100">
+                                    عرض التوصيات
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                groupNumber++;
+            }
+        </div>
+    }
+</div>

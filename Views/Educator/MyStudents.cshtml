@@ -24,6 +24,7 @@
                     <th>الفصل</th>
                     <th>المدرسة</th>
                     <th>لوحة التحكم</th>
+                    <th>المجموعات</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,11 +37,11 @@
                         <td>@child.Class?.ClassName</td>
                         <td>@child.School?.SchoolName</td>
                         <td>
-                            <a asp-controller="Parent"
-                               asp-action="ViewChildDashboard"
-                               asp-route-childId="@child.ChildId">
-                                عرض لوحة التحكم
-                            </a>
+                           <a asp-controller="Educator"
+                           asp-action="ViewStudentDashboard"
+                           asp-route-childId="@child.ChildId">
+                           عرض لوحة التحكم
+                       </a>
                         </td>
                         <td>
                             @foreach (var pc in child.ParentChildren)

@@ -1,4 +1,5 @@
 ﻿using BadeePlatform.Data;
+using BadeePlatform.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,7 @@ builder.Services.AddScoped<BadeePlatform.Services.IRecommendationService, BadeeP
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
 builder.Services.AddScoped<BadeePlatform.Services.IRequestService, BadeePlatform.Services.RequestService>();
+builder.Services.AddScoped<BadeePlatform.Services.IGroupingService, BadeePlatform.Services.GroupingService>();
 
 
 // Add services to the container.
