@@ -3,6 +3,7 @@
     ViewData["Title"] = "مجموعاتي";
     var classId = ViewBag.ClassId;
     var notGroupedYet = ViewBag.NotGroupedYet ?? false;
+    var educatorId = ViewBag.EducatorId as string;
 }
 <div class="container mt-4" dir="rtl">
     <h2 class="mb-4">مجموعات الفصل</h2>
@@ -60,7 +61,8 @@
                             </ul>
                             <div class="mt-3">
                                 <a asp-controller="Recommendation"
-                                   asp-action="GetRecommendation"
+                                   asp-action="EdActivityList"
+                                   asp-route-educatorId="@educatorId"
                                    asp-route-groupId="@group.ChildGroupId"
                                    class="btn btn-primary w-100">
                                     عرض التوصيات
