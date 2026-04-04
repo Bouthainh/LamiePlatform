@@ -19,17 +19,13 @@ namespace BadeePlatform.Services
        
         public async Task<bool> DeleteChildProfileAsync(string parentId, string childId)
         {
-            var parentChildRecord = await _db.ParentChildren
-                .FirstOrDefaultAsync(pc => pc.ParentId == parentId && pc.ChildId == childId);
+            var childRecord = await _db.Children
+                  .FirstOrDefaultAsync(c => c.ChildId == childId);
 
-            if (parentChildRecord == null)
-            {
-                return false;
-            }
+            if (childRecord == null) return false;
 
-            _db.ParentChildren.Remove(parentChildRecord);
-            await _db.SaveChangesAsync();
-
+            _db.Children.Remove(childRecord);
+            await _db.SaveChangesAsync(); 
             return true;
         }
 
@@ -235,7 +231,7 @@ namespace BadeePlatform.Services
                 await CreateEducatorPermissionAsync(parentId, dto.ChildId, dto.ClassId.Value);
             }
 
-            return new ServiceResult(true, "تم إضافة الطفل بنجاح.", parentId: null, data: loginCode);
+            return new ServiceResult(true, "تم إضافة الطفل بنجاح.", userId: null, data: loginCode);
         }
 
         private async Task CreateEducatorPermissionAsync(string parentId, string childId, Guid classId)
@@ -316,6 +312,7 @@ namespace BadeePlatform.Services
                     City = child.School?.City,
                     Grade = child.Grade?.GradeName,
                     Class = child.Class?.ClassName,
+                    EducatorId = child.Class?.EducatorId,
                     EducatorName = child.Class?.Educator?.EducatorName,
 
                     RelationshipType = parentChild.RelationshipType,

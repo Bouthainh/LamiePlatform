@@ -1,0 +1,161 @@
+﻿@model BadeePlatform.Models.ViewModels.EducatorProfileViewModel
+
+@if (TempData["ProfileEditedSuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["ProfileEditedSuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<div class="profile-header">
+    <h1>الملف الشخصي</h1>
+</div>
+
+<form asp-controller="Educator" asp-action="EditProfile" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="EducatorId" />
+
+    <div class="form-grid">
+        <div class="form-group form-group--fname">
+            <label asp-for="FirstName">الاسم الأول</label>
+            <input asp-for="FirstName" class="form-control" type="text" required maxlength="50" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-group--lname">
+            <label asp-for="LastName">اسم العائلة</label>
+            <input asp-for="LastName" class="form-control" type="text" required maxlength="50" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-group--phone">
+            <label>رقم الجوال</label>
+            <input asp-for="PhoneNumber" class="form-control"
+                   required maxlength="10" pattern="05\d{8}"
+                   title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-group--school">
+            <label asp-for="SchoolId">المدرسة</label>
+            @Html.DropDownListFor(m => m.SchoolId,
+            ViewBag.Schools as SelectList,
+                                "-- اختر المدرسة --",
+                        new { @class = "form-control" })
+            <span asp-validation-for="SchoolId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>الصف الدراسي</label>
+            <select id="GradeId" name="GradeId" class="form-control">
+                <option value="">-- اختر الصف --</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>الفصل الدراسي</label>
+            <div id="ClassCheckboxes" style="border:1px solid #ced4da; border-radius:8px; padding:10px; background:#f9f9f9;">
+                <p class="text-muted">-- اختر الصف أولاً --</p>
+            </div>
+        </div>
+        <div class="form-group form-group--email">
+            <label>البريد الإلكتروني</label>
+            <input asp-for="Email" class="form-control" type="email"
+                   required maxlength="100" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-group--username">
+            <label>اسم المستخدم</label>
+            <input asp-for="Username" class="form-control"
+                   required minlength="3" maxlength="50" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="form-group form-group--password">
+            <label>كلمة المرور</label>
+            <input asp-for="Password" type="password" class="form-control" minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                   title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +"
+                   class="form-control" placeholder="أدخل قيمة جديدة لإعادة تعيين كلمة المرور" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-submit">
+        <button type="submit">حفظ التغييرات</button>
+    </div>
+</form>
+
+<div class="action-buttons">
+    <form asp-controller="Educator" asp-action="DeleteEducatorAccount" method="post"
+          onsubmit="return confirm('هل أنت متأكد من حذف ملف @Model.FirstName؟');">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="EducatorId" value="@Model.EducatorId" />
+        <button type="submit" class="btn btn-delete">حذف الحساب</button>
+    </form>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        var currentGradeId = '@Model.GradeId';
+        var currentClassIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassIds));
+
+        $('#SchoolId').change(function () {
+            var schoolId = $(this).val();
+            $('#GradeId').html('<option value="">-- اختر الصف --</option>');
+            $('#ClassCheckboxes').html('<p class="text-muted">-- اختر الصف أولاً --</p>');
+
+            if (schoolId) {
+                $.getJSON('/Educator/GetGradesBySchool', { schoolId: schoolId }, function (data) {
+                    var options = '<option value="">-- اختر الصف --</option>';
+                    $.each(data, function (i, g) {
+                        var selected = g.id == currentGradeId ? 'selected' : '';
+                        options += '<option value="' + g.id + '" ' + selected + '>' + g.name + '</option>';
+                    });
+                    $('#GradeId').html(options);
+
+                    if (currentGradeId) {
+                        $('#GradeId').val(currentGradeId).trigger('change');
+                    }
+                });
+            }
+        });
+
+        $('#GradeId').change(function () {
+            var gradeId = $(this).val();
+            $('#ClassCheckboxes').html('');
+
+            if (gradeId) {
+                $.getJSON('/Educator/GetClassesByGrade', { gradeId: gradeId }, function (data) {
+                    if (data.length === 0) {
+                        $('#ClassCheckboxes').html('<p class="text-muted">لا توجد فصول متاحة</p>');
+                        return;
+                    }
+                    var html = '';
+                    $.each(data, function (i, c) {
+                        var checked = currentClassIds.includes(c.id) ? 'checked' : '';
+                        html += `
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                       name="ClassIds" value="${c.id}" id="class_${c.id}" ${checked}>
+                                <label class="form-check-label" for="class_${c.id}">
+                                    ${c.name}
+                                </label>
+                            </div>`;
+                    });
+                    $('#ClassCheckboxes').html(html);
+                });
+            }
+        });
+
+        $(document).ready(function () {
+            var schoolId = $('#SchoolId').val();
+            if (schoolId) {
+                $('#SchoolId').trigger('change');
+            }
+        });
+    </script>
+}

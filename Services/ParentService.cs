@@ -47,7 +47,7 @@ namespace BadeePlatform.Services
             {
                 _db.Parents.Add(parent);
                 await _db.SaveChangesAsync();
-                return new ServiceResult(true, "تم التسجيل بنجاح.", parent.ParentId);
+                return new ServiceResult(true, "تم التسجيل بنجاح.", userId: parent.ParentId);
             }
             catch (Exception)
             {
@@ -91,7 +91,7 @@ namespace BadeePlatform.Services
 
             if (verificationResult == PasswordVerificationResult.Success)
             {
-                return new ServiceResult(true, "تم تسجيل الدخول بنجاح.", parent.ParentId, parent.Role);
+                return new ServiceResult(true, "تم تسجيل الدخول بنجاح.", userId: parent.ParentId, parent.Role);
             }
 
             return new ServiceResult(false, "اسم المستخدم أو كلمة المرور غير صحيحة.");

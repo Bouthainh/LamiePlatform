@@ -13,6 +13,8 @@ public partial class ChildGroup
 
     public int? MatchScore { get; set; }
 
+    public virtual Class? Class { get; set; }  
+
     public virtual ICollection<ActivityRecommendation> ActivityRecommendations { get; set; } = new List<ActivityRecommendation>();
 
     public virtual ICollection<Child> Children { get; set; } = new List<Child>();

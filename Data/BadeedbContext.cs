@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using BadeePlatform.Models;
 using BadeePlatform.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace BadeePlatform.Data;
 
@@ -51,6 +52,8 @@ public partial class BadeedbContext : DbContext
     public virtual DbSet<Request> Requests { get; set; }
 
     public virtual DbSet<School> Schools { get; set; }
+    public virtual DbSet<Conversation> Conversations { get; set; }
+    public virtual DbSet<Message> Messages { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         if (!optionsBuilder.IsConfigured) {
@@ -69,15 +72,15 @@ public partial class BadeedbContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("recommendation_ID");
             entity.Property(e => e.ActivityDescription)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_description");
             entity.Property(e => e.ActivityName)
                 .HasMaxLength(3000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_name");
             entity.Property(e => e.Category)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("category");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
@@ -123,7 +126,7 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ChildGroupId).HasColumnName("child_group_ID");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_name");
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.CreatedAt)
@@ -131,7 +134,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.Gender)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("gender");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
             entity.Property(e => e.IconImgPath)
@@ -176,9 +179,13 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.GroupName)
                 .HasMaxLength(50)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("group_name");
             entity.Property(e => e.MatchScore).HasColumnName("match_score");
+
+            entity.HasOne(d => d.Class).WithMany(p => p.ChildGroups)
+                .HasForeignKey(d => d.ClassId)
+              .HasConstraintName("FK_ChildGroup_Class");
         });
 
         modelBuilder.Entity<ChildIntelligence>(entity =>
@@ -202,7 +209,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("proficiency_score");
             entity.Property(e => e.Summary)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("summary");
 
             entity.HasOne(d => d.Child).WithMany(p => p.ChildIntelligences)
@@ -227,7 +234,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("class_ID");
             entity.Property(e => e.ClassName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("class_name");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
@@ -265,7 +272,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("educator_ID");
             entity.Property(e => e.EducatorName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_name");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
@@ -347,7 +354,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("character_description");
             entity.Property(e => e.CharacterName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("character_name");
         });
 
@@ -449,7 +456,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.GradeName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("grade_name");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
 
@@ -507,7 +514,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("Icon_img_path");
             entity.Property(e => e.IntelligenceName)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("intelligence_name");
             entity.Property(e => e.IntelligenceTypeDescription)
                 .IsUnicode(false)
@@ -542,7 +549,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("is_verified");
             entity.Property(e => e.ParentName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(256)
@@ -645,16 +652,78 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("school_ID");
             entity.Property(e => e.Branch)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("branch");
             entity.Property(e => e.City)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("city");
             entity.Property(e => e.SchoolName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("school_name");
+        });
+
+        modelBuilder.Entity<Conversation>(entity =>
+        {
+            entity.HasKey(e => e.ConversationId).HasName("PK_Conversation");
+            entity.ToTable("Conversation");
+
+            entity.Property(e => e.ConversationId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("conversation_ID");
+            entity.Property(e => e.EducatorId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("educator_ID");
+            entity.Property(e => e.ParentId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("parent_ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("created_at");
+
+            entity.HasOne(d => d.Educator).WithMany()
+                .HasForeignKey(d => d.EducatorId)
+                .HasConstraintName("FK_Conversation_Educator");
+
+            entity.HasOne(d => d.Parent).WithMany()
+                .HasForeignKey(d => d.ParentId)
+                .HasConstraintName("FK_Conversation_Parent");
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.MessageId).HasName("PK_Message");
+            entity.ToTable("Message");
+
+            entity.Property(e => e.MessageId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("message_ID");
+            entity.Property(e => e.ConversationId).HasColumnName("conversation_ID");
+            entity.Property(e => e.SenderType)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_type");
+            entity.Property(e => e.SenderId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_ID");
+            entity.Property(e => e.Content)
+                .HasMaxLength(1000)
+                .IsUnicode(true)
+                .HasColumnName("content");
+            entity.Property(e => e.IsRead)
+                .HasDefaultValue(false)
+                .HasColumnName("is_read");
+            entity.Property(e => e.SentAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("sent_at");
+
+            entity.HasOne(d => d.Conversation).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.ConversationId)
+                .HasConstraintName("FK_Message_Conversation");
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -1,0 +1,31 @@
+﻿<h1>الصفحة الرئيسية للمعلم</h1>
+
+<a asp-controller="Educator" asp-action="ViewEducatorProfile">عرض الملف الشخصي</a>
+<a asp-controller="Educator" asp-action="Logout">الخروج من الحساب</a>
+<a asp-controller="Educator" asp-action="SearchChildren">البحث عن طفل</a>
+<a asp-controller="Educator" asp-action="MyStudents">طلابي</a>
+<a asp-controller="Grouping" asp-action="Index">عرض المجموعات</a>
+
+<div id="unreadBadge" style="display:none;">
+    <a href="@Url.Action("Index", "Chat")">
+        💬 لديك <span id="unreadCount"></span> رسالة غير مقروءة
+    </a>
+</div>
+
+@section Scripts {
+    <script>
+        function checkUnread() {
+            $.getJSON('/Chat/GetUnreadCount', function (data) {
+                if (data.count > 0) {
+                    $('#unreadCount').text(data.count);
+                    $('#unreadBadge').show();
+                } else {
+                    $('#unreadBadge').hide();
+                }
+            });
+        }
+
+        checkUnread();
+        setInterval(checkUnread, 30000);
+    </script>
+}

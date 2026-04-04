@@ -1,0 +1,67 @@
+﻿@model List<BadeePlatform.Models.Child>
+@{
+    ViewData["Title"] = "لامع - طلابي";
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
+
+<main dir="rtl">
+
+    <h1>قائمة طلابي</h1>
+
+    @if (Model != null && Model.Any())
+    {
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>رقم الهوية</th>
+                    <th>اسم الطالب</th>
+                    <th>المرحلة</th>
+                    <th>الفصل</th>
+                    <th>المدرسة</th>
+                    <th>لوحة التحكم</th>
+                    <th>المجموعات</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var child in Model)
+                {
+                    <tr>
+                        <td>@child.ChildId</td>
+                        <td>@child.ChildName</td>
+                        <td>@child.Grade?.GradeName</td>
+                        <td>@child.Class?.ClassName</td>
+                        <td>@child.School?.SchoolName</td>
+                        <td>
+                           <a asp-controller="Educator"
+                           asp-action="ViewStudentDashboard"
+                           asp-route-childId="@child.ChildId">
+                           عرض لوحة التحكم
+                       </a>
+                        </td>
+                        <td>
+                            @foreach (var pc in child.ParentChildren)
+                            {
+                                <a href="@Url.Action("Chat", "Chat", new { 
+                                       educatorId = ViewBag.CurrentEducatorId, 
+                                       parentId = pc.ParentId })"
+                                   class="btn btn-primary" style="margin:2px;">
+                                    💬 مراسلة ولي الأمر
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>لا يوجد طلاب مضافين حتى الآن</p>
+    }
+
+</main>
