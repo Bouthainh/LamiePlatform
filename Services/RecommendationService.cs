@@ -15,7 +15,6 @@ namespace BadeePlatform.Services
         private readonly BadeedbContext _db;
         private readonly IHttpClientFactory _httpFactory;
         private readonly string _openAiApiKey;
-        private const int GroupSize = 4;
 
         //defining the ai model: GPT-4o-mini
         private const string GptModel = "gpt-4o-mini";
@@ -122,34 +121,41 @@ namespace BadeePlatform.Services
                 sb.AppendLine($"  {ci.Intelligence?.IntelligenceName}: {ci.ProficiencyScore}");
 
             sb.AppendLine();
+            //control instruction to ensure home-friendly activities for parents
+            sb.AppendLine("تأكد أن النشاط المقترح مناسب للتطبيق في المنزل، ولا يتطلب معدات متخصصة أو بيئة مدرسية"); 
             AppendSharedInstructions(sb);
 
             return sb.ToString();
         }
 
         // Educator prompt >> group context with averaged intelligences
-        private string BuildPrompt(ChildGroup group)
+         private string BuildPrompt(ChildGroup group)
         {
-            var averages = CalculateGroupIntelligenceAverages(group);
             var grade = group.Class?.Grade?.GradeName ?? "غير محدد";
-
+            var memberDominants = ExtractMemberDominantIntelligences(group);
+ 
             var sb = new StringBuilder();
-
+            //set the context for the educator
             sb.AppendLine("أنت متخصص في تطوير قدرات الأطفال داخل بيئة تعليمية.");
             sb.AppendLine($"الصف الدراسي: {grade}.");
-            sb.AppendLine($"حجم المجموعة: {GroupSize} أطفال.");
+            sb.AppendLine($"حجم المجموعة: {memberDominants.Count} أطفال.");
             sb.AppendLine();
-            sb.AppendLine("فيما يلي متوسط درجات المجموعة في نظرية الذكاءات المتعددة لهوارد غاردنر (من 100):");
+            sb.AppendLine("تم تشكيل هذه المجموعة بحيث يتميز كل طفل بذكاء مختلف، وفيما يلي الذكاء الأبرز لكل عضو:");
+ 
+            int memberNumber = 1;
+            foreach (var (childName, dominantIntelligence) in memberDominants)
+                sb.AppendLine($"  الطفل {memberNumber++} ({childName}): الذكاء الأبرز هو {dominantIntelligence}");
 
-            foreach (var (domain, avg) in averages)
-                sb.AppendLine($"  {domain}: {avg:F1}");
-
+            //control instruction to ensure classroom-friendly activities for educators
             sb.AppendLine();
-            sb.AppendLine("تأكد أن النشاط المقترح مناسب للتطبيق الجماعي داخل الفصل.");
+            sb.AppendLine("المطلوب: اقترح نشاطاً جماعياً واحداً داخل الفصل يستثمر الذكاء الأبرز لكل عضو في المجموعة،");
+            sb.AppendLine("بحيث يُسهم كل طفل من موضع قوته ويكمل الآخرين، مما يُنمّي مهاراتهم جميعاً معاً.");
+            sb.AppendLine("تأكد أن النشاط قابل للتطبيق الجماعي داخل الفصل الدراسي.");
             AppendSharedInstructions(sb);
-
+ 
             return sb.ToString();
         }
+ 
 
         // Shared instructions for both prompts 
         private static void AppendSharedInstructions(StringBuilder sb)
@@ -172,38 +178,25 @@ namespace BadeePlatform.Services
             sb.AppendLine("}");
         }
 
-
-        // Calculate average intelligence scores for a group
-        private static Dictionary<string, double> CalculateGroupIntelligenceAverages(ChildGroup group)
+        // Extract each child's single dominant intelligence (name + score) from the group
+        private static List<(string ChildName, string DominantIntelligence)> ExtractMemberDominantIntelligences(ChildGroup group)
         {
-            // scores per domain across all children
-            var totals = new Dictionary<string, (double Sum, int Count)>();
-
-            foreach (var child in group.Children)
-            {
-                foreach (var ci in child.ChildIntelligences)
+            return group.Children
+                .Select(c =>
                 {
-                    var domain = ci.Intelligence?.IntelligenceName ?? "غير معروف";
+                    var top = c.ChildIntelligences
+                        .OrderByDescending(ci => ci.ProficiencyScore)
+                        .FirstOrDefault();
 
-                    if (!totals.ContainsKey(domain))
-                        // Use 0.0 to ensure Sum is a double
-                        totals[domain] = (0.0, 0);
+                    var intelligenceName = top?.Intelligence?.IntelligenceName ?? "غير محدد";
+                    var childName = c.ChildName ?? $"طفل";
 
-                    // Convert nullable decimal to double, treating null as 0
-                    double score = (double)(ci.ProficiencyScore ?? 0m);
-
-                    totals[domain] = (totals[domain].Sum + score, totals[domain].Count + 1);
-                }
-            }
-
-            // Compute averages
-            return totals.ToDictionary(
-                kvp => kvp.Key,
-                kvp => kvp.Value.Count > 0 ? kvp.Value.Sum / kvp.Value.Count : 0.0
-            );
+                    return (childName, intelligenceName);
+                })
+                .ToList();
         }
 
-        //call the GPT API and parse the response into a structured result
+        // //call the GPT API and parse the response into a structured result
         private async Task<GptRecommendationResult?> CallGptAsync(string userPrompt)
         {
             try
@@ -328,6 +321,20 @@ namespace BadeePlatform.Services
                 ActivityDescription = rec.ActivityDescription ?? "",
                 Duration = rec.Duration
             };
+        }
+
+        public async Task<List<RecommendationListItem>> GetRecommendationsByGroupIdAsync(Guid groupId)
+        {
+            return await _db.ActivityRecommendations
+                .Where(r => r.GroupId == groupId)
+                .OrderByDescending(r => r.RecommendationId)
+                .Select(r => new RecommendationListItem
+                {
+                    RecommendationId = r.RecommendationId,
+                    ActivityName = r.ActivityName,
+                    Category = r.Category,
+                })
+                .ToListAsync();
         }
     }
 }

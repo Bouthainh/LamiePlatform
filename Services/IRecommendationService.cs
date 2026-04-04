@@ -12,6 +12,8 @@ namespace BadeePlatform.Services
         Task<ServiceResult> GenerateAndSaveForGroupAsync(Guid groupId, string educatorId);
         Task<List<RecommendationListItem>> GetRecommendationsByEducatorIdAsync(string educatorId);
         Task<RecommendationDetailViewModel?> GetGroupRecommendationDetailAsync(Guid recommendationId);
+        Task<List<RecommendationListItem>> GetRecommendationsByGroupIdAsync(Guid groupId);
+
 
     }
 }
