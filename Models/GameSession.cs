@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BadeePlatform.Models;
+namespace LamiePlatform.Models;
 
 public partial class GameSession
 {
-    public Guid GameId { get; set; }
-
     public Guid LevelId { get; set; }
 
     public string ChildId { get; set; } = null!;
 
-    public decimal? Score { get; set; }
+    public Guid GameSessionId { get; set; }
 
-    public int? TimeTaken { get; set; }
+    public double? TotalTime { get; set; }
 
-    public string? AttemptData { get; set; }
+    public DateTime? PlayedAt { get; set; }
+
+    public virtual ICollection<AspectResult> AspectResults { get; set; } = new List<AspectResult>();
 
     public virtual Child Child { get; set; } = null!;
 

@@ -1,17 +1,17 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.DTOs;
+﻿using BadeePlatform.DTOs;
 using BadeePlatform.Helpers;
 using BadeePlatform.Models;
 using BadeePlatform.Models.ViewModels;
+using LamiePlatform.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BadeePlatform.Services
 {
     public class ChildService : IChildService
     {
-        private readonly BadeedbContext _db;
+        private readonly LamiedbContext _db;
 
-        public ChildService(BadeedbContext db)
+        public ChildService(LamiedbContext db)
         {
             _db = db;
         }

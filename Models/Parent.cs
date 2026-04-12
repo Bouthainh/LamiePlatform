@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BadeePlatform.Models;
+namespace LamiePlatform.Models;
 
 public partial class Parent
 {
@@ -22,6 +22,8 @@ public partial class Parent
     public DateTime? CreatedAt { get; set; }
 
     public string? Role { get; set; }
+
+    public virtual ICollection<Conversation> Conversations { get; set; } = new List<Conversation>();
 
     public virtual ICollection<EducatorPermission> EducatorPermissions { get; set; } = new List<EducatorPermission>();
 

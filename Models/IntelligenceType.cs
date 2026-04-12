@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BadeePlatform.Models;
+namespace LamiePlatform.Models;
 
 public partial class IntelligenceType
 {
@@ -13,7 +13,9 @@ public partial class IntelligenceType
 
     public string? IconImgPath { get; set; }
 
+    public virtual ICollection<AspectResult> AspectResults { get; set; } = new List<AspectResult>();
+
     public virtual ICollection<ChildIntelligence> ChildIntelligences { get; set; } = new List<ChildIntelligence>();
 
-    public virtual ICollection<IntelligenceProgress> IntelligenceProgresses { get; set; } = new List<IntelligenceProgress>();
+    public virtual ICollection<GameLevel> GameLevels { get; set; } = new List<GameLevel>();
 }

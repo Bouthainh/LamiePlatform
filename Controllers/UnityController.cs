@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LamiePlatform.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BadeePlatform.Data;
 using System.Text.Json.Serialization;
 
 namespace BadeePlatform.Controllers
@@ -9,9 +9,9 @@ namespace BadeePlatform.Controllers
     [Route("api/[controller]")]
     public class UnityController : ControllerBase
     {
-        private readonly BadeedbContext _db;
+        private readonly LamiedbContext _db;
 
-        public UnityController(BadeedbContext db)
+        public UnityController(LamiedbContext db)
         {
             _db = db;
         }
@@ -60,6 +60,20 @@ namespace BadeePlatform.Controllers
                 Gender = child.Gender,
                 Message = "Login successful"
             });
+        }
+
+        [HttpGet("GetGameLevels")]
+        public async Task<IActionResult> GetGameLevels()
+        {
+            var levels = await _db.GameLevels
+                .Where(l => l.IntelligenceId != null)
+                .Select(l => new {
+                    levelId = l.LevelId,
+                    levelName = l.LevelName
+                })
+                .ToListAsync();
+
+            return Ok(levels);
         }
     }
 }

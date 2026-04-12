@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BadeePlatform.Models;
+namespace LamiePlatform.Models;
 
 public partial class ChildGroup
 {
@@ -13,9 +13,9 @@ public partial class ChildGroup
 
     public int? MatchScore { get; set; }
 
-    public virtual Class? Class { get; set; }  
-
     public virtual ICollection<ActivityRecommendation> ActivityRecommendations { get; set; } = new List<ActivityRecommendation>();
 
     public virtual ICollection<Child> Children { get; set; } = new List<Child>();
+
+    public virtual Class? Class { get; set; }
 }

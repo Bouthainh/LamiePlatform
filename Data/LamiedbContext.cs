@@ -1,23 +1,26 @@
-﻿using BadeePlatform.Models;
-using BadeePlatform.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using LamiePlatform.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace BadeePlatform.Data;
+namespace LamiePlatform.Data;
 
-public partial class BadeedbContext : DbContext
+public partial class LamiedbContext : DbContext
 {
-    public BadeedbContext()
+    public LamiedbContext()
     {
     }
 
-    public BadeedbContext(DbContextOptions<BadeedbContext> options)
+    public LamiedbContext(DbContextOptions<LamiedbContext> options)
         : base(options)
     {
     }
 
     public virtual DbSet<ActivityRecommendation> ActivityRecommendations { get; set; }
+
+    public virtual DbSet<AspectResult> AspectResults { get; set; }
+
+    public virtual DbSet<AssessmentItem> AssessmentItems { get; set; }
 
     public virtual DbSet<Child> Children { get; set; }
 
@@ -26,6 +29,8 @@ public partial class BadeedbContext : DbContext
     public virtual DbSet<ChildIntelligence> ChildIntelligences { get; set; }
 
     public virtual DbSet<Class> Classes { get; set; }
+
+    public virtual DbSet<Conversation> Conversations { get; set; }
 
     public virtual DbSet<Educator> Educators { get; set; }
 
@@ -37,13 +42,13 @@ public partial class BadeedbContext : DbContext
 
     public virtual DbSet<GameSession> GameSessions { get; set; }
 
-    public virtual DbSet<GameWorld> GameWorlds { get; set; }
-
     public virtual DbSet<Grade> Grades { get; set; }
 
-    public virtual DbSet<IntelligenceProgress> IntelligenceProgresses { get; set; }
+    public virtual DbSet<IndicatorResult> IndicatorResults { get; set; }
 
     public virtual DbSet<IntelligenceType> IntelligenceTypes { get; set; }
+
+    public virtual DbSet<Message> Messages { get; set; }
 
     public virtual DbSet<Parent> Parents { get; set; }
 
@@ -52,14 +57,11 @@ public partial class BadeedbContext : DbContext
     public virtual DbSet<Request> Requests { get; set; }
 
     public virtual DbSet<School> Schools { get; set; }
-    public virtual DbSet<Conversation> Conversations { get; set; }
-    public virtual DbSet<Message> Messages { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        if (!optionsBuilder.IsConfigured) {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263. optionsBuilder.UseSqlServer("Server=.;Database=badeedb;Trusted_Connection=True;TrustServerCertificate=true"); 
-        }
-    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.;Database=LamieDB;Trusted_Connection=True;TrustServerCertificate=true");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ActivityRecommendation>(entity =>
@@ -72,15 +74,15 @@ public partial class BadeedbContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("recommendation_ID");
             entity.Property(e => e.ActivityDescription)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("activity_description");
             entity.Property(e => e.ActivityName)
                 .HasMaxLength(3000)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("activity_name");
             entity.Property(e => e.Category)
                 .HasMaxLength(1000)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("category");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
@@ -96,6 +98,7 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Child).WithMany(p => p.ActivityRecommendations)
                 .HasForeignKey(d => d.ChildId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__ActivityR__child__778AC167");
 
             entity.HasOne(d => d.Class).WithMany(p => p.ActivityRecommendations)
@@ -104,11 +107,70 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Educator).WithMany(p => p.ActivityRecommendations)
                 .HasForeignKey(d => d.EducatorId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__ActivityR__educa__787EE5A0");
 
             entity.HasOne(d => d.Group).WithMany(p => p.ActivityRecommendations)
                 .HasForeignKey(d => d.GroupId)
                 .HasConstraintName("FK__ActivityR__group__797309D9");
+        });
+
+        modelBuilder.Entity<AspectResult>(entity =>
+        {
+            entity.HasKey(e => e.AspectResultId).HasName("PK__AspectRe__AB86FFC0B1A6C9B2");
+
+            entity.ToTable("AspectResult");
+
+            entity.Property(e => e.AspectResultId).HasColumnName("aspect_result_id");
+            entity.Property(e => e.AspectName)
+                .HasMaxLength(100)
+                .HasColumnName("aspect_name");
+            entity.Property(e => e.AspectRating)
+                .HasMaxLength(20)
+                .HasColumnName("aspect_rating");
+            entity.Property(e => e.AspectScore).HasColumnName("aspect_score");
+            entity.Property(e => e.GameSessionId).HasColumnName("gameSession_ID");
+            entity.Property(e => e.IntelligenceId).HasColumnName("intelligence_ID");
+            entity.Property(e => e.RecordedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("recorded_at");
+
+            entity.HasOne(d => d.GameSession).WithMany(p => p.AspectResults)
+                .HasForeignKey(d => d.GameSessionId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AspectResult_GameSession");
+
+            entity.HasOne(d => d.Intelligence).WithMany(p => p.AspectResults)
+                .HasForeignKey(d => d.IntelligenceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AspectResult_Intelligence");
+        });
+
+        modelBuilder.Entity<AssessmentItem>(entity =>
+        {
+            entity.HasKey(e => e.ItemId).HasName("PK__Assessme__5203084565EDBCE3");
+
+            entity.ToTable("AssessmentItem");
+
+            entity.Property(e => e.ItemId).HasColumnName("item_ID");
+            entity.Property(e => e.Accuracy).HasColumnName("accuracy");
+            entity.Property(e => e.ErrorRate).HasColumnName("error_rate");
+            entity.Property(e => e.FinalScore).HasColumnName("final_score");
+            entity.Property(e => e.IndicatorResultId).HasColumnName("indicator_result_id");
+            entity.Property(e => e.ItemIndex).HasColumnName("item_index");
+            entity.Property(e => e.PsychometricPts).HasColumnName("psychometric_pts");
+            entity.Property(e => e.Rating)
+                .HasMaxLength(20)
+                .HasColumnName("rating");
+            entity.Property(e => e.RecordedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("recorded_at");
+            entity.Property(e => e.SpeedScore).HasColumnName("speed_score");
+
+            entity.HasOne(d => d.IndicatorResult).WithMany(p => p.AssessmentItems)
+                .HasForeignKey(d => d.IndicatorResultId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_AssessmentItem_Indicator");
         });
 
         modelBuilder.Entity<Child>(entity =>
@@ -126,7 +188,7 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ChildGroupId).HasColumnName("child_group_ID");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("child_name");
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.CreatedAt)
@@ -134,7 +196,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.Gender)
                 .HasMaxLength(10)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("gender");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
             entity.Property(e => e.IconImgPath)
@@ -179,13 +241,13 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.GroupName)
                 .HasMaxLength(50)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("group_name");
             entity.Property(e => e.MatchScore).HasColumnName("match_score");
 
             entity.HasOne(d => d.Class).WithMany(p => p.ChildGroups)
                 .HasForeignKey(d => d.ClassId)
-              .HasConstraintName("FK_ChildGroup_Class");
+                .HasConstraintName("FK_ChildGroup_Class");
         });
 
         modelBuilder.Entity<ChildIntelligence>(entity =>
@@ -209,12 +271,11 @@ public partial class BadeedbContext : DbContext
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("proficiency_score");
             entity.Property(e => e.Summary)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("summary");
 
             entity.HasOne(d => d.Child).WithMany(p => p.ChildIntelligences)
                 .HasForeignKey(d => d.ChildId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__ChildInte__child__7B5B524B");
 
             entity.HasOne(d => d.Intelligence).WithMany(p => p.ChildIntelligences)
@@ -234,7 +295,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("class_ID");
             entity.Property(e => e.ClassName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("class_name");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
@@ -247,11 +308,44 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Educator).WithMany(p => p.Classes)
                 .HasForeignKey(d => d.EducatorId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__Class__educator___6FE99F9F");
 
             entity.HasOne(d => d.Grade).WithMany(p => p.Classes)
                 .HasForeignKey(d => d.GradeId)
                 .HasConstraintName("FK__Class__grade_ID__70DDC3D8");
+        });
+
+        modelBuilder.Entity<Conversation>(entity =>
+        {
+            entity.HasKey(e => e.ConversationId).HasName("PK__Conversa__31E14AF287AA6722");
+
+            entity.ToTable("Conversation");
+
+            entity.Property(e => e.ConversationId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("conversation_ID");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("created_at");
+            entity.Property(e => e.EducatorId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("educator_ID");
+            entity.Property(e => e.ParentId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("parent_ID");
+
+            entity.HasOne(d => d.Educator).WithMany(p => p.Conversations)
+                .HasForeignKey(d => d.EducatorId)
+                .HasConstraintName("FK__Conversat__educa__2B0A656D");
+
+            entity.HasOne(d => d.Parent).WithMany(p => p.Conversations)
+                .HasForeignKey(d => d.ParentId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Conversat__paren__2BFE89A6");
         });
 
         modelBuilder.Entity<Educator>(entity =>
@@ -272,7 +366,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("educator_ID");
             entity.Property(e => e.EducatorName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("educator_name");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
@@ -327,6 +421,7 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Child).WithMany(p => p.EducatorPermissions)
                 .HasForeignKey(d => d.ChildId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__EducatorP__child__7D439ABD");
 
             entity.HasOne(d => d.Educator).WithMany(p => p.EducatorPermissions)
@@ -354,7 +449,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("character_description");
             entity.Property(e => e.CharacterName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("character_name");
         });
 
@@ -367,11 +462,7 @@ public partial class BadeedbContext : DbContext
             entity.Property(e => e.LevelId)
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("level_ID");
-            entity.Property(e => e.ChallangeNo).HasColumnName("ChallangeNO");
-            entity.Property(e => e.Difficulty)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("difficulty");
+            entity.Property(e => e.IntelligenceId).HasColumnName("intelligence_ID");
             entity.Property(e => e.LevelDescription)
                 .IsUnicode(false)
                 .HasColumnName("level_description");
@@ -379,67 +470,35 @@ public partial class BadeedbContext : DbContext
                 .HasMaxLength(1000)
                 .IsUnicode(false)
                 .HasColumnName("level_name");
-            entity.Property(e => e.Points).HasColumnName("points");
-            entity.Property(e => e.WorldId).HasColumnName("world_ID");
 
-            entity.HasOne(d => d.World).WithMany(p => p.GameLevels)
-                .HasForeignKey(d => d.WorldId)
-                .HasConstraintName("FK__GameLevel__world__00200768");
+            entity.HasOne(d => d.Intelligence).WithMany(p => p.GameLevels)
+                .HasForeignKey(d => d.IntelligenceId)
+                .HasConstraintName("FK_GameLevel_Intelligence");
         });
 
         modelBuilder.Entity<GameSession>(entity =>
         {
-            entity.HasKey(e => new { e.GameId, e.LevelId, e.ChildId }).HasName("PK__GameSess__93D519603730ED61");
-
             entity.ToTable("GameSession");
 
-            entity.Property(e => e.GameId)
-                .HasDefaultValueSql("(newsequentialid())")
-                .HasColumnName("game_ID");
-            entity.Property(e => e.LevelId).HasColumnName("level_ID");
+            entity.Property(e => e.GameSessionId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("gameSession_ID");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("child_ID");
-            entity.Property(e => e.AttemptData)
-                .IsUnicode(false)
-                .HasColumnName("attemptData");
-            entity.Property(e => e.Score)
-                .HasColumnType("numeric(18, 0)")
-                .HasColumnName("score");
-            entity.Property(e => e.TimeTaken).HasColumnName("time_taken");
+            entity.Property(e => e.LevelId).HasColumnName("level_ID");
+            entity.Property(e => e.PlayedAt).HasColumnName("played_at");
+            entity.Property(e => e.TotalTime).HasColumnName("total_time");
 
             entity.HasOne(d => d.Child).WithMany(p => p.GameSessions)
                 .HasForeignKey(d => d.ChildId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__GameSessi__child__01142BA1");
 
             entity.HasOne(d => d.Level).WithMany(p => p.GameSessions)
                 .HasForeignKey(d => d.LevelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__GameSessi__level__02084FDA");
-        });
-
-        modelBuilder.Entity<GameWorld>(entity =>
-        {
-            entity.HasKey(e => e.WorldId).HasName("PK__GameWorl__A13DB906C4C7A0CF");
-
-            entity.ToTable("GameWorld");
-
-            entity.Property(e => e.WorldId)
-                .HasDefaultValueSql("(newsequentialid())")
-                .HasColumnName("world_ID");
-            entity.Property(e => e.UnlockRequirement)
-                .IsUnicode(false)
-                .HasColumnName("unlock_Requirement");
-            entity.Property(e => e.WorldDescription)
-                .HasMaxLength(1000)
-                .IsUnicode(false)
-                .HasColumnName("world_description");
-            entity.Property(e => e.WorldName)
-                .HasMaxLength(100)
-                .IsUnicode(false)
-                .HasColumnName("world_name");
         });
 
         modelBuilder.Entity<Grade>(entity =>
@@ -456,7 +515,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.GradeName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("grade_name");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
 
@@ -465,39 +524,30 @@ public partial class BadeedbContext : DbContext
                 .HasConstraintName("FK__Grade__school_ID__6EF57B66");
         });
 
-        modelBuilder.Entity<IntelligenceProgress>(entity =>
+        modelBuilder.Entity<IndicatorResult>(entity =>
         {
-            entity.HasKey(e => e.ProgressId).HasName("PK__Intellig__49B0D4D9EBF4F61F");
+            entity.HasKey(e => e.IndicatorResultId).HasName("PK__Indicato__93B7BE7CE6E47A10");
 
-            entity.ToTable("IntelligenceProgress");
+            entity.ToTable("IndicatorResult");
 
-            entity.Property(e => e.ProgressId)
-                .HasDefaultValueSql("(newsequentialid())")
-                .HasColumnName("progress_ID");
-            entity.Property(e => e.ChildId)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("child_ID");
-            entity.Property(e => e.IntelligenceId).HasColumnName("intelligence_ID");
-            entity.Property(e => e.LevelId).HasColumnName("level_ID");
-            entity.Property(e => e.RecordDate)
-                .HasDefaultValueSql("(sysdatetime())")
-                .HasColumnName("record_date");
-            entity.Property(e => e.Score)
-                .HasColumnType("numeric(18, 0)")
-                .HasColumnName("score");
+            entity.Property(e => e.IndicatorResultId).HasColumnName("indicator_result_id");
+            entity.Property(e => e.AspectResultId).HasColumnName("aspect_result_id");
+            entity.Property(e => e.IndicatorName)
+                .HasMaxLength(100)
+                .HasColumnName("indicator_name");
+            entity.Property(e => e.IndicatorRating)
+                .HasMaxLength(20)
+                .HasColumnName("indicator_rating");
+            entity.Property(e => e.IndicatorScore).HasColumnName("indicator_score");
+            entity.Property(e => e.PsychometricPts).HasColumnName("psychometric_pts");
+            entity.Property(e => e.RecordedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("recorded_at");
 
-            entity.HasOne(d => d.Child).WithMany(p => p.IntelligenceProgresses)
-                .HasForeignKey(d => d.ChildId)
-                .HasConstraintName("FK__Intellige__child__02FC7413");
-
-            entity.HasOne(d => d.Intelligence).WithMany(p => p.IntelligenceProgresses)
-                .HasForeignKey(d => d.IntelligenceId)
-                .HasConstraintName("FK__Intellige__intel__03F0984C");
-
-            entity.HasOne(d => d.Level).WithMany(p => p.IntelligenceProgresses)
-                .HasForeignKey(d => d.LevelId)
-                .HasConstraintName("FK__Intellige__level__04E4BC85");
+            entity.HasOne(d => d.AspectResult).WithMany(p => p.IndicatorResults)
+                .HasForeignKey(d => d.AspectResultId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_IndicatorResult_Aspect");
         });
 
         modelBuilder.Entity<IntelligenceType>(entity =>
@@ -514,11 +564,43 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("Icon_img_path");
             entity.Property(e => e.IntelligenceName)
                 .HasMaxLength(1000)
-                .IsUnicode(true)
-                .HasColumnName("intelligence_name");
-            entity.Property(e => e.IntelligenceTypeDescription)
                 .IsUnicode(false)
-                .HasColumnName("intelligenceType_description");
+                .HasColumnName("intelligence_name");
+            entity.Property(e => e.IntelligenceTypeDescription).HasColumnName("intelligenceType_description");
+        });
+
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.MessageId).HasName("PK__Message__0BBC6AEED828F13E");
+
+            entity.ToTable("Message");
+
+            entity.Property(e => e.MessageId)
+                .HasDefaultValueSql("(newid())")
+                .HasColumnName("message_ID");
+            entity.Property(e => e.Content)
+                .HasMaxLength(1000)
+                .HasColumnName("content");
+            entity.Property(e => e.ConversationId).HasColumnName("conversation_ID");
+            entity.Property(e => e.IsRead)
+                .HasDefaultValue(false)
+                .HasColumnName("is_read");
+            entity.Property(e => e.SenderId)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_ID");
+            entity.Property(e => e.SenderType)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("sender_type");
+            entity.Property(e => e.SentAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("sent_at");
+
+            entity.HasOne(d => d.Conversation).WithMany(p => p.Messages)
+                .HasForeignKey(d => d.ConversationId)
+                .HasConstraintName("FK__Message__convers__31B762FC");
         });
 
         modelBuilder.Entity<Parent>(entity =>
@@ -549,7 +631,7 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("is_verified");
             entity.Property(e => e.ParentName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("parent_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(256)
@@ -589,7 +671,6 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Child).WithMany(p => p.ParentChildren)
                 .HasForeignKey(d => d.ChildId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__ParentChi__child__05D8E0BE");
 
             entity.HasOne(d => d.Parent).WithMany(p => p.ParentChildren)
@@ -630,10 +711,12 @@ public partial class BadeedbContext : DbContext
 
             entity.HasOne(d => d.Child).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.ChildId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK__Request__child_I__07C12930");
 
             entity.HasOne(d => d.Educator).WithMany(p => p.Requests)
                 .HasForeignKey(d => d.EducatorId)
+                .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__Request__educato__08B54D69");
 
             entity.HasOne(d => d.Parent).WithMany(p => p.Requests)
@@ -652,78 +735,16 @@ public partial class BadeedbContext : DbContext
                 .HasColumnName("school_ID");
             entity.Property(e => e.Branch)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("branch");
             entity.Property(e => e.City)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("city");
             entity.Property(e => e.SchoolName)
                 .HasMaxLength(100)
-                .IsUnicode(true)
+                .IsUnicode(false)
                 .HasColumnName("school_name");
-        });
-
-        modelBuilder.Entity<Conversation>(entity =>
-        {
-            entity.HasKey(e => e.ConversationId).HasName("PK_Conversation");
-            entity.ToTable("Conversation");
-
-            entity.Property(e => e.ConversationId)
-                .HasDefaultValueSql("(newid())")
-                .HasColumnName("conversation_ID");
-            entity.Property(e => e.EducatorId)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("educator_ID");
-            entity.Property(e => e.ParentId)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("parent_ID");
-            entity.Property(e => e.CreatedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnName("created_at");
-
-            entity.HasOne(d => d.Educator).WithMany()
-                .HasForeignKey(d => d.EducatorId)
-                .HasConstraintName("FK_Conversation_Educator");
-
-            entity.HasOne(d => d.Parent).WithMany()
-                .HasForeignKey(d => d.ParentId)
-                .HasConstraintName("FK_Conversation_Parent");
-        });
-
-        modelBuilder.Entity<Message>(entity =>
-        {
-            entity.HasKey(e => e.MessageId).HasName("PK_Message");
-            entity.ToTable("Message");
-
-            entity.Property(e => e.MessageId)
-                .HasDefaultValueSql("(newid())")
-                .HasColumnName("message_ID");
-            entity.Property(e => e.ConversationId).HasColumnName("conversation_ID");
-            entity.Property(e => e.SenderType)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("sender_type");
-            entity.Property(e => e.SenderId)
-                .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasColumnName("sender_ID");
-            entity.Property(e => e.Content)
-                .HasMaxLength(1000)
-                .IsUnicode(true)
-                .HasColumnName("content");
-            entity.Property(e => e.IsRead)
-                .HasDefaultValue(false)
-                .HasColumnName("is_read");
-            entity.Property(e => e.SentAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnName("sent_at");
-
-            entity.HasOne(d => d.Conversation).WithMany(p => p.Messages)
-                .HasForeignKey(d => d.ConversationId)
-                .HasConstraintName("FK_Message_Conversation");
         });
 
         OnModelCreatingPartial(modelBuilder);
