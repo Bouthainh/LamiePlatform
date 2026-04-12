@@ -1,6 +1,8 @@
 ﻿using BadeePlatform.Services;
 using LamiePlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace BadeePlatform.Controllers
 
@@ -51,7 +53,9 @@ namespace BadeePlatform.Controllers
 
         public async Task<IActionResult> EdActivityList(string educatorId, Guid? groupId)
         {
-            var recommendations = await _recommendationService.GetRecommendationsByEducatorIdAsync(educatorId);
+            var recommendations = groupId.HasValue
+                ? await _recommendationService.GetRecommendationsByGroupIdAsync(groupId.Value)
+                : new List<RecommendationListItem>();
 
             var vm = new EducatorRecommendationViewModel
             {

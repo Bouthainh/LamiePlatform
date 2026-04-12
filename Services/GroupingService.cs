@@ -13,14 +13,14 @@ public class GroupingService : IGroupingService
         _context = context;
     }
 
-    // ── Check if class already has groups ────────────────────────────────────
+    // Check if class already has groups
     public async Task<bool> ClassAlreadyGroupedAsync(Guid classId)
     {
         return await _context.ChildGroups
             .AnyAsync(g => g.ClassId == classId);
     }
 
-    // ── Main grouping method ──────────────────────────────────────────────────
+    // Main grouping method 
     public async Task<List<ChildGroup>> CreateGroupsForClassAsync(Guid classId)
     {
         // 1. Load all children in this class with their intelligences
@@ -120,7 +120,7 @@ public class GroupingService : IGroupingService
         return savedGroups;
     }
 
-    // ── Get existing groups for a class ──────────────────────────────────────
+    //Get existing groups for a class 
     public async Task<List<ChildGroup>> GetGroupsByClassAsync(Guid classId)
     {
         return await _context.ChildGroups

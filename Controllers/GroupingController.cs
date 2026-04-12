@@ -17,7 +17,7 @@ public class GroupingController : Controller
         _context = context;
     }
 
-    // GET: /Grouping/Index — يجيب فصل المعلم تلقائياً
+    //  يجيب فصل المعلم 
     public async Task<IActionResult> Index()
     {
         var educatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -34,9 +34,12 @@ public class GroupingController : Controller
         return RedirectToAction("MyGroups", new { classId = educatorClass.ClassId });
     }
 
-    // GET: /Grouping/MyGroups?classId=...
     public async Task<IActionResult> MyGroups(Guid classId)
     {
+        var educatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        ViewBag.EducatorId = educatorId;
+        ViewBag.ClassId = classId;
+
         var alreadyGrouped = await _groupingService.ClassAlreadyGroupedAsync(classId);
         if (alreadyGrouped)
         {
@@ -49,7 +52,6 @@ public class GroupingController : Controller
         return View("~/Views/Educator/Grouping/MyGroups.cshtml", new List<BadeePlatform.Models.ChildGroup>());
     }
 
-    // POST: /Grouping/CreateGroups
     [HttpPost]
     public async Task<IActionResult> CreateGroups(Guid classId)
     {
