@@ -1,5 +1,5 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Services;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,31 +20,31 @@ builder.Services.AddHttpClient("OpenAI", client =>
     client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
 });
 
-builder.Services.AddScoped<BadeePlatform.Services.IChildService, BadeePlatform.Services.ChildService>();
+builder.Services.AddScoped<LamiePlatform.Services.IChildService, LamiePlatform.Services.ChildService>();
 
-builder.Services.AddScoped<BadeePlatform.Services.IParentService, BadeePlatform.Services.ParentService>();
+builder.Services.AddScoped<LamiePlatform.Services.IParentService, LamiePlatform.Services.ParentService>();
 
-builder.Services.AddScoped<BadeePlatform.Services.IDashboardService, BadeePlatform.Services.DashboardService>();
+builder.Services.AddScoped<LamiePlatform.Services.IDashboardService, LamiePlatform.Services.DashboardService>();
 
-builder.Services.AddScoped<BadeePlatform.Services.IEducatorService, BadeePlatform.Services.EducatorService>();
+builder.Services.AddScoped<LamiePlatform.Services.IEducatorService, LamiePlatform.Services.EducatorService>();
 
-builder.Services.AddScoped<BadeePlatform.Services.IChatService, BadeePlatform.Services.ChatService>();
-builder.Services.AddScoped<BadeePlatform.Services.IRecommendationService, BadeePlatform.Services.RecommendationService>();
+builder.Services.AddScoped<LamiePlatform.Services.IChatService, LamiePlatform.Services.ChatService>();
+builder.Services.AddScoped<LamiePlatform.Services.IRecommendationService, LamiePlatform.Services.RecommendationService>();
+
+builder.Services.AddScoped<LamiePlatform.Services.GameService, LamiePlatform.Services.GameService>();
 
 
-
-
-builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
-builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
-builder.Services.AddScoped<BadeePlatform.Services.IRequestService, BadeePlatform.Services.RequestService>();
-builder.Services.AddScoped<BadeePlatform.Services.IGroupingService, BadeePlatform.Services.GroupingService>();
+builder.Services.AddScoped<IPasswordHasher<LamiePlatform.Models.Parent>, PasswordHasher<LamiePlatform.Models.Parent>>();
+builder.Services.AddScoped<IPasswordHasher<LamiePlatform.Models.Educator>, PasswordHasher<LamiePlatform.Models.Educator>>();
+builder.Services.AddScoped<LamiePlatform.Services.IRequestService, LamiePlatform.Services.RequestService>();
+builder.Services.AddScoped<LamiePlatform.Services.IGroupingService, LamiePlatform.Services.GroupingService>();
 
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 //DI for connection string 
-builder.Services.AddDbContext<BadeedbContext>(options =>
+builder.Services.AddDbContext<LamieDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
 
