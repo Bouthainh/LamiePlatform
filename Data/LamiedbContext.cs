@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LamiePlatform.Data;
 
-public partial class LamiedbContext : DbContext
+public partial class LamieDbContext : DbContext
 {
-    public LamiedbContext()
+    public LamieDbContext()
     {
     }
 
-    public LamiedbContext(DbContextOptions<LamiedbContext> options)
+    public LamieDbContext(DbContextOptions<LamieDbContext> options)
         : base(options)
     {
     }
@@ -60,7 +60,7 @@ public partial class LamiedbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.;Database=LamieDB;Trusted_Connection=True;TrustServerCertificate=true");
+        => optionsBuilder.UseSqlServer("Server=.;Database=LamieDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -153,11 +153,12 @@ public partial class LamiedbContext : DbContext
             entity.ToTable("AssessmentItem");
 
             entity.Property(e => e.ItemId).HasColumnName("item_ID");
-            entity.Property(e => e.Accuracy).HasColumnName("accuracy");
-            entity.Property(e => e.ErrorRate).HasColumnName("error_rate");
             entity.Property(e => e.FinalScore).HasColumnName("final_score");
             entity.Property(e => e.IndicatorResultId).HasColumnName("indicator_result_id");
             entity.Property(e => e.ItemIndex).HasColumnName("item_index");
+            entity.Property(e => e.ItemName)
+                .HasMaxLength(255)
+                .HasColumnName("item_name");
             entity.Property(e => e.PsychometricPts).HasColumnName("psychometric_pts");
             entity.Property(e => e.Rating)
                 .HasMaxLength(20)
@@ -165,7 +166,6 @@ public partial class LamiedbContext : DbContext
             entity.Property(e => e.RecordedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnName("recorded_at");
-            entity.Property(e => e.SpeedScore).HasColumnName("speed_score");
 
             entity.HasOne(d => d.IndicatorResult).WithMany(p => p.AssessmentItems)
                 .HasForeignKey(d => d.IndicatorResultId)
@@ -582,9 +582,7 @@ public partial class LamiedbContext : DbContext
                 .HasMaxLength(1000)
                 .HasColumnName("content");
             entity.Property(e => e.ConversationId).HasColumnName("conversation_ID");
-            entity.Property(e => e.IsRead)
-                .HasDefaultValue(false)
-                .HasColumnName("is_read");
+            entity.Property(e => e.IsRead).HasColumnName("is_read");
             entity.Property(e => e.SenderId)
                 .HasMaxLength(10)
                 .IsUnicode(false)
