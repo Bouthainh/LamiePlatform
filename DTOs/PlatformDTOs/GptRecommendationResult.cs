@@ -1,4 +1,4 @@
-﻿namespace LamiePlatform.DTOs
+﻿namespace LamiePlatform.DTOs.PlatformDTOs
 {
     public class GptRecommendationResult
     {

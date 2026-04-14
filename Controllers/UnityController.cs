@@ -1,19 +1,20 @@
-﻿using LamiePlatform.Data;
+﻿using LamiePlatform.DTOs.GameDTOs;
+using LamiePlatform.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class UnityController : ControllerBase
     {
-        private readonly LamiedbContext _db;
+        private readonly GameService _gameService;
 
-        public UnityController(LamiedbContext db)
+        public UnityController(GameService gameService)
         {
-            _db = db;
+            _gameService = gameService;
         }
 
         public class LoginRequest
@@ -23,57 +24,59 @@ namespace BadeePlatform.Controllers
 
         public class LoginResponse
         {
-            [JsonPropertyName("Success")]
-            public bool Success { get; set; }
-
-            [JsonPropertyName("ChildId")]
-            public string ChildId { get; set; }
-
-            [JsonPropertyName("Gender")]
-            public string Gender { get; set; }
-
-            [JsonPropertyName("Message")]
-            public string Message { get; set; }
+            [JsonPropertyName("Success")] public bool Success { get; set; }
+            [JsonPropertyName("ChildId")] public string ChildId { get; set; }
+            [JsonPropertyName("Gender")] public string Gender { get; set; }
+            [JsonPropertyName("Message")] public string Message { get; set; }
         }
-
         [HttpPost("CheckLoginCode")]
         public async Task<IActionResult> CheckLoginCode([FromBody] LoginRequest request)
         {
-            var child = await _db.Children
-                .FirstOrDefaultAsync(c => c.LoginCode == request.Code);
+            var result = await _gameService.CheckLoginCode(request.Code);
 
-            if (child == null)
+            if (!result.Success)
             {
-                return Ok(new LoginResponse
+                return StatusCode(result.StatusCode, new LoginResponse
                 {
                     Success = false,
                     ChildId = "",
                     Gender = "",
-                    Message = "Wrong code"
+                    Message = result.Message
                 });
             }
+
+            var data = result.Data as dynamic;
 
             return Ok(new LoginResponse
             {
                 Success = true,
-                ChildId = child.ChildId,
-                Gender = child.Gender,
-                Message = "Login successful"
+                ChildId = data.ChildId,
+                Gender = data.Gender,
+                Message = result.Message
             });
         }
 
         [HttpGet("GetGameLevels")]
         public async Task<IActionResult> GetGameLevels()
         {
-            var levels = await _db.GameLevels
-                .Where(l => l.IntelligenceId != null)
-                .Select(l => new {
-                    levelId = l.LevelId,
-                    levelName = l.LevelName
-                })
-                .ToListAsync();
+            var levels = await _gameService.GetGameLevels();
+            return Ok(levels.Data);
+        }
 
-            return Ok(levels);
+        [HttpPost("SaveGameResult")]
+        public async Task<IActionResult> SaveGameResult([FromBody] SaveGameResultRequest request)
+        {
+            try
+            {
+                var result = await _gameService.SaveGameResult(request);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }

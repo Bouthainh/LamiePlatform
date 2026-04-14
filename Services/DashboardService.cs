@@ -1,16 +1,16 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Helpers;
-using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Helpers;
+using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
 using LamiePlatform.Data;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public class DashboardService : IDashboardService
     {
-        private readonly LamiedbContext _db;
+        private readonly LamieDbContext _db;
 
-        public DashboardService(LamiedbContext db)
+        public DashboardService(LamieDbContext db)
         {
             _db = db;
         }

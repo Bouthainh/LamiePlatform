@@ -1,7 +1,7 @@
-﻿using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public interface IDashboardService
     {

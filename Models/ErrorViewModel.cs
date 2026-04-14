@@ -1,4 +1,4 @@
-namespace BadeePlatform.Models
+namespace LamiePlatform.Models
 {
     public class ErrorViewModel
     {

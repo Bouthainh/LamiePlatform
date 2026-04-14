@@ -1,20 +1,20 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.DTOs;
-using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
 using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using LamiePlatform.DTOs.PlatformDTOs;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public class ParentService : IParentService
     {
-        private readonly BadeedbContext _db;
+        private readonly LamieDbContext _db;
         private readonly IPasswordHasher<Parent> _passwordHasher;
 
-        public ParentService(BadeedbContext db, IPasswordHasher<Parent> passwordHasher) 
+        public ParentService(LamieDbContext db, IPasswordHasher<Parent> passwordHasher) 
         {
             _db = db;
             _passwordHasher = passwordHasher;

@@ -1,6 +1,6 @@
-﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models.ViewModels;
-using BadeePlatform.Services;
+﻿using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models.ViewModels;
+using LamiePlatform.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     public class EducatorController : Controller, IEducatorController
     {
@@ -245,7 +245,7 @@ namespace BadeePlatform.Controllers
             ViewBag.SearchTerm = searchTerm;
 
             if (string.IsNullOrEmpty(searchTerm))
-                return View(new List<BadeePlatform.Models.Child>());
+                return View(new List<LamiePlatform.Models.Child>());
 
             var results = await _requestService.SearchChildrenAsync(searchTerm, educatorId);
             return View(results);

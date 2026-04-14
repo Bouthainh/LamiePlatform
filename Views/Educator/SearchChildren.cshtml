@@ -1,4 +1,4 @@
-﻿@model List<BadeePlatform.Models.Child>
+﻿@model List<LamiePlatform.Models.Child>
 @{
     ViewData["Title"] = "لامع - البحث عن طفل";
     ViewData["HideHeader"] = true;
@@ -68,7 +68,7 @@
 
     @if (ViewBag.SentRequests != null)
     {
-        var sentRequests = ViewBag.SentRequests as List<BadeePlatform.Models.Request>;
+        var sentRequests = ViewBag.SentRequests as List<LamiePlatform.Models.Request>;
         if (sentRequests != null && sentRequests.Any())
         {
             <h2>الطلبات المرسلة</h2>

@@ -1,4 +1,4 @@
-﻿namespace BadeePlatform.Helpers
+﻿namespace LamiePlatform.Helpers
 {
     public static class ChildExtensions
     {

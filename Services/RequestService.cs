@@ -1,14 +1,14 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Models;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public class RequestService : IRequestService
     {
-        private readonly BadeedbContext _context;
+        private readonly LamieDbContext _context;
 
-        public RequestService(BadeedbContext context)
+        public RequestService(LamieDbContext context)
         {
             _context = context;
         }

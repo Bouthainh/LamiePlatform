@@ -1,7 +1,7 @@
-﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
-using BadeePlatform.Services;
+﻿using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
+using LamiePlatform.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     public class ParentController : Controller, IParentController
     {

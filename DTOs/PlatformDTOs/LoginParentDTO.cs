@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BadeePlatform.DTOs
+namespace LamiePlatform.DTOs.PlatformDTOs
 {
-    public class LoginEducatorDTO
+    public class LoginParentDTO
     {
         [Required(ErrorMessage = "اسم المستخدم أو البريد الإلكتروني مطلوب.")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "يجب أن يتراوح المدخل بين 3 و 100 حرف.")]

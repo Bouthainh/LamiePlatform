@@ -1,4 +1,4 @@
-﻿namespace BadeePlatform.DTOs
+﻿namespace LamiePlatform.DTOs.PlatformDTOs
 {
     using System.ComponentModel.DataAnnotations;
 

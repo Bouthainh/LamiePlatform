@@ -1,8 +1,8 @@
-﻿using BadeePlatform.Services;
+﻿using LamiePlatform.Services;
 using LamiePlatform.Models.ViewModels;
 
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public interface IRecommendationService
     {

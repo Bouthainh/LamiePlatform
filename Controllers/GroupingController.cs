@@ -1,17 +1,17 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Services;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace BadeePlatform.Controllers;
+namespace LamiePlatform.Controllers;
 
 public class GroupingController : Controller
 {
     private readonly IGroupingService _groupingService;
-    private readonly BadeedbContext _context;
+    private readonly LamieDbContext _context;
 
-    public GroupingController(IGroupingService groupingService, BadeedbContext context)
+    public GroupingController(IGroupingService groupingService, LamieDbContext context)
     {
         _groupingService = groupingService;
         _context = context;
@@ -49,7 +49,7 @@ public class GroupingController : Controller
         }
         ViewBag.ClassId = classId;
         ViewBag.NotGroupedYet = true;
-        return View("~/Views/Educator/Grouping/MyGroups.cshtml", new List<BadeePlatform.Models.ChildGroup>());
+        return View("~/Views/Educator/Grouping/MyGroups.cshtml", new List<LamiePlatform.Models.ChildGroup>());
     }
 
     [HttpPost]

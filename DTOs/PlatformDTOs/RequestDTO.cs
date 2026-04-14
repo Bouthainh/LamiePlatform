@@ -1,4 +1,4 @@
-﻿namespace BadeePlatform.DTOs
+﻿namespace LamiePlatform.DTOs.PlatformDTOs
 {
     public class SearchChildDTO
     {

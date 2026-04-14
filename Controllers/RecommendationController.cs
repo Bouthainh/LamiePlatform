@@ -1,10 +1,10 @@
-﻿using BadeePlatform.Services;
+﻿using LamiePlatform.Services;
 using LamiePlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 
 {
     public class RecommendationController : Controller

@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.InMemory;
-using BadeePlatform.Data;
+using LamiePlatform.Data;
 
 namespace LamiePlatform.Tests.Helpers
 {
     public static class TestDbContextFactory
     {
-        public static BadeedbContext CreateInMemoryContext()
+        public static LamieDbContext CreateInMemoryContext()
         {
-            var options = new DbContextOptionsBuilder<BadeedbContext>()
+            var options = new DbContextOptionsBuilder<LamieDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
-            return new BadeedbContext(options);
+            return new LamieDbContext(options);
         }
     }
 }

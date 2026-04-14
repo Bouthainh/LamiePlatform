@@ -1,8 +1,8 @@
-﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public interface IChildService
     {

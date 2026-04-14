@@ -1,7 +1,7 @@
-using BadeePlatform.Data;
-using BadeePlatform.DTOs;
-using BadeePlatform.Models;
-using BadeePlatform.Services;
+using LamiePlatform.Data;
+using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models;
+using LamiePlatform.Services;
 using FluentAssertions;
 using LamiePlatform.Tests.Helpers;
 using Microsoft.EntityFrameworkCore;
@@ -340,7 +340,7 @@ public class ChildServiceTests
 
     // add child test 
 
-    private (BadeedbContext context, ChildService service) CreateTestEnvironment()
+    private (LamieDbContext context, ChildService service) CreateTestEnvironment()
     {
         var context = TestDbContextFactory.CreateInMemoryContext();
         var service = new ChildService(context);
@@ -348,7 +348,7 @@ public class ChildServiceTests
     }
 
     private async Task<(Guid schoolId, Guid gradeId, Guid classId)> SetupSchoolDataAsync(
-        BadeedbContext context,
+        LamieDbContext context,
         string city = "Jeddah")
     {
         var schoolId = Guid.NewGuid();
@@ -380,7 +380,7 @@ public class ChildServiceTests
         return (schoolId, gradeId, classId);
     }
 
-    private async Task<string> SetupParentAsync(BadeedbContext context, string parentId = "1023456789")
+    private async Task<string> SetupParentAsync(LamieDbContext context, string parentId = "1023456789")
     {
         context.Parents.Add(new Parent
         {

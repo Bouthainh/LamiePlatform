@@ -1,6 +1,6 @@
-﻿using BadeePlatform.Models;
+﻿using LamiePlatform.Models;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public interface IChatService
     {

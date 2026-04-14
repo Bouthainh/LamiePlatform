@@ -1,4 +1,4 @@
-﻿using BadeePlatform.Services;
+﻿using LamiePlatform.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

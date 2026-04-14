@@ -1,14 +1,14 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Models;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BadeePlatform.Services;
+namespace LamiePlatform.Services;
 
 public class GroupingService : IGroupingService
 {
-    private readonly BadeedbContext _context;
+    private readonly LamieDbContext _context;
 
-    public GroupingService(BadeedbContext context)
+    public GroupingService(LamieDbContext context)
     {
         _context = context;
     }
