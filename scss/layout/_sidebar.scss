@@ -1,62 +1,65 @@
+@use 'sass:color';
+
 .sidebar-container {
-  display: flex;
-  flex-direction: row-reverse; // sidebar on the right
-  gap: $spacing-lg; // space between sidebar and main content
-  padding: $spacing-lg;
-  background-color: $light-bg;
-  direction: ltr; 
-  main {
-    flex: 1; 
-  }
-
-.sidebar {
-    width: 90px;
-    background: $white;
-    border-radius: 22px;
-    padding: $spacing-md $spacing-sm;
-    height: 92vh;
-    position: sticky;
-    top: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $spacing-md;
-    @include card-shadow;
+    flex-direction: row-reverse; // sidebar on the right
+    gap: $spacing-lg; // space between sidebar and main content
+    padding: $spacing-lg;
+    background-color: $light-bg;
+    direction: ltr;
 
-    .sidebar-links {
-      display: flex;
-      flex-direction: column;
-      gap: $spacing-sm;
-      width: 100%;
-      align-items: center;
-
-      .sidebar-item {
-        width: 56px;
-        height: 56px;
-        @include flex-center;
-        border-radius: 16px;
-        background: lighten($primary-color, 38%);
-        color: darken($primary-color, 10%);
-        font-size: 22px;
-        text-decoration: none;
-        cursor: pointer;
-        @include transition();
-
-        &:hover {
-          transform: translateY(-4px);
-          background: lighten($primary-color, 30%);
-        }
-      }
-
-      .logout {
-        margin-top: auto;
-        background: lighten($secondary-color, 40%);
-        color: darken($secondary-color, 15%);
-
-        &:hover {
-          background: lighten($secondary-color, 35%);
-        }
-      }
+    main {
+        flex: 1;
     }
-}
+
+    .sidebar {
+        width: 90px;
+        background: $white;
+        border-radius: 22px;
+        padding: $spacing-md $spacing-sm;
+        height: 92vh;
+        position: sticky;
+        top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: $spacing-md;
+        @include card-shadow;
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+            width: 100%;
+            align-items: center;
+
+            .sidebar-item {
+                width: 56px;
+                height: 56px;
+                @include flex-center;
+                border-radius: 16px;
+                background: lighten($primary-color, 38%);
+                color: darken($primary-color, 10%);
+                font-size: 22px;
+                text-decoration: none;
+                cursor: pointer;
+                @include transition();
+
+                &:hover {
+                    transform: translateY(-4px);
+                    background: lighten($primary-color, 30%);
+                }
+            }
+
+            .logout {
+                margin-top: auto;
+                background: color.scale($secondary-color, $lightness: 78%);
+                color: darken($secondary-color, 15%);
+
+                &:hover {
+                    background: lighten($secondary-color, 35%);
+                }
+            }
+        }
+    }
 }

@@ -15,6 +15,15 @@
   }
 }
 
+// Global page styles mixin
+@mixin global-page-base {
+    background-color: $global-bg;
+    font-family: $primary-font;
+    font-size: $font-size-base;
+    color: $text-color;
+    min-height: 100vh;
+}
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -31,22 +40,41 @@
   transition: $property $transition-speed $transition-ease;
 }
 
-@mixin button-style($bg-color, $text-color: $white) {
-  background-color: $bg-color;
-  color: $text-color;
-  padding: $spacing-sm $spacing-lg;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: $font-size-base;
-  font-weight: 600;
-  @include transition();
+// Button style mixin with variants for size and color
+@mixin button-style($bg-color, $text-color: $white, $size: md) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: none;
+    border-radius: $btn-border-radius;
+    cursor: pointer;
+    font-family: $primary-font;
+    font-weight: 600;
+    @include transition();
+    // Size variants
+    @if $size == sm {
+        padding: $btn-padding-sm;
+        font-size: $btn-font-size-sm;
+    }
+    @else if $size == lg {
+        padding: $btn-padding-lg;
+        font-size: $btn-font-size-lg;
+    }
+    @else {
+        padding: $btn-padding-md;
+        font-size: $btn-font-size-md;
+    }
 
-  &:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: $box-shadow-hover;
-  }
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-hover;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
 }
 
 @mixin card-shadow {
@@ -57,3 +85,4 @@
     box-shadow: $box-shadow-hover;
   }
 }
+

@@ -17,7 +17,7 @@ header {
 
     nav {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         align-items: center;
         max-width: 1400px;
         margin: 0 auto;
@@ -26,7 +26,7 @@ header {
 
         .logo {
             img {
-                height: 70px;
+                height: 90px;
                 width: auto;
 
                 @media (max-width: 768px) {
@@ -41,7 +41,6 @@ header {
             margin: 0;
             padding: 0;
             gap: 3.2rem;
-
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
@@ -54,12 +53,12 @@ header {
                 a {
                     text-decoration: none;
                     color: $text-dark;
-                    font-size: 1.1rem;
+                    font-size: 1.5rem;
                     font-weight: 600;
                     transition: color 0.3s ease;
 
                     &:hover {
-                        color: $hover-color;
+                        color: $primary-color;
                     }
                 }
             }

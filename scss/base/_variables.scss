@@ -1,5 +1,6 @@
-$primary-color: #e98b9a;
-$secondary-color: #5cc4d1;
+// Color Palette
+$primary-color: #ffb90f;
+$secondary-color: #32c8c3;
 $text-color: #333;
 $text-dark: #2c3e50;
 $text-light: #7f8c8d;
@@ -7,10 +8,19 @@ $light-bg: #f8f8f8;
 $white: #fff;
 $dark: #2b2b2b;
 $form-background-color:#f8f9f3;
+$tirquaz-color:#8ee4e0;
+$purple-color:#9d4ebe;
+$purple-light: #c9a3db; 
+$coral-light: #ffa589; 
+$coral-soft: #FF9AA2; 
+$coral-vivid: #ff6531; 
+$coral-red: #ff3c4b;
 $primary-green: #00a651;
 $primary-green-dark: #008f45;
-$tirquaz-color:#358785;
-$purple-color:#8f52a4;
+
+// Global Background
+$global-bg: #fff4d6;
+
 
 // Soft background colors for child cards
 $child-blue: #e6f4ff;
@@ -20,12 +30,14 @@ $child-pink: #ffd4e5;
 $child-light-pink:#ffe8f0;
 $child-yellow: #fff4cc;
 $child-light-yellow:#fffae6;
+
 // colors for the dashbord 
 $yellow-gradient-light: #fffae6;
 $yellow-gradient-dark: #fff4cc;
 $yellow-accent: #ffd966;
 $orange-text: #f57f17;
 $orange-text-dark: #e65100;
+
 // Borders + shadows
 $card-shadow: 0 4px 8px rgba(0,0,0,0.08);
 
@@ -33,17 +45,20 @@ $header-bg: $white;
 $footer-bg: $light-bg;
 $footer-text: #666;
 
+//font
 $primary-font: 'IBM Plex Sans', 'Cairo', 'Segoe UI', Tahoma, sans-serif;
 $font-size-base: 16px;
 $font-size-large: 18px;
 $font-size-small: 14px;
 
+// Spacing between elements
 $spacing-xs: 8px;
 $spacing-sm: 16px;
 $spacing-md: 24px;
 $spacing-lg: 32px;
 $spacing-xl: 48px;
 
+// Breakpoints for responsive design
 $breakpoint-mobile: 480px;
 $breakpoint-tablet: 768px;
 $breakpoint-desktop: 1024px;
@@ -54,3 +69,14 @@ $box-shadow-hover: 0 4px 20px rgba(0, 0, 0, 0.15);
 
 $transition-speed: 0.3s;
 $transition-ease: ease-in-out;
+
+// Button styles
+$btn-padding-sm: 12px 25px;
+$btn-padding-md: 16px 30px; 
+$btn-padding-lg: 20px 40px;
+
+$btn-font-size-sm: 13px;
+$btn-font-size-md: 15px;
+$btn-font-size-lg: 20px;
+
+$btn-border-radius: 25px;  

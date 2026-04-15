@@ -101,87 +101,87 @@ main {
 
 // Permissions Section
 .contact-section {
-  background: $child-light-pink;
-  padding: $spacing-lg;
-  border-radius: 20px;
-  text-align: center;
-  margin-bottom: $spacing-xl;
+    background: $child-light-pink;
+    padding: $spacing-lg;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: $spacing-xl;
 
-  .contact-title {
-    color: $primary-color;
-    font-weight: 700;
-    margin-bottom: $spacing-md;
-  }
-
-  .contact-options {
-    @include flex-center;
-    gap: $spacing-md;
-    flex-wrap: wrap;
-
-    form {
-      display: flex;
-      gap: $spacing-md;
-      align-items: center;
+    .contact-title {
+        color: $primary-color;
+        font-weight: 700;
+        margin-bottom: $spacing-md;
     }
 
-    .contact-option {
-      padding: $spacing-sm $spacing-xl; 
-      min-width: 180px; 
-      background-color: $white;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      @include flex-center;
-      gap: 6px;
-      font-weight: 600;
-      cursor: not-allowed;
-      box-sizing: border-box;
-      @include transition(all); 
+    .contact-options {
+        @include flex-center;
+        gap: $spacing-md;
+        flex-wrap: wrap;
 
-      &.active {
-        background: #e8fbe8;
-        border-color: $primary-green;
-        color: $primary-green-dark;
-      }
+        form {
+            display: flex;
+            gap: $spacing-md;
+            align-items: center;
+        }
+
+        .contact-option {
+            padding: $spacing-sm $spacing-xl;
+            min-width: 180px;
+            background-color: $white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            @include flex-center;
+            gap: 6px;
+            font-weight: 600;
+            cursor: not-allowed;
+            box-sizing: border-box;
+            @include transition(all);
+
+            &.active {
+                background: #e8fbe8;
+                border-color: $secondary-color;
+                color: $tirquaz-color;
+            }
+        }
+
+        .inactive-btn {
+            padding: $spacing-sm $spacing-xl;
+            min-width: 180px;
+            background: $white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            @include transition(all);
+            box-sizing: border-box;
+
+            &:hover {
+                background: #f9f9f9;
+                border-color: #999;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            &:active {
+                transform: translateY(0);
+            }
+        }
+
+        @include respond-to(mobile) {
+            flex-direction: column;
+
+            form {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .contact-option,
+            .inactive-btn {
+                width: 100%;
+                min-width: unset; // Reset min-width on mobile
+            }
+        }
     }
-
-    .inactive-btn {
-      padding: $spacing-sm $spacing-xl; 
-      min-width: 180px; 
-      background: $white;
-      border: 2px solid #ddd;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      @include transition(all);
-      box-sizing: border-box; 
-
-      &:hover {
-        background: #f9f9f9;
-        border-color: #999;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
-    }
-
-    @include respond-to(mobile) {
-      flex-direction: column;
-
-      form {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .contact-option,
-      .inactive-btn {
-        width: 100%;
-        min-width: unset; // Reset min-width on mobile
-      }
-    }
-  }
 }
 // School Details
 .school-details {
@@ -220,72 +220,72 @@ main {
 }
 
 .action-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: $spacing-sm;
-  margin-top: $spacing-lg;
-
-  form {
-    flex: 0 0 auto;
-  }
-
-  .btn {
-    padding: $spacing-sm $spacing-xl;
-    min-width: 180px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: $font-size-base;
-    text-align: center;
-    cursor: pointer;
-    border: none;
-    text-decoration: none;
-    display: inline-block;
-    box-sizing: border-box;
-    @include transition(all);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
-  .btn-delete {
-    background: $primary-color;
-    color: $white;
-
-    &:hover {
-      background: darken($primary-color, 8%);
-      box-shadow: 0 4px 16px rgba($primary-color, 0.4);
-    }
-  }
-
-  .btn-edit {
-    background: $primary-green;
-    color: $white;
-
-    &:hover {
-      background: $primary-green-dark;
-      box-shadow: 0 4px 16px rgba($primary-green, 0.4);
-    }
-  }
-
-  @include respond-to(mobile) {
-    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-top: $spacing-lg;
 
     form {
-      width: 100%;
+        flex: 0 0 auto;
     }
 
     .btn {
-      width: 100%;
+        padding: $spacing-sm $spacing-xl;
+        min-width: 180px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: $font-size-base;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+        display: inline-block;
+        box-sizing: border-box;
+        @include transition(all);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
     }
-  }
+
+    .btn-delete {
+        background: $primary-color;
+        color: $white;
+
+        &:hover {
+            background: darken($primary-color, 8%);
+            box-shadow: 0 4px 16px rgba($primary-color, 0.4);
+        }
+    }
+
+    .btn-edit {
+        background: $secondary-color;
+        color: $white;
+
+        &:hover {
+            background: $secondary-color;
+            box-shadow: 0 4px 16px rgba($tirquaz-color, 0.4);
+        }
+    }
+
+    @include respond-to(mobile) {
+        flex-direction: column;
+
+        form {
+            width: 100%;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
 }
 
 // Alerts
