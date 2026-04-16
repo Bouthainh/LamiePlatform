@@ -1,8 +1,8 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.DTOs;
-using BadeePlatform.Models;
-using BadeePlatform.Models.ViewModels;
-using BadeePlatform.Services;
+﻿using LamiePlatform.Data;
+using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models;
+using LamiePlatform.Models.ViewModels;
+using LamiePlatform.Services;
 using FluentAssertions;
 using LamiePlatform.Tests.Helpers;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +14,7 @@ namespace LamiePlatform.Tests.Services;
 public class ParentServiceTests
 {
     // Helper method to create ParentService with PasswordHasher
-    private ParentService GetParentService(BadeedbContext context)
+    private ParentService GetParentService(LamieDbContext context)
     {
         var passwordHasher = new PasswordHasher<Parent>();
         return new ParentService(context, passwordHasher);

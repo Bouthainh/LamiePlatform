@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using BadeePlatform.DTOs;
+using LamiePlatform.DTOs.PlatformDTOs;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     public interface IEducatorController 
     {

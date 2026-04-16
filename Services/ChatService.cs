@@ -1,15 +1,15 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Models;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Models;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public class ChatService : IChatService
     {
-        private readonly BadeedbContext _db;
+        private readonly LamieDbContext _db;
 
-        public ChatService(BadeedbContext db)
+        public ChatService(LamieDbContext db)
         {
             _db = db;
         }

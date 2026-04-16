@@ -1,6 +1,6 @@
-﻿using BadeePlatform.Models;
+﻿using LamiePlatform.Models;
 
-namespace BadeePlatform.Models
+namespace LamiePlatform.Models
 {
     public class Conversation
     {

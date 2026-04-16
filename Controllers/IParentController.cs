@@ -1,8 +1,8 @@
-﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     public interface IParentController
     {

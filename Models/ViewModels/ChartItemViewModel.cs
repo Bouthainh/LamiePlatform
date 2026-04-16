@@ -1,5 +1,5 @@
 ﻿
-namespace BadeePlatform.Models.ViewModels
+namespace LamiePlatform.Models.ViewModels
 {
     public class ChartItemViewModel
     {

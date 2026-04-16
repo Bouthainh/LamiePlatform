@@ -1,18 +1,18 @@
-﻿using BadeePlatform.Data;
-using BadeePlatform.Models;
-using BadeePlatform.Services;
-using LamiePlatform.DTOs;
+﻿using LamiePlatform.Data;
+using LamiePlatform.Models;
+using LamiePlatform.Services;
+using LamiePlatform.DTOs.PlatformDTOs;
 using LamiePlatform.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public class RecommendationService : IRecommendationService
     {
-        private readonly BadeedbContext _db;
+        private readonly LamieDbContext _db;
         private readonly IHttpClientFactory _httpFactory;
         private readonly string _openAiApiKey;
 
@@ -21,7 +21,7 @@ namespace BadeePlatform.Services
         // OpenAI API endpoint 
         private const string OpenAiEndpoint = "https://api.openai.com/v1/chat/completions";
 
-        public RecommendationService(BadeedbContext db, IHttpClientFactory httpFactory, IConfiguration config)
+        public RecommendationService(LamieDbContext db, IHttpClientFactory httpFactory, IConfiguration config)
         {
             _db = db;
             _httpFactory = httpFactory;

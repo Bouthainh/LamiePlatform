@@ -1,4 +1,4 @@
-﻿namespace BadeePlatform.Services
+﻿namespace LamiePlatform.Services
 {
     public interface IRequestService
     {

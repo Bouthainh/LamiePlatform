@@ -1,8 +1,8 @@
 using System.Diagnostics;
-using BadeePlatform.Models;
+using LamiePlatform.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BadeePlatform.Controllers
+namespace LamiePlatform.Controllers
 {
     public class HomeController : Controller
     {

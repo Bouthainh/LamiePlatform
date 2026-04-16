@@ -1,7 +1,7 @@
-﻿using BadeePlatform.DTOs;
-using BadeePlatform.Models.ViewModels;
+﻿using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models.ViewModels;
 
-namespace BadeePlatform.Services
+namespace LamiePlatform.Services
 {
     public interface IParentService
     {

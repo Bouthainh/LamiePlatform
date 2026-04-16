@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace BadeePlatform.Models;
+namespace LamiePlatform.Models;
 
 public partial class Child
 {
@@ -44,8 +44,6 @@ public partial class Child
     public virtual ICollection<GameSession> GameSessions { get; set; } = new List<GameSession>();
 
     public virtual Grade? Grade { get; set; }
-
-    public virtual ICollection<IntelligenceProgress> IntelligenceProgresses { get; set; } = new List<IntelligenceProgress>();
 
     public virtual ICollection<ParentChild> ParentChildren { get; set; } = new List<ParentChild>();
 
