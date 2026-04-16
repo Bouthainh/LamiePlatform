@@ -1,404 +1,408 @@
 .login-container,
 .signup-container {
-  display: flex;
-  min-height: 100vh;
-  background-color: $light-bg;
-  font-family: $primary-font;
-  direction: rtl;
+    display: flex;
+    min-height: 100vh;
+    background-color: $light-bg;
+    font-family: $primary-font;
+    direction: rtl;
 
-  @include respond-to(tablet) {
-    flex-direction: column;
-  }
+    @include respond-to(tablet) {
+        flex-direction: column;
+    }
 }
 
 .login-container {
-  flex-direction: row-reverse;
+    flex-direction: row-reverse;
 
-  @include respond-to(tablet) {
-    flex-direction: column-reverse;
-  }
+    @include respond-to(tablet) {
+        flex-direction: column-reverse;
+    }
 }
 
 .signup-container {
-  .signup-form-section {
-    flex: 1.1; // WIDER: Changed from 1 to 1.2 (20% wider)
-    min-width: 0; // Allows flex item to shrink
-    
-    @include respond-to(tablet) {
-      flex: 1;
+    .signup-form-section {
+        flex: 1.1;
+        min-width: 0;
+
+        @include respond-to(tablet) {
+            flex: 1;
+        }
     }
-  }
-  
-  .illustration-section {
-    flex: 0.8; // Narrower image section
-  }
+
+    .illustration-section {
+        flex: 0.8;
+    }
 }
 
 .login-left,
 .illustration-section {
-  flex: 1;
-  background: linear-gradient(135deg, rgba($primary-color, 0.05), rgba($secondary-color, 0.05));
-  @include flex-center;
-  padding: $spacing-xl;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 30% 50%, rgba($primary-color, 0.08), transparent 50%), radial-gradient(circle at 70% 30%, rgba($secondary-color, 0.08), transparent 50%);
-    pointer-events: none;
-  }
-
-  @include respond-to(tablet) {
-    min-height: 300px;
-    padding: $spacing-lg;
-  }
-
-  .login-illustration,
-  .character-container {
-    margin-top: -320px;
+    flex: 1;
+    background: linear-gradient(135deg, lighten($purple-color, 45%) 0%, lighten($secondary-color, 45%) 100%);
+    @include flex-center;
+    padding: $spacing-xl;
     position: relative;
-    z-index: 1;
-    text-align: center;
-    
-    img {
-      max-width: 450px;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+    overflow: hidden;
 
-      @include respond-to(tablet) {
-        max-width: 300px;
-      }
-
-      @include respond-to(mobile) {
-        max-width: 250px;
-      }
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 30% 50%, rgba($purple-color, 0.08), transparent 50%), radial-gradient(circle at 70% 30%, rgba($secondary-color, 0.08), transparent 50%);
+        pointer-events: none;
     }
-  }
+
+    @include respond-to(tablet) {
+        min-height: 300px;
+        padding: $spacing-lg;
+    }
+
+    .login-illustration,
+    .character-container {
+        margin-top: -320px;
+        position: relative;
+        z-index: 1;
+        text-align: center;
+
+        img {
+            max-width: 450px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+
+            @include respond-to(tablet) {
+                max-width: 300px;
+            }
+
+            @include respond-to(mobile) {
+                max-width: 250px;
+            }
+        }
+    }
 }
 
 .login-right,
 .signup-form-section {
-  flex: 1;
-  @include flex-center;
-  flex-direction: column;
-  padding: $spacing-xl;
-  background-color: $form-background-color;
-  
-  @include respond-to(tablet) {
-    padding: $spacing-lg $spacing-md;
-  }
+    flex: 1;
+    @include flex-center;
+    flex-direction: column;
+    padding: $spacing-xl;
+    background-color: $form-background-color;
 
-  @include respond-to(mobile) {
-    padding: $spacing-md $spacing-sm;
-  }
+    @include respond-to(tablet) {
+        padding: $spacing-lg $spacing-md;
+    }
+
+    @include respond-to(mobile) {
+        padding: $spacing-md $spacing-sm;
+    }
 }
 
 .form-header {
-  text-align: center;
-  margin-bottom: $spacing-xl;
+    text-align: center;
+    margin-bottom: $spacing-xl;
 
-  h1 {
-    font-size: 2.5rem;
-    color: $text-color;
-    margin-bottom: $spacing-sm;
-    font-weight: 700;
+    h1 {
+        font-size: 2.5rem;
+        color: $purple-color;
+        margin-bottom: $spacing-sm;
+        font-weight: 700;
 
-    @include respond-to(tablet) {
-      font-size: 2rem;
+        @include respond-to(tablet) {
+            font-size: 2rem;
+        }
+
+        @include respond-to(mobile) {
+            font-size: 1.75rem;
+        }
     }
 
-    @include respond-to(mobile) {
-      font-size: 1.75rem;
-    }
-  }
+    p {
+        color: $footer-text;
+        font-size: 1.1rem;
 
-  p {
-    color: $footer-text;
-    font-size: 1.1rem;
-    
-    @include respond-to(mobile) {
-      font-size: 1rem;
+        @include respond-to(mobile) {
+            font-size: 1rem;
+        }
     }
-  }
 }
 
 .login-right h1,
 .signup-form-section h1 {
-  font-size: 2.5rem;
-  color: $text-color;
-  margin-bottom: $spacing-xl;
-  font-weight: 700;
-  text-align: center;
+    font-size: 2.5rem;
+    color: $purple-color;
+    margin-bottom: $spacing-xl;
+    font-weight: 700;
+    text-align: center;
 
-  @include respond-to(tablet) {
-    font-size: 2rem;
-    margin-bottom: $spacing-lg;
-  }
+    @include respond-to(tablet) {
+        font-size: 2rem;
+        margin-bottom: $spacing-lg;
+    }
 
-  @include respond-to(mobile) {
-    font-size: 1.75rem;
-  }
+    @include respond-to(mobile) {
+        font-size: 1.75rem;
+    }
 }
 
 .login-right form {
-  width: 100%;
-  max-width: 500px;
-  background-color: $form-background-color;
-  padding: 45px 40px;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 500px;
+    background-color: $white;
+    padding: 45px 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid #f5f5f5;
 
-  @include respond-to(mobile) {
-    max-width: 100%;
-    padding: $spacing-xl;
-  }
+    @include respond-to(mobile) {
+        max-width: 100%;
+        padding: $spacing-xl;
+    }
 }
 
 .signup-form-section form,
 .signup-form {
-  width: 100%;
-  max-width: 570px; // WIDER for signup
-  background-color: $form-background-color;
-  padding: 50px 45px; // More padding
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 570px;
+    background-color: $white;
+    padding: 50px 45px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid #f5f5f5;
 
-  @include respond-to(mobile) {
-    max-width: 100%;
-    padding: $spacing-xl $spacing-lg;
-  }
+    @include respond-to(mobile) {
+        max-width: 100%;
+        padding: $spacing-xl $spacing-lg;
+    }
 }
 
 .form-group {
-  margin-bottom: $spacing-lg;
-  position: relative;
+    margin-bottom: $spacing-lg;
+    position: relative;
 
-  label {
-    display: block;
-    font-size: 0.95rem;
-    color: $text-color;
-    margin-bottom: $spacing-sm;
-    font-weight: 600;
-  }
-
-  input,
-  select {
-    width: 100%;
-    padding: 15px 18px;
-    border: 2px solid #e5e7eb;
-    border-radius: 12px;
-    font-size: 1rem;
-    font-family: $primary-font;
-    background-color: $white;
-    color: $text-color;
-    @include transition(all);
-
-    &:focus {
-      outline: none;
-      border-color: $secondary-color;
-      box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
-      transform: translateY(-1px);
+    label {
+        display: block;
+        font-size: 0.95rem;
+        color: $text-color;
+        margin-bottom: $spacing-sm;
+        font-weight: 600;
     }
 
-    &::placeholder {
-      color: #bdc3c7;
-    }
-  }
+    input,
+    select {
+        width: 100%;
+        padding: 15px 18px;
+        border: 2px solid #e8e8e8;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: $primary-font;
+        background-color: #fafafa;
+        color: $text-color;
+        @include transition(all);
 
-  select {
-    cursor: pointer;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: left 16px center;
-    padding-left: 40px;
-  }
+        &:focus {
+            outline: none;
+            border-color: $secondary-color;
+            background-color: $white;
+            box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+            transform: translateY(-1px);
+        }
+
+        &::placeholder {
+            color: #bdc3c7;
+        }
+    }
+
+    select {
+        cursor: pointer;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: left 16px center;
+        padding-left: 40px;
+    }
 }
 
 .form-row {
-  display: flex;
-  gap: $spacing-xl;
-  margin-bottom: $spacing-xl;
-
-  @include respond-to(tablet) {
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: $spacing-lg;
-  }
-
-  .form-group {
-    flex: 1;
-    margin-bottom: 0;
+    display: flex;
+    gap: $spacing-xl;
+    margin-bottom: $spacing-xl;
 
     @include respond-to(tablet) {
-      margin-bottom: $spacing-lg;
-      
-      &:last-child {
-        margin-bottom: 0;
-      }
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: $spacing-lg;
     }
-  }
+
+    .form-group {
+        flex: 1;
+        margin-bottom: 0;
+
+        @include respond-to(tablet) {
+            margin-bottom: $spacing-lg;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
 }
 
 .form-group.full-width {
-  width: 100%;
-  flex: 0 0 100%;
-  margin-bottom: $spacing-lg;
+    width: 100%;
+    flex: 0 0 100%;
+    margin-bottom: $spacing-lg;
 }
 
 .text-danger,
 .error {
-  display: block;
-  color: darken($primary-color, 10%);
-  font-size: 0.85rem;
-  margin-top: $spacing-xs;
+    display: block;
+    color: $primary-color;
+    font-size: 0.85rem;
+    margin-top: $spacing-xs;
 }
 
 .alert {
-  padding: $spacing-sm $spacing-md;
-  margin-bottom: $spacing-xl;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  
-  &-success {
-    background-color: rgba($secondary-color, 0.1);
-    color: darken($secondary-color, 15%);
-    border: 1px solid rgba($secondary-color, 0.3);
-  }
-  
-  &-danger {
-    background-color: rgba($primary-color, 0.1);
-    color: darken($primary-color, 15%);
-    border: 1px solid rgba($primary-color, 0.3);
-  }
+    padding: $spacing-sm $spacing-md;
+    margin-bottom: $spacing-xl;
+    border-radius: 8px;
+    font-size: 0.95rem;
+
+    &-success {
+        background-color: lighten($accent-green, 45%);
+        color: darken($accent-green, 20%);
+        border: 1px solid lighten($accent-green, 30%);
+    }
+
+    &-danger {
+        background-color: lighten($primary-color, 42%);
+        color: darken($primary-color, 15%);
+        border: 1px solid lighten($primary-color, 30%);
+    }
 }
 
 .form-options {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: $spacing-xl;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-xl;
 
-  @include respond-to(mobile) {
-    flex-direction: column;
-    gap: $spacing-sm;
-    align-items: flex-start;
-  }
+    @include respond-to(mobile) {
+        flex-direction: column;
+        gap: $spacing-sm;
+        align-items: flex-start;
+    }
 }
 
 .remember-me {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  
-  input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: $primary-color;
-    cursor: pointer;
-  }
-  
-  label {
-    color: $text-color;
-    font-size: 0.95rem;
-    cursor: pointer;
-  }
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: $primary-color;
+        cursor: pointer;
+    }
+
+    label {
+        color: $text-color;
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
 }
 
 .forgot-password {
-  margin-bottom: $spacing-lg;
-  
-  a {
-    color: $secondary-color;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    @include transition(color);
-    
-    &:hover {
-      color: darken($secondary-color, 10%);
-      text-decoration: underline;
+    margin-bottom: $spacing-lg;
+
+    a {
+        color: $secondary-color;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+        @include transition(color);
+
+        &:hover {
+            color: darken($secondary-color, 10%);
+            text-decoration: underline;
+        }
     }
-  }
 }
 
 .login-button,
 .signup-btn {
-  width: 100%;
-  padding: 16px;
-  background: linear-gradient(135deg, $primary-color, darken($primary-color, 5%));
-  color: $white;
-  border: none;
-  border-radius: 25px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: $primary-font;
-  @include transition(all);
-  box-shadow: 0 4px 15px rgba($primary-color, 0.3);
-  margin-top: $spacing-xl;
-  margin-bottom: $spacing-lg;
+    width: 100%;
+    padding: 16px;
+    background: $accent-yellow;
+    color: $white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: $primary-font;
+    @include transition(all);
+    box-shadow: 0 4px 12px rgba($primary-color, 0.25);
+    margin-top: $spacing-xl;
+    margin-bottom: $spacing-lg;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba($primary-color, 0.4);
-  }
+    &:hover {
+        background: darken($accent-yellow, 8%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba($accent-yellow, 0.35);
+    }
 
-  &:active {
-    transform: translateY(0) scale(0.98);
-    box-shadow: 0 2px 10px rgba($primary-color, 0.3);
-  }
+    &:active {
+        transform: translateY(0) scale(0.98);
+        box-shadow: 0 2px 10px rgba($accent-yellow, 0.25);
+    }
 
-  @include respond-to(mobile) {
-    padding: 14px;
-    font-size: 1rem;
-  }
+    @include respond-to(mobile) {
+        padding: 14px;
+        font-size: 1rem;
+    }
 }
 
 .signup-link,
 .login-link {
-  margin-top: $spacing-xl;
-  text-align: center;
+    margin-top: $spacing-xl;
+    text-align: center;
 
-  p {
-    color: $text-color;
-    font-size: 1rem;
+    p {
+        color: $text-color;
+        font-size: 1rem;
 
-    a {
-      color: $secondary-color;
-      text-decoration: none;
-      font-weight: 600;
-      @include transition(color);
+        a {
+            color: $secondary-color;
+            text-decoration: none;
+            font-weight: 600;
+            @include transition(color);
 
-      &:hover {
-        color: darken($secondary-color, 10%);
-        text-decoration: underline;
-      }
+            &:hover {
+                color: darken($secondary-color, 10%);
+                text-decoration: underline;
+            }
+        }
     }
-  }
 }
 
 .toggle-password {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  color: #777;
-  cursor: pointer;
-  padding: 5px;
-  font-size: 1.1rem;
-  
-  &:hover {
-    color: $primary-color;
-  }
-  
-  &:focus {
-    outline: none;
-  }
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #777;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.1rem;
+
+    &:hover {
+        color: $primary-color;
+    }
+
+    &:focus {
+        outline: none;
+    }
 }
