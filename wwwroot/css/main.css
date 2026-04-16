@@ -327,7 +327,7 @@ header nav .nav-menu li a:hover {
 }
 .main-text p {
   font-size: 1.25rem;
-  color: #666;
+  color: #333333;
   line-height: 1.9;
   margin-bottom: 24px;
   order: 1;
@@ -633,95 +633,125 @@ header nav .nav-menu li a:hover {
 }
 
 .process-section {
-  background: none;
   width: 100%;
-  max-width: 1300px;
+  max-width: 860px;
   margin: 60px auto;
-  padding: 80px 80px;
-  display: grid !important;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
-  column-gap: 60px;
-  row-gap: 40px;
-  align-items: start;
+  padding: 80px 40px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  gap: 24px;
   direction: rtl;
-  position: relative;
 }
 .process-section h2 {
-  grid-column: 1;
-  grid-row: 1/span 3;
-  align-self: center;
+  text-align: center;
   font-size: 4rem;
   font-weight: 800;
   color: #9d4ebe;
-  text-align: right;
-  margin: 0;
-}
-@media (max-width: 1024px) {
-  .process-section {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    row-gap: 30px;
-    padding: 60px 30px;
-  }
-  .process-section h2 {
-    grid-column: 1;
-    grid-row: 1;
-    text-align: center;
-    font-size: 2.8rem;
-  }
+  margin-bottom: 12px;
+  grid-column: unset !important;
+  grid-row: unset !important;
+  align-self: unset;
 }
 .process-section .process-step {
-  grid-column: 2;
-  text-align: right;
+  grid-column: unset !important;
+  border-radius: 20px;
+  padding: 28px 32px;
+  display: flex !important;
+  align-items: center;
+  gap: 24px;
+  cursor: default;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
   position: relative;
-  z-index: 2;
+  overflow: hidden;
 }
-@media (max-width: 1024px) {
-  .process-section .process-step {
-    grid-column: 1;
-  }
+.process-section .process-step::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.process-section .process-step:hover {
+  transform: translateY(-6px) scale(1.015);
+}
+.process-section .process-step:hover::before {
+  opacity: 1;
+}
+.process-section .process-step:hover .step-number {
+  transform: rotate(-12deg) scale(1.15);
+}
+.process-section .process-step:nth-child(2) {
+  background: #32c8c3;
+}
+.process-section .process-step:nth-child(2):hover {
+  box-shadow: 0 16px 40px rgba(50, 200, 195, 0.45);
+}
+.process-section .process-step:nth-child(2) .step-number {
+  background: rgba(255, 255, 255, 0.28);
+}
+.process-section .process-step:nth-child(3) {
+  background: #ffb90f;
+}
+.process-section .process-step:nth-child(3):hover {
+  box-shadow: 0 16px 40px rgba(255, 185, 15, 0.45);
+}
+.process-section .process-step:nth-child(3) .step-number {
+  background: rgba(255, 255, 255, 0.28);
+}
+.process-section .process-step:nth-child(4) {
+  background: #9d4ebe;
+}
+.process-section .process-step:nth-child(4):hover {
+  box-shadow: 0 16px 40px rgba(127, 119, 221, 0.45);
+}
+.process-section .process-step:nth-child(4) .step-number {
+  background: rgba(255, 255, 255, 0.28);
 }
 .process-section .process-step .step-number {
-  font-size: 2.8rem;
-  font-weight: 900;
-  color: #fff;
-  width: 96px;
-  height: 96px;
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  padding-top: 0 !important;
+  background: rgba(255, 255, 255, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 0 16px auto;
-  line-height: 1;
-}
-.process-section .process-step:nth-child(2) .step-number {
-  background-color: #ffb90f;
-  border-radius: 50%;
-}
-.process-section .process-step:nth-child(3) .step-number {
-  background-color: #9d4ebe;
-  border-radius: 6px;
-}
-.process-section .process-step:nth-child(4) .step-number {
-  background-color: #32c8c3;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-  border-radius: 0;
-  padding-top: 20px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .process-section .process-step h3 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 8px;
   font-weight: 700;
 }
 .process-section .process-step p {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #555;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.88);
   line-height: 1.7;
+  margin: 0;
 }
 .process-section .process-step img {
   display: none;
+}
+@media (max-width: 992px) {
+  .process-section {
+    padding: 60px 20px;
+  }
+  .process-section h2 {
+    font-size: 2.8rem;
+  }
+  .process-section .process-step {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 
 .faq-section {
