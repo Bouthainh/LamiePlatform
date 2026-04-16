@@ -1,0 +1,45 @@
+﻿@model List<BadeePlatform.Models.Conversation>
+@{
+    var userType = ViewBag.UserType as string;
+    var userId = ViewBag.UserId as string;
+}
+
+<div class="container mt-4">
+    <h2>المحادثات</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">لا توجد محادثات بعد</div>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var conv in Model)
+            {
+                var otherName = userType == "Educator"
+                ? conv.Parent?.ParentName
+                : conv.Educator?.EducatorName;
+
+                var lastMsg = conv.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
+                var unread = conv.Messages.Count(m => !m.IsRead && m.SenderType != userType);
+
+                <a href="@Url.Action("Chat", "Chat", new { educatorId = conv.EducatorId, parentId = conv.ParentId })"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1">@otherName</h6>
+                        <small class="text-muted">@(lastMsg?.Content ?? "لا توجد رسائل")</small>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-muted d-block">
+                            @(lastMsg?.SentAt?.ToString("hh:mm tt") ?? "")
+                        </small>
+                        @if (unread > 0)
+                        {
+                            <span class="badge bg-danger rounded-pill">@unread</span>
+                        }
+                    </div>
+                </a>
+            }
+        </div>
+    }
+</div>

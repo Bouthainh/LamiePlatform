@@ -58,6 +58,7 @@ namespace BadeePlatform.Services
             //return the Full View Model after retrieving data
             return new ChildDashboardViewModel
             {
+                ChildId = child.ChildId,
                 ChildName = child.ChildName,
                 Age = (int)child.Age,
                 IconImgPath = ChildExtensions.GetIconPathByGender(child.Gender),

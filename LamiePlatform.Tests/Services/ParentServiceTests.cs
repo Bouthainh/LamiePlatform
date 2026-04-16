@@ -60,7 +60,7 @@ public class ParentServiceTests
         result.Should().NotBeNull();
         result.Success.Should().BeTrue();
         result.Message.Should().Be("تم تسجيل الدخول بنجاح.");
-        result.ParentId.Should().Be("1119435366");
+        result.UserId.Should().Be("1119435366");
         result.Data.Should().Be("Father");
     }
 
@@ -104,7 +104,7 @@ public class ParentServiceTests
         result.Should().NotBeNull();
         result.Success.Should().BeTrue();
         result.Message.Should().Be("تم تسجيل الدخول بنجاح.");
-        result.ParentId.Should().Be("1119435366");
+        result.UserId.Should().Be("1119435366");
         result.Data.Should().Be("Father");
     }
 
@@ -130,7 +130,7 @@ public class ParentServiceTests
         result.Should().NotBeNull();
         result.Success.Should().BeFalse();
         result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
-        result.ParentId.Should().BeNull();
+        result.UserId.Should().BeNull();
     }
 
     // Login Parent - TC4: Parent Exists but Password Field is Null
@@ -170,7 +170,7 @@ public class ParentServiceTests
         result.Should().NotBeNull();
         result.Success.Should().BeFalse();
         result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
-        result.ParentId.Should().BeNull();
+        result.UserId.Should().BeNull();
     }
 
     // Login Parent - TC5: Wrong Password
@@ -213,7 +213,7 @@ public class ParentServiceTests
         result.Should().NotBeNull();
         result.Success.Should().BeFalse();
         result.Message.Should().Be("اسم المستخدم أو كلمة المرور غير صحيحة.");
-        result.ParentId.Should().BeNull();
+        result.UserId.Should().BeNull();
     }
  
     // Update Parent Profile - TC1: Parent exists - Success

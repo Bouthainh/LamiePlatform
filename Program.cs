@@ -1,4 +1,5 @@
 ﻿using BadeePlatform.Data;
+using BadeePlatform.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Parent/Login";
         options.AccessDeniedPath = "/Parent/AccessDenied";
     });
+// register HttpClient for OpenAI API
+builder.Services.AddHttpClient("OpenAI", client =>
+{
+    var apiKey = builder.Configuration["OpenAI:ApiKey"]
+        ?? throw new InvalidOperationException("OpenAI:ApiKey not set in appsettings.json.");
+
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
+});
 
 builder.Services.AddScoped<BadeePlatform.Services.IChildService, BadeePlatform.Services.ChildService>();
 
@@ -17,7 +26,19 @@ builder.Services.AddScoped<BadeePlatform.Services.IParentService, BadeePlatform.
 
 builder.Services.AddScoped<BadeePlatform.Services.IDashboardService, BadeePlatform.Services.DashboardService>();
 
+builder.Services.AddScoped<BadeePlatform.Services.IEducatorService, BadeePlatform.Services.EducatorService>();
+
+builder.Services.AddScoped<BadeePlatform.Services.IChatService, BadeePlatform.Services.ChatService>();
+builder.Services.AddScoped<BadeePlatform.Services.IRecommendationService, BadeePlatform.Services.RecommendationService>();
+
+
+
+
 builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Parent>, PasswordHasher<BadeePlatform.Models.Parent>>();
+builder.Services.AddScoped<IPasswordHasher<BadeePlatform.Models.Educator>, PasswordHasher<BadeePlatform.Models.Educator>>();
+builder.Services.AddScoped<BadeePlatform.Services.IRequestService, BadeePlatform.Services.RequestService>();
+builder.Services.AddScoped<BadeePlatform.Services.IGroupingService, BadeePlatform.Services.GroupingService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

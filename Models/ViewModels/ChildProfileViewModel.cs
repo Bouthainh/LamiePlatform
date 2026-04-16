@@ -14,6 +14,7 @@
         public string Grade { get; set; }
         public string Class { get; set; }
         public string EducatorName { get; set; }
+        public string? EducatorId { get; set; }
 
         public string RelationshipType { get; set; }
 

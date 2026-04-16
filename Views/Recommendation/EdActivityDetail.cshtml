@@ -1,0 +1,36 @@
+@model LamiePlatform.Models.ViewModels.RecommendationDetailViewModel
+@{
+    ViewData["Title"] = "تفاصيل التوصية";
+}
+
+<div class="container mt-4" dir="rtl">
+    <h2 class="mb-4">تفاصيل التوصية</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered align-middle">
+                <tr>
+                    <th class="table-light" style="width: 180px;">اسم النشاط</th>
+                    <td>@Model.ActivityName</td>
+                </tr>
+                <tr>
+                    <th class="table-light">الوصف</th>
+                    <td>@Model.ActivityDescription</td>
+                </tr>
+                <tr>
+                    <th class="table-light">المدة (دقيقة)</th>
+                    <td>@(Model.Duration.HasValue? Model.Duration.Value.ToString() + " دقيقة" : "غير محدد")</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="EdActivityList"
+           asp-route-educatorId="@ViewBag.EducatorId"
+           asp-route-groupId="@Model.GroupId"
+           class="btn btn-outline-secondary">
+            ← العودة إلى قائمة التوصيات
+        </a>
+    </div>
+</div>

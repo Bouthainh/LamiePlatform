@@ -9,6 +9,7 @@
     ViewData["HideFooter"] = true;
     ViewData["SpicalHeader"] = true;
     ViewData["SpicalFooter"] = true;
+    var currentParentId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 }
 <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 <main>
@@ -128,6 +129,17 @@
                                 <span class="label">المعلم:</span>
                                 <span class="value">@Model.EducatorName</span>
                             </div>
+                              @if (!string.IsNullOrEmpty(Model.EducatorId))
+    {
+        <div class="detail-row">
+            <a href="@Url.Action("Chat", "Chat", new { 
+                   educatorId = Model.EducatorId, 
+                   parentId = currentParentId })"
+               class="btn btn-primary mt-2">
+                💬 مراسلة المعلم
+            </a>
+        </div>
+    }
                         }
                     </div>
 

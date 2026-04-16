@@ -1,281 +1,289 @@
 .edit-child-page {
-  direction: rtl;
-  font-family: $primary-font;
-  min-height: 100vh;
-  background-color: $light-bg;
-  color: $text-color;
-  padding: $spacing-md;
+    direction: rtl;
+    font-family: $primary-font;
+    min-height: 100vh;
+    background-color: $light-bg;
+    color: $text-color;
+    padding: $spacing-md;
 
-  .main-container {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-  }
+    .main-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+    }
 
-  .main-content {
-    background: linear-gradient(135deg, $child-light-pink 0%, $child-light-blue 50%, $child-light-yellow 100%);
-    border-radius: 22px;
-    padding: $spacing-xl;
-    @include card-shadow;
-    box-sizing: border-box;
-
-    .form-container {
-      max-width: 700px;
-      margin: 0 auto;
-        
-      .form-header {
-        text-align: center;
-        margin-bottom: $spacing-xl;
-
-        h1 {
-          color: $purple-color;
-          font-size: 32px;
-          font-weight: 700;
-          margin: 0;
-        }
-      }
-
-      // Alert messages
-      .alert {
-        padding: $spacing-sm $spacing-md;
-        border-radius: 12px;
-        margin-bottom: $spacing-md;
-
-        &.alert-danger {
-          background-color: #ffe6e6;
-          color: #d32f2f;
-          border: 1px solid #ffcccc;
-
-          ul {
-            margin: 0;
-            padding-right: $spacing-md;
-
-            li {
-              margin-bottom: $spacing-xs;
-            }
-          }
-        }
-      }
-
-      // Form sections
-      .form-section {
-        margin-bottom: $spacing-lg;
-        padding: $spacing-xl;
+    .main-content {
         background: $white;
-        border-radius: 18px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 22px;
+        padding: $spacing-xl;
+        @include card-shadow;
+        box-sizing: border-box;
+        border: 2px solid #f0f0f0;
 
-        h2 {
-          color: $tirquaz-color;
-          font-size: 20px;
-          font-weight: 700;
-          margin: 0 0 $spacing-lg;
-          padding-bottom: $spacing-sm;
-          border-bottom: 2px solid rgba($tirquaz-color, 0.2);
-        }
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
 
-        // Form groups
-        .form-group {
-          margin-bottom: $spacing-md;
+            .form-header {
+                text-align: center;
+                margin-bottom: $spacing-xl;
 
-          label {
-            display: block;
-            font-size: $font-size-small;
-            font-weight: 600;
-            color: $text-light;
-            margin-bottom: $spacing-xs;
-          }
-
-          .form-control {
-            width: 100%;
-            padding: 12px $spacing-md;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: $font-size-base;
-            font-family: $primary-font;
-            background-color: #fafafa;
-            @include transition(all);
-            box-sizing: border-box;
-
-            &:focus {
-              outline: none;
-              border-color: $secondary-color;
-              background-color: $white;
-              box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+                h1 {
+                    color: $purple-color;
+                    font-size: 32px;
+                    font-weight: 700;
+                    margin: 0;
+                }
             }
+            // Alert messages
+            .alert {
+                padding: $spacing-sm $spacing-md;
+                border-radius: 12px;
+                margin-bottom: $spacing-md;
 
-            &::placeholder {
-              color: #bbb;
+                &.alert-danger {
+                    background-color: lighten($primary-color, 42%);
+                    color: darken($primary-color, 15%);
+                    border: 1px solid lighten($primary-color, 30%);
+
+                    ul {
+                        margin: 0;
+                        padding-right: $spacing-md;
+
+                        li {
+                            margin-bottom: $spacing-xs;
+                        }
+                    }
+                }
             }
-          }
+            // Form sections
+            .form-section {
+                margin-bottom: $spacing-lg;
+                padding: $spacing-xl;
+                background: #fafafa;
+                border-radius: 18px;
+                border: 2px solid #f0f0f0;
 
-          select.form-control {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: left 12px center;
-            padding-left: 36px;
-          }
+                h2 {
+                    color: $secondary-color;
+                    font-size: 20px;
+                    font-weight: 700;
+                    margin: 0 0 $spacing-lg;
+                    padding-bottom: $spacing-sm;
+                    position: relative;
+                    padding-right: $spacing-sm;
 
-          .text-danger {
-            display: block;
-            color: #d32f2f;
-            font-size: $font-size-small;
-            margin-top: $spacing-xs;
-          }
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        right: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        width: 4px;
+                        height: 70%;
+                        background-color: $secondary-color;
+                        border-radius: 2px;
+                    }
+                }
+                // Form groups
+                .form-group {
+                    margin-bottom: $spacing-md;
+
+                    label {
+                        display: block;
+                        font-size: $font-size-small;
+                        font-weight: 600;
+                        color: $text-light;
+                        margin-bottom: $spacing-xs;
+                    }
+
+                    .form-control {
+                        width: 100%;
+                        padding: 12px $spacing-md;
+                        border: 2px solid #e8e8e8;
+                        border-radius: 10px;
+                        font-size: $font-size-base;
+                        font-family: $primary-font;
+                        background-color: $white;
+                        @include transition(all);
+                        box-sizing: border-box;
+
+                        &:focus {
+                            outline: none;
+                            border-color: $secondary-color;
+                            background-color: $white;
+                            box-shadow: 0 0 0 3px rgba($secondary-color, 0.1);
+                        }
+
+                        &::placeholder {
+                            color: #bbb;
+                        }
+                    }
+
+                    select.form-control {
+                        cursor: pointer;
+                        appearance: none;
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+                        background-repeat: no-repeat;
+                        background-position: left 12px center;
+                        padding-left: 36px;
+                    }
+
+                    .text-danger {
+                        display: block;
+                        color: $primary-color;
+                        font-size: $font-size-small;
+                        margin-top: $spacing-xs;
+                    }
+                }
+                // Form row for side-by-side inputs
+                .form-row {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: $spacing-md;
+
+                    @include respond-to(tablet) {
+                        grid-template-columns: 1fr;
+                    }
+                }
+            }
+            // Form actions
+            .form-actions {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: $spacing-md;
+                margin-top: $spacing-xl;
+
+                .submit-btn {
+                    background-color: $accent-green;
+                    color: $white;
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding: 14px 50px;
+                    min-width: 160px;
+                    border: none;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    box-shadow: 0 4px 12px rgba($accent-green, 0.25);
+                    @include transition(all);
+
+                    &:hover {
+                        background-color: $primary-green-dark;
+                        transform: translateY(-2px);
+                        box-shadow: 0 6px 20px rgba($accent-green, 0.35);
+                    }
+
+                    &:active {
+                        transform: translateY(0);
+                    }
+                }
+
+                .cancel-btn {
+                    font-size: 16px;
+                    font-weight: 600;
+                    padding: 14px 50px;
+                    min-width: 160px;
+                    border-radius: 12px;
+                    text-decoration: none;
+                    display: inline-block;
+                    text-align: center;
+                    background-color: #f5f5f5;
+                    color: $text-light;
+                    @include transition(all);
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+                    &:hover {
+                        background-color: #e0e0e0;
+                        transform: translateY(-2px);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+                    }
+
+                    &:active {
+                        transform: translateY(0);
+                    }
+                }
+            }
         }
-
-        // Form row for side-by-side inputs
-        .form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: $spacing-md;
-
-          @include respond-to(tablet) {
-            grid-template-columns: 1fr;
-          }
-        }
-      }
-
-      // Form actions
-      .form-actions {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: $spacing-md;
-        margin-top: $spacing-xl;
-
-        .submit-btn {
-          background-color: $primary-green;
-          color: $white;
-          font-size: 16px;
-          font-weight: 600;
-          padding: 14px 50px;
-          min-width: 160px;
-          border: none;
-          border-radius: 12px;
-          cursor: pointer;
-          box-shadow: 0 4px 12px rgba($primary-green, 0.25);
-          @include transition(all);
-
-          &:hover {
-            background-color: $primary-green-dark;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba($primary-green, 0.35);
-          }
-
-          &:active {
-            transform: translateY(0);
-          }
-        }
-
-        .cancel-btn {
-          font-size: 16px;
-          font-weight: 600;
-          padding: 14px 50px;
-          min-width: 160px;
-          border-radius: 12px;
-          text-decoration: none;
-          display: inline-block;
-          text-align: center;
-          background-color: #f5f5f5;
-          color: $text-light;
-          @include transition(all);
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-
-          &:hover {
-            background-color: #e0e0e0;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-          }
-
-          &:active {
-            transform: translateY(0);
-          }
-        }
-      }
     }
-  }
+    // Responsive adjustments
+    @include respond-to(tablet) {
+        padding: $spacing-sm;
 
-  // Responsive adjustments
-  @include respond-to(tablet) {
-    padding: $spacing-sm;
+        .main-content {
+            padding: $spacing-lg;
+            border-radius: 18px;
 
-    .main-content {
-      padding: $spacing-lg;
-      border-radius: 18px;
+            .form-container {
+                .form-header h1 {
+                    font-size: 26px;
+                }
 
-      .form-container {
-        .form-header h1 {
-          font-size: 26px;
-        }
+                .form-section {
+                    padding: $spacing-lg;
 
-        .form-section {
-          padding: $spacing-lg;
+                    h2 {
+                        font-size: 18px;
+                    }
+                }
 
-          h2 {
-            font-size: 18px;
-          }
-        }
+                .form-actions {
+                    flex-direction: column;
+                    gap: $spacing-sm;
 
-        .form-actions {
-          flex-direction: column;
-          gap: $spacing-sm;
-
-          .submit-btn,
-          .cancel-btn {
-            width: 100%;
-            min-width: auto;
-          }
-        }
-      }
-    }
-  }
-
-  @include respond-to(mobile) {
-    .main-content {
-      padding: $spacing-md;
-      border-radius: 16px;
-
-      .form-container {
-        .form-header h1 {
-          font-size: 22px;
-        }
-
-        .form-section {
-          padding: $spacing-md;
-
-          h2 {
-            font-size: 16px;
-          }
-
-          .form-group {
-            margin-bottom: $spacing-sm;
-
-            .form-control {
-              padding: 10px $spacing-sm;
-              font-size: $font-size-small;
+                    .submit-btn,
+                    .cancel-btn {
+                        width: 100%;
+                        min-width: auto;
+                    }
+                }
             }
-
-            label {
-              font-size: 13px;
-            }
-          }
-
-          .form-row {
-            gap: $spacing-sm;
-          }
         }
-
-        .form-actions {
-          .submit-btn,
-          .cancel-btn {
-            padding: 12px 30px;
-            font-size: $font-size-small;
-          }
-        }
-      }
     }
-  }
+
+    @include respond-to(mobile) {
+        .main-content {
+            padding: $spacing-md;
+            border-radius: 16px;
+
+            .form-container {
+                .form-header h1 {
+                    font-size: 22px;
+                }
+
+                .form-section {
+                    padding: $spacing-md;
+
+                    h2 {
+                        font-size: 16px;
+                    }
+
+                    .form-group {
+                        margin-bottom: $spacing-sm;
+
+                        .form-control {
+                            padding: 10px $spacing-sm;
+                            font-size: $font-size-small;
+                        }
+
+                        label {
+                            font-size: 13px;
+                        }
+                    }
+
+                    .form-row {
+                        gap: $spacing-sm;
+                    }
+                }
+
+                .form-actions {
+                    .submit-btn,
+                    .cancel-btn {
+                        padding: 12px 30px;
+                        font-size: $font-size-small;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,0 +1,101 @@
+﻿@model List<BadeePlatform.Models.Child>
+@{
+    ViewData["Title"] = "لامع - البحث عن طفل";
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
+
+<main dir="rtl">
+
+    <h1>البحث عن طفل وإرسال طلب</h1>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <p style="color:green;">@TempData["SuccessMessage"]</p>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color:red;">@TempData["ErrorMessage"]</p>
+    }
+
+    <form method="get" asp-action="SearchChildren" asp-controller="Educator">
+        <input type="text" name="searchTerm" value="@ViewBag.SearchTerm" placeholder="أدخل الاسم أو رقم الهوية" />
+        <button type="submit">بحث</button>
+    </form>
+
+    @if (Model != null && Model.Any())
+    {
+        <h2>نتائج البحث</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>رقم الهوية</th>
+                    <th>اسم الطفل</th>
+                    <th>المرحلة</th>
+                    <th>الفصل</th>
+                    <th>إجراء</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var child in Model)
+                {
+                    <tr>
+                        <td>@child.ChildId</td>
+                        <td>@child.ChildName</td>
+                        <td>@child.Grade?.GradeName</td>
+                        <td>@child.Class?.ClassName</td>
+                        <td>
+                            <form method="post" asp-action="SendRequest" asp-controller="Educator">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="childId" value="@child.ChildId" />
+                                <button type="submit">إرسال طلب</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (ViewBag.SearchTerm != null)
+    {
+        <p>لا توجد نتائج مطابقة في مدرستك</p>
+    }
+
+    @if (ViewBag.SentRequests != null)
+    {
+        var sentRequests = ViewBag.SentRequests as List<BadeePlatform.Models.Request>;
+        if (sentRequests != null && sentRequests.Any())
+        {
+            <h2>الطلبات المرسلة</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>اسم الطفل</th>
+                        <th>تاريخ الإرسال</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var req in sentRequests)
+                    {
+                        <tr>
+                            <td>@req.Child?.ChildName</td>
+                            <td>@req.SentAt?.ToString("yyyy/MM/dd")</td>
+                            <td>
+                                @if (req.RequestStatus == "Pending") { <span>قيد الانتظار</span> }
+                                else if (req.RequestStatus == "Approved") { <span>مقبول</span> }
+                                else if (req.RequestStatus == "Rejected") { <span>مرفوض</span> }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+
+</main>

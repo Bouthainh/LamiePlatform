@@ -20,6 +20,6 @@
   </ItemGroup>
   
   <ItemGroup>
- <ProjectReference Include="..\BadeePlatform.csproj" />  </ItemGroup>
+ <ProjectReference Include="..\LamiePlatform.csproj" />  </ItemGroup>
 
 </Project>

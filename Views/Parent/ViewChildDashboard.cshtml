@@ -62,7 +62,12 @@
             <h4>المعلم</h4>
             <p>@Model.EducatorName</p>
             <small>@Model.EducatorEmail</small>
-            <button>للتواصل مع المعلم</button>
+            <a href="@Url.Action("Chat", "Chat", new { 
+                   educatorId = Model.EducatorId, 
+                   parentId = Model.ParentId })"
+               class="btn btn-primary mt-2">
+                💬 مراسلة المعلم
+            </a>
         </div>
 
         <div class="box">
@@ -76,6 +81,11 @@
         </div>
     </div>
 </div>
+
+<a asp-controller="Recommendation" asp-action="ActivityList" asp-route-childId="@Model.ChildId">
+    عرض التوصيات
+</a>
+
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/js/dashboard.js"></script>
