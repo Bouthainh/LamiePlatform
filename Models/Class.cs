@@ -17,11 +17,10 @@ public partial class Class
 
     public virtual ICollection<ActivityRecommendation> ActivityRecommendations { get; set; } = new List<ActivityRecommendation>();
 
-    public virtual ICollection<ChildGroup> ChildGroups { get; set; } = new List<ChildGroup>();
-
     public virtual ICollection<Child> Children { get; set; } = new List<Child>();
 
     public virtual Educator? Educator { get; set; }
 
     public virtual Grade? Grade { get; set; }
+    public virtual ICollection<ChildGroup> ChildGroups { get; set; } = new List<ChildGroup>();
 }

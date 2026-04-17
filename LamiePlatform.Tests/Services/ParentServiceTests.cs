@@ -4,7 +4,6 @@ using LamiePlatform.Models;
 using LamiePlatform.Models.ViewModels;
 using LamiePlatform.Services;
 using FluentAssertions;
-using LamiePlatform.Data;
 using LamiePlatform.Tests.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

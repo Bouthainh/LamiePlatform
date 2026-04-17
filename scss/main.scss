@@ -21,6 +21,8 @@ body, main, .container {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
+    @include global-page-base;
+    box-sizing: border-box;
 }
 
 section {

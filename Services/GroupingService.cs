@@ -1,5 +1,6 @@
 ﻿using LamiePlatform.Data;
 using LamiePlatform.Models;
+using LamiePlatform.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LamiePlatform.Services;

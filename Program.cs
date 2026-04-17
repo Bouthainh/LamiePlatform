@@ -30,8 +30,8 @@ builder.Services.AddScoped<LamiePlatform.Services.IEducatorService, LamiePlatfor
 
 builder.Services.AddScoped<LamiePlatform.Services.IChatService, LamiePlatform.Services.ChatService>();
 builder.Services.AddScoped<LamiePlatform.Services.IRecommendationService, LamiePlatform.Services.RecommendationService>();
-
 builder.Services.AddScoped<LamiePlatform.Services.GameService, LamiePlatform.Services.GameService>();
+
 
 
 builder.Services.AddScoped<IPasswordHasher<LamiePlatform.Models.Parent>, PasswordHasher<LamiePlatform.Models.Parent>>();

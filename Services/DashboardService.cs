@@ -2,7 +2,6 @@
 using LamiePlatform.Helpers;
 using LamiePlatform.Models;
 using LamiePlatform.Models.ViewModels;
-using LamiePlatform.Data;
 
 namespace LamiePlatform.Services
 {

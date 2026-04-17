@@ -1,13 +1,13 @@
 ﻿using LamiePlatform.Data;
 using LamiePlatform.Models;
 using Microsoft.AspNetCore.Identity;
+using LamiePlatform.DTOs.PlatformDTOs;
 using LamiePlatform.Models.ViewModels;
 using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using LamiePlatform.DTOs.PlatformDTOs;
 
 namespace LamiePlatform.Services
 {

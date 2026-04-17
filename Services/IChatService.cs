@@ -1,4 +1,4 @@
-﻿using LamiePlatform.Models;
+﻿using  LamiePlatform.Models;
 
 namespace LamiePlatform.Services
 {
