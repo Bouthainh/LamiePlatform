@@ -188,5 +188,37 @@ namespace LamiePlatform.Services
                 throw;
             }
         }
+        public async Task<ServiceResult<ChildProfileDto>> GetChildProfileAsync(string childId)
+        {
+            var child = await _db.Children
+                .Where(c => c.ChildId == childId)
+                .Select(c => new ChildProfileDto
+                {
+                    FullName = c.ChildName,
+                    Age = c.Age,
+                    Gender = c.Gender
+                })
+                .FirstOrDefaultAsync();
+
+            if (child == null)
+            {
+                return new ServiceResult<ChildProfileDto>
+                {
+                    Success = false,
+                    Message = "الطفل غير موجود",
+                    StatusCode = 404,
+                    Data = null
+                };
+            }
+
+            return new ServiceResult<ChildProfileDto>
+            {
+                Success = true,
+                Message = "تم جلب البيانات بنجاح",
+                StatusCode = 200,
+                Data = child
+            };
+        }
     }
+
 }
