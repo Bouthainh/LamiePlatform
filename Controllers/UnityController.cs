@@ -78,5 +78,29 @@ namespace LamiePlatform.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("GetChildProfile/{childId}")]
+        public async Task<IActionResult> GetChildProfile(string childId)
+        {
+            try
+            {
+                var result = await _gameService.GetChildProfileAsync(childId);
+
+                if (!result.Success)
+                {
+                    return StatusCode(result.StatusCode, new { Message = result.Message });
+                }
+
+                return Ok(result.Data);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500, new
+                {
+                    Message = "حدث خطأ غير متوقع في السيرفر، يرجى المحاولة مرة أخرى"
+                });
+            }
+        }
     }
+
 }
