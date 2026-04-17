@@ -12,6 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Educator\NewFolder\**" />
+    <Content Remove="Views\Educator\NewFolder\**" />
+    <EmbeddedResource Remove="Views\Educator\NewFolder\**" />
+    <None Remove="Views\Educator\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="FluentAssertions" Version="8.8.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
