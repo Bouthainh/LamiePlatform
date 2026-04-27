@@ -1,0 +1,116 @@
+﻿@model LamiePlatform.Models.ViewModels.DashboardViewModels.ReportIndexViewModel
+@{
+    ViewData["Title"] = "تقارير " + Model.ChildName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var isEducator = Model.ViewerRole == "Educator";
+}
+
+<div class="container-fluid py-4" dir="rtl">
+
+    <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+        <div>
+            <h4 class="fw-bold mb-0">تقارير الطفل: @Model.ChildName</h4>
+            <span style="font-size:16px; color:#ff6531; font-weight:600;">
+                @(isEducator ? "التقارير التي أنشأها المعلم" : "التقارير التي أنشأها ولي الأمر")
+            </span>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="@Url.Action(isEducator ? "ChildDashboardEducator" : "ChildDashboardParent", "Dashboard", new { childId = Model.ChildId })"
+                   class="btn-back">
+                العودة للوحة التحكم
+            </a>
+            <form asp-action="Generate" asp-controller="Report" method="post" class="d-inline">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="childId" value="@Model.ChildId" />
+                <button type="submit" class="btn-action">
+                    تصدير تقرير جديد
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    @if (!Model.Reports.Any())
+    {
+        <div class="card report-card shadow-sm">
+            <div class="card-body text-center py-5">
+                <div style="font-size:40px;margin-bottom:12px">&#128196;</div>
+                <h6 class="text-muted">لا توجد تقارير محفوظة بعد</h6>
+                <p class="text-muted" style="font-size:13px">اضغط على "تصدير تقرير جديد" لإنشاء أول تقرير</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row g-3">
+            @foreach (var report in Model.Reports)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card report-card shadow-sm h-100">
+                        <div class="card-body">
+                            <div class="d-flex align-items-start gap-3">
+                                <div style="font-size:32px;line-height:1">&#128196;</div>
+                                <div class="flex-grow-1">
+                                    <p class="fw-bold mb-1" style="font-size:13px">
+                                        تقرير @report.GeneratedBy
+                                    </p>
+                                    <p class="text-muted mb-0" style="font-size:12px">
+                                        @report.GeneratedAt.ToString("yyyy/MM/dd  —  HH:mm")
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent border-top-0 pt-0 pb-3 px-3">
+                            <div class="d-flex gap-2 flex-wrap">
+
+                                <a href="@Url.Action("Download", "Report", new { childId = Model.ChildId, fileName = report.FileName })"
+                                       class="btn-download">
+                                    تحميل
+                                </a>
+
+                                @if (isEducator)
+                                {
+                                    var parentId = ViewBag.LinkedParentId as string;
+                                    if (!string.IsNullOrEmpty(parentId))
+                                    {
+                                        <form asp-action="ShareToChat" asp-controller="Report" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="childId" value="@Model.ChildId" />
+                                            <input type="hidden" name="fileName" value="@report.FileName" />
+                                            <input type="hidden" name="educatorId" value="@currentUserId" />
+                                            <input type="hidden" name="parentId" value="@parentId" />
+                                            <button type="submit" class="btn-share">
+                                                مشاركة مع ولي الأمر
+                                            </button>
+                                        </form>
+                                    }
+                                }
+                                else
+                                {
+                             
+                                    var educatorId = ViewBag.LinkedEducatorId as string;
+                                    if (!string.IsNullOrEmpty(educatorId))
+                                    {
+                                        <form asp-action="ShareToChat" asp-controller="Report" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="childId" value="@Model.ChildId" />
+                                            <input type="hidden" name="fileName" value="@report.FileName" />
+                                            <input type="hidden" name="educatorId" value="@educatorId" />
+                                            <input type="hidden" name="parentId" value="@currentUserId" />
+                                            <button type="submit" class="btn-share">
+                                                مشاركة مع المعلم
+                                            </button>
+                                        </form>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
