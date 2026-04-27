@@ -25,6 +25,7 @@ builder.Services.AddScoped<LamiePlatform.Services.IChildService, LamiePlatform.S
 builder.Services.AddScoped<LamiePlatform.Services.IParentService, LamiePlatform.Services.ParentService>();
 
 builder.Services.AddScoped<LamiePlatform.Services.IDashboardService, LamiePlatform.Services.DashboardService>();
+builder.Services.AddScoped<LamiePlatform.Services.IReportService, LamiePlatform.Services.ReportService>();
 
 builder.Services.AddScoped<LamiePlatform.Services.IEducatorService, LamiePlatform.Services.EducatorService>();
 
@@ -64,6 +65,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 // for the unity api
 app.MapControllers();
