@@ -1,21 +1,16 @@
-﻿@model List<LamiePlatform.Models.ChildGroup>
+@model List<LamiePlatform.Models.ChildGroup>
 @{
     ViewData["Title"] = "مجموعاتي";
     var classId = ViewBag.ClassId;
     var notGroupedYet = ViewBag.NotGroupedYet ?? false;
     var educatorId = ViewBag.EducatorId as string;
 }
-<div class="container mt-4" dir="rtl">
-    <h2 class="mb-4">مجموعات الفصل</h2>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">تم إنشاء المجموعات بنجاح!</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
+<div class="groups-outer" dir="rtl">
+    <img src="~/images/starLogo.png" class="groups-star-logo" alt="" />
+
+    <h2 class="groups-heading">مجموعات الفصل</h2>
+
 
     @if (notGroupedYet)
     {
@@ -23,48 +18,46 @@
             <h5 class="text-muted mb-4">لم يتم إنشاء مجموعات لهذا الفصل بعد.</h5>
             <form method="post" action="/Grouping/CreateGroups">
                 <input type="hidden" name="classId" value="@classId" />
-                <button type="submit" class="btn btn-primary btn-lg">
-                    إنشاء المجموعات
-                </button>
+                <button type="submit" class="btn-action">إنشاء المجموعات</button>
             </form>
         </div>
     }
     else
     {
-        <div class="row">
+        <div class="row g-4">
             @{
                 int groupNumber = 1;
             }
             @foreach (var group in Model)
             {
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-header">
-                            <strong>المجموعة @groupNumber</strong>
+                <div class="col-md-6">
+                    <div class="group-card">
+                        <div class="group-card-header">
+                            المجموعة @groupNumber
                         </div>
-                        <div class="card-body">
-                            <h6 class="text-muted mb-3">الأطفال (@group.Children.Count)</h6>
-                            <ul class="list-group list-group-flush">
+                        <div class="group-card-body">
+                            <p class="group-count">الأطفال (@group.Children.Count)</p>
+                            <div>
                                 @foreach (var child in group.Children)
                                 {
                                     var top1 = child.ChildIntelligences
-                                    .OrderByDescending(ci => ci.ProficiencyScore)
-                                    .FirstOrDefault();
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        .OrderByDescending(ci => ci.ProficiencyScore)
+                                        .FirstOrDefault();
+                                    <div class="group-child-item">
                                         <span>@child.ChildName</span>
                                         @if (top1 != null)
                                         {
-                                            <span>@top1.Intelligence?.IntelligenceName (@top1.ProficiencyScore)</span>
+                                            <span class="child-intel-badge">@top1.Intelligence?.IntelligenceName (@top1.ProficiencyScore)</span>
                                         }
-                                    </li>
+                                    </div>
                                 }
-                            </ul>
-                            <div class="mt-3">
+                            </div>
+                            <div class="group-btn-wrap">
                                 <a asp-controller="Recommendation"
                                    asp-action="EdActivityList"
                                    asp-route-educatorId="@educatorId"
                                    asp-route-groupId="@group.ChildGroupId"
-                                   class="btn btn-primary w-100">
+                                   class="group-rec-btn">
                                     عرض التوصيات
                                 </a>
                             </div>

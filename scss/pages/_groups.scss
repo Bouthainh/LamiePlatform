@@ -1,0 +1,97 @@
+.groups-outer {
+    background: $white;
+    border-radius: 22px;
+    border: 2px solid rgba($purple-color, 0.18);
+    padding: $spacing-lg;
+    position: relative;
+    margin: $spacing-md auto;
+    direction: rtl;
+
+    .groups-star-logo {
+        position: absolute;
+        top: $spacing-md;
+        left: $spacing-md;
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+    }
+}
+
+.groups-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $secondary-color;
+    margin-bottom: $spacing-md;
+    text-align: right;
+}
+
+.group-card {
+    background: $global-bg;
+    border-radius: 16px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+    height: 100%;
+}
+
+.group-card-header {
+    background: $tirquaz-color;
+    padding: 12px $spacing-sm;
+    font-size: 15px;
+    font-weight: 700;
+    color: $text-dark;
+    text-align: right;
+    direction: rtl;
+}
+
+.group-card-body {
+    padding: $spacing-sm;
+    direction: rtl;
+
+    .group-count {
+        font-size: 13px;
+        color: $text-light;
+        margin-bottom: $spacing-sm;
+        text-align: right;
+    }
+}
+
+.group-child-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px $spacing-sm;
+    border-bottom: 1px solid rgba($purple-color, 0.1);
+    font-size: 14px;
+    color: $text-dark;
+    direction: rtl;
+
+    &:last-child { border-bottom: none; }
+
+    .child-intel-badge {
+        font-size: 12px;
+        color: $text-light;
+    }
+}
+
+.group-btn-wrap {
+    text-align: center;
+    margin-top: $spacing-sm;
+}
+
+.group-rec-btn {
+    background: $secondary-color;
+    color: $white;
+    border-radius: $btn-border-radius;
+    padding: 6px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    @include transition();
+
+    &:hover {
+        opacity: 0.85;
+        color: $white;
+    }
+}

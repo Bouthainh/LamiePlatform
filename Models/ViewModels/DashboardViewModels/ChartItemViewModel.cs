@@ -1,5 +1,4 @@
-﻿
-namespace LamiePlatform.Models.ViewModels
+﻿namespace LamiePlatform.Models.ViewModels.DashboardViewModels
 {
     public class ChartItemViewModel
     {

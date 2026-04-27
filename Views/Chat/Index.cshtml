@@ -1,41 +1,47 @@
-﻿@model List<LamiePlatform.Models.Conversation>
+@model List<LamiePlatform.Models.Conversation>
 @{
     var userType = ViewBag.UserType as string;
-    var userId = ViewBag.UserId as string;
+    var userId   = ViewBag.UserId as string;
 }
 
-<div class="container mt-4">
-    <h2>المحادثات</h2>
+<div class="chat-list-outer" dir="rtl">
+
+    <img src="~/images/starLogo.png" class="chat-star-logo" alt="">
+
+    <h2 class="chat-list-heading">المحادثات</h2>
 
     @if (!Model.Any())
     {
-        <div class="alert alert-info">لا توجد محادثات بعد</div>
+        <div class="chat-list-inner">
+            <p class="chat-empty">لا توجد محادثات بعد</p>
+        </div>
     }
     else
     {
-        <div class="list-group">
+        <div class="chat-list-inner">
             @foreach (var conv in Model)
             {
                 var otherName = userType == "Educator"
-                ? conv.Parent?.ParentName
-                : conv.Educator?.EducatorName;
+                    ? conv.Parent?.ParentName
+                    : conv.Educator?.EducatorName;
 
                 var lastMsg = conv.Messages.OrderByDescending(m => m.SentAt).FirstOrDefault();
-                var unread = conv.Messages.Count(m => !m.IsRead && m.SenderType != userType);
+                var unread  = conv.Messages.Count(m => !m.IsRead && m.SenderType != userType);
 
                 <a href="@Url.Action("Chat", "Chat", new { educatorId = conv.EducatorId, parentId = conv.ParentId })"
-                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="mb-1">@otherName</h6>
-                        <small class="text-muted">@(lastMsg?.Content ?? "لا توجد رسائل")</small>
+                   class="chat-list-item">
+                    <div class="chat-item-main">
+                        <i class="bi bi-person-circle chat-person-icon"></i>
+                        <div class="chat-item-right">
+                            <span class="chat-item-name">@otherName</span>
+                            <span class="chat-item-preview">@(lastMsg?.Content ?? "لا توجد رسائل")</span>
+                        </div>
                     </div>
-                    <div class="text-end">
-                        <small class="text-muted d-block">
-                            @(lastMsg?.SentAt?.ToString("hh:mm tt") ?? "")
-                        </small>
+                    <div class="chat-item-left">
+                        <span class="chat-item-time">@(lastMsg?.SentAt?.ToString("hh:mm tt") ?? "")</span>
                         @if (unread > 0)
                         {
-                            <span class="badge bg-danger rounded-pill">@unread</span>
+                            <span class="chat-unread">@unread</span>
                         }
                     </div>
                 </a>

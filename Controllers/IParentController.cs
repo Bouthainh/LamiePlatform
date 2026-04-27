@@ -17,7 +17,6 @@ namespace LamiePlatform.Controllers
         public Task<IActionResult> ViewChildProfile(string childId);
         public Task<IActionResult> EditChildProfile(string childId);
         public Task<IActionResult> EditChildProfile(string childId, EditChildDTO dto);
-        public IActionResult ViewChildDashboard(string childId);
         public Task<IActionResult> ParentHomePage();
         public Task<IActionResult> ViewProfile();
         public Task<IActionResult> EditProfile(ParentProfileViewModel model);

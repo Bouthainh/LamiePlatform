@@ -17,7 +17,6 @@ public class GroupingController : Controller
         _context = context;
     }
 
-    //  يجيب فصل المعلم 
     public async Task<IActionResult> Index()
     {
         var educatorId = User.FindFirstValue(ClaimTypes.NameIdentifier);

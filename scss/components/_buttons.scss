@@ -1,0 +1,165 @@
+
+%btn-base {
+    display: inline-block;
+    border: none;
+    border-radius: $btn-border-radius;
+    font-family: $primary-font;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    @include transition(all);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    color: $white;
+
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-2px);
+        box-shadow: $box-shadow-hover;
+        color: $white;
+        text-decoration: none;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:disabled,
+    &.disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+%btn-lg {
+    padding: $btn-padding-lg;
+    font-size: $btn-font-size-lg;
+    min-width: 180px;
+}
+
+%btn-md {
+    padding: $btn-padding-md;
+    font-size: $btn-font-size-md;
+    min-width: 140px;
+}
+
+%btn-sm {
+    padding: $btn-padding-sm;
+    font-size: $btn-font-size-sm;
+    min-width: 100px;
+}
+
+.btn-service {
+    @extend %btn-base;
+    @extend %btn-lg;
+    background-color: $secondary-color; 
+
+    &:hover {
+        background-color: darken($secondary-color, 8%);
+        box-shadow: 0 6px 20px rgba($secondary-color, 0.4);
+    }
+}
+
+.btn-login {
+    @extend %btn-base;
+    @extend %btn-lg;
+    background-color: $primary-color;
+
+    &:hover {
+        background-color: darken($primary-color, 8%);
+        box-shadow: 0 6px 20px rgba($primary-color, 0.4);
+    }
+}
+
+.btn-action {
+    @extend %btn-base;
+    @extend %btn-md;
+    background-color: $purple-color; 
+
+    &:hover {
+        background-color: darken($purple-color, 8%);
+        box-shadow: 0 6px 20px rgba($purple-color, 0.35);
+    }
+}
+
+.btn-delete {
+    @extend %btn-base;
+    @extend %btn-sm;
+    background-color: $coral-red; 
+
+    &:hover {
+        background-color: darken($coral-red, 8%);
+        box-shadow: 0 4px 14px rgba($coral-red, 0.4);
+    }
+}
+
+.btn-cancel {
+    @extend %btn-base;
+    @extend %btn-sm;
+    background-color: #a6a6a6;
+    color: $white;
+
+    &:hover {
+        background-color: darken(#a6a6a6, 10%);
+        box-shadow: 0 4px 14px rgba(#a6a6a6, 0.4);
+    }
+}
+
+.btn-back {
+    @extend %btn-base;
+    @extend %btn-sm;
+    background-color: $tirquaz-color;
+    color: $text-dark;
+
+    &:hover {
+        background-color: darken($tirquaz-color, 8%);
+        color: $text-dark;
+        box-shadow: 0 4px 14px rgba($tirquaz-color, 0.4);
+    }
+}
+
+.btn-share {
+    @extend %btn-base;
+    @extend %btn-sm;
+    background-color: $purple-light; 
+    color: $text-dark;
+
+    &:hover {
+        background-color: darken($purple-light, 8%);
+        color: $text-dark;
+        box-shadow: 0 4px 14px rgba($purple-light, 0.4);
+    }
+}
+
+.btn-download {
+    @extend %btn-base;
+    @extend %btn-sm;
+    background-color: $coral-vivid; 
+
+    &:hover {
+        background-color: darken($coral-vivid, 8%);
+        box-shadow: 0 4px 14px rgba($coral-vivid, 0.4);
+    }
+}
+
+@include respond-to(mobile) {
+    .btn-service,
+    .btn-login {
+        padding: $btn-padding-md;
+        font-size: $btn-font-size-md;
+        min-width: 120px;
+    }
+
+    .btn-action {
+        padding: $btn-padding-sm;
+        font-size: $btn-font-size-sm;
+        min-width: 100px;
+    }
+}

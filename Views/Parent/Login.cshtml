@@ -3,10 +3,6 @@
     ViewData["Title"] = "لامع - تسجيل الدخول";
     Layout = null;
 }
-@{
-    ViewData["HideHeader"] = true;
-    ViewData["HideFooter"] = true;
-}
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -14,81 +10,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
-
-    
-    <!-- Load your compiled CSS (includes ALL Sass styles) -->
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    
-    <!-- Cairo Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for eye icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="login-body">
+<body>
 
-    <div class="login-container">
-        <div class="login-left">
-            <div class="login-illustration">
-                <br>
-                <img src="~/images/LamieLogo.png" alt="LamieLogo">
+<div class="auth-layout">
+
+    <div class="auth-form-side">
+
+        <img src="~/images/LamieLogo.png" alt="لامع" class="auth-logo" />
+
+        <h1>مرحبا بعودتك إلى لامع</h1>
+        <h2>معلومات ولي الأمر</h2>
+
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+        }
+        @if (TempData["RegisterSuccessMessage"] != null)
+        {
+            <div class="lamie-toast lamie-toast-success" style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;min-width:300px">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>@TempData["RegisterSuccessMessage"]</span>
+                <button class="lamie-toast-close" onclick="this.parentElement.remove()" aria-label="إغلاق">&times;</button>
             </div>
-        </div>
-        <div class="login-right">
-            <h1>مرحبا بعودتك إلى لامع</h1>
-            <br>
-            <h2>معلومات ولي الأمر</h2>
-            <br>
+        }
 
-            @if (TempData["RegisterSuccessMessage"] != null)
-            {
-                <div class="alert alert-success">@TempData["RegisterSuccessMessage"]</div>
-            }
+        <form method="POST" asp-controller="Parent" asp-action="Login">
+            @Html.AntiForgeryToken()
 
-            @if (ViewData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
-            }
-
-            <form method="POST" asp-controller="Parent" asp-action="Login">
-                @Html.AntiForgeryToken()
-
-                <div class="form-group">
-                    <label asp-for="UsernameOrEmail">اسم المستخدم أو البريد الألكتروني</label>
-                    <input asp-for="UsernameOrEmail"
-                           type="text"
-                           placeholder="أدخل اسم المستخدم أو بريدك هنا"
-                           required
-                           minlength="3"
-                           maxlength="100" />
-                    <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Password">كلمة المرور</label>
-                    <input asp-for="Password"
-                           type="password"
-                           placeholder="أدخل كلمة المرور هنا"
-                           required
-                           minlength="8"
-                           maxlength="100" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <button type="submit" class="login-button">سجل دخول</button>
-            </form>
-
-            <div class="signup-link">
-                <p>
-                    ليس لديك حساب؟
-                    <a asp-controller="Parent" asp-action="Register">أنشئ الآن</a>
-                </p>
+            <div class="form-group">
+                <label asp-for="UsernameOrEmail">اسم المستخدم أو البريد الإلكتروني</label>
+                <input asp-for="UsernameOrEmail" type="text"
+                       placeholder="أدخل اسم المستخدم أو بريدك هنا"
+                       required minlength="3" maxlength="100" />
+                <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Password">كلمة المرور</label>
+                <input asp-for="Password" type="password"
+                       placeholder="أدخل كلمة المرور هنا"
+                       required minlength="8" maxlength="100" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-login">سجل دخول</button>
+        </form>
+
+        <div class="signup-link">
+            <p>ليس لديك حساب؟ <a asp-controller="Parent" asp-action="Register">أنشئ الآن</a></p>
         </div>
+
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <div class="auth-media-side">
+        <video autoplay muted loop playsinline>
+            <source src="~/videos/Lubnah_Form.mp4" type="video/mp4" />
+        </video>
+    </div>
+
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

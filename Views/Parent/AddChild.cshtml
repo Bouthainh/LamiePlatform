@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "لامع - اضافة طفل";
+
 }
 @{
     ViewData["HideHeader"] = true;
@@ -11,284 +12,262 @@
 }
 
 <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
-<main class="add-child-page">
-    <div class="main-container">
-        <section class="main-content">
-            <div class="form-container">
-                <div class="form-header">
-                    <h1>اضافة طفل</h1>
+<div class="profile-form-page">
+
+    @if (ViewData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <div class="profile-outer-container">
+        <img class="star-logo-corner" src="~/images/starLogo.png" alt="" />
+
+        <div class="profile-header">
+            <h1>اضافة طفل</h1>
+        </div>
+
+        <div class="profile-form-container">
+            <form asp-action="AddChild" asp-controller="Parent" method="post" id="addChildForm">
+                @Html.AntiForgeryToken()
+
+                <div class="form-section">
+                    <h2>بيانات الطفل</h2>
+
+                    <div class="form-group">
+                        <label asp-for="ChildId">رقم هوية الطفل</label>
+                        <input asp-for="ChildId" type="text" class="form-control" required placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" />
+                        <span asp-validation-for="ChildId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FirstName">الاسم الأول</label>
+                        <input asp-for="FirstName" type="text" class="form-control" required placeholder="أدخل الاسم الأول" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FatherName">اسم الأب</label>
+                        <input asp-for="FatherName" type="text" class="form-control" required placeholder="أدخل اسم الأب" />
+                        <span asp-validation-for="FatherName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="GrandFatherName">اسم الجد</label>
+                        <input asp-for="GrandFatherName" type="text" class="form-control" required placeholder="أدخل اسم الجد" />
+                        <span asp-validation-for="GrandFatherName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="LastName">اسم العائلة</label>
+                        <input asp-for="LastName" type="text" class="form-control" required placeholder="أدخل اسم العائلة" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="Age">العمر</label>
+                            <select asp-for="Age" class="form-control">
+                                <option value="">اختر العمر</option>
+                                <option value="4">4 سنوات</option>
+                                <option value="5">5 سنوات</option>
+                                <option value="6">6 سنوات</option>
+                                <option value="7">7 سنوات</option>
+                                <option value="8">8 سنوات</option>
+                            </select>
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Gender">الجنس</label>
+                            <select asp-for="Gender" class="form-control">
+                                <option value="">اختر الجنس</option>
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-                <!-- Error messages while adding chilldren -->
-                @if (ViewData["ErrorMessage"] != null)
-                {
-                    <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
-                }
 
-                @if (!ViewData.ModelState.IsValid)
-                {
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                <div class="form-section">
+                    <h2>بيانات المدرسة</h2>
+
+                    <div class="form-group">
+                        <label asp-for="City">المدينة</label>
+                        <select asp-for="City" id="cityDropdown" class="form-control">
+                            <option value="">اختر المدينة</option>
+                            @if (ViewBag.Cities != null)
                             {
-                                <li>@error.ErrorMessage</li>
-                            }
-                        </ul>
-                    </div>
-                }
-
-                <form asp-action="AddChild" asp-controller="Parent" method="post" id="addChildForm">
-                    @Html.AntiForgeryToken()
-
-                    <div class="form-section">
-                        <h2>بيانات الطفل</h2>
-
-                        <div class="form-group">
-                            <label asp-for="ChildId">رقم هوية الطفل</label>
-                            <input asp-for="ChildId" type="text" class="form-control" required placeholder="أدخل رقم الهوية (10 أرقام)" maxlength="10" />
-                            <span asp-validation-for="ChildId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="FirstName">الاسم الأول</label>
-                            <input asp-for="FirstName" type="text" class="form-control" required placeholder="أدخل الاسم الأول" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="FatherName">اسم الأب</label>
-                            <input asp-for="FatherName" type="text" class="form-control" required placeholder="أدخل اسم الأب" />
-                            <span asp-validation-for="FatherName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="GrandFatherName">اسم الجد</label>
-                            <input asp-for="GrandFatherName" type="text" class="form-control" required placeholder="أدخل اسم الجد" />
-                            <span asp-validation-for="GrandFatherName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="LastName">اسم العائلة</label>
-                            <input asp-for="LastName" type="text" class="form-control" required placeholder="أدخل اسم العائلة" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-
-
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label asp-for="Age">العمر</label>
-                                <select asp-for="Age" class="form-control">
-                                    <option value="">اختر العمر</option>
-                                    <option value="4">4 سنوات</option>
-                                    <option value="5">5 سنوات</option>
-                                    <option value="6">6 سنوات</option>
-                                    <option value="7">7 سنوات</option>
-                                    <option value="8">8 سنوات</option>
-                                </select>
-                                <span asp-validation-for="Age" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="Gender">الجنس</label>
-                                <select asp-for="Gender" class="form-control">
-                                    <option value="">اختر الجنس</option>
-                                    <option value="ذكر">ذكر</option>
-                                    <option value="أنثى">أنثى</option>
-                                </select>
-                                <span asp-validation-for="Gender" class="text-danger"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h2>بيانات المدرسة</h2>
-
-                        <div class="form-group">
-                            <label asp-for="City">المدينة</label>
-                            <select asp-for="City" id="cityDropdown" class="form-control">
-                                <option value="">اختر المدينة</option>
-                                @if (ViewBag.Cities != null)
+                                @foreach (var city in ViewBag.Cities)
                                 {
-                                    @foreach (var city in ViewBag.Cities)
-                                    {
-                                        <option value="@city">@city</option>
-                                    }
+                                    <option value="@city">@city</option>
                                 }
+                            }
+                        </select>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="SchoolId">اسم المدرسة</label>
+                        <select asp-for="SchoolId" id="schoolDropdown" class="form-control">
+                            <option value="">اختر المدرسة</option>
+                        </select>
+                        <span asp-validation-for="SchoolId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label asp-for="GradeId">المرحلة الدراسية</label>
+                            <select asp-for="GradeId" id="gradeDropdown" class="form-control">
+                                <option value="">اختر المرحلة</option>
                             </select>
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <span asp-validation-for="GradeId" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="SchoolId">اسم المدرسة</label>
-                            <select asp-for="SchoolId" id="schoolDropdown" class="form-control">
-                                <option value="">اختر المدرسة</option>
+                            <label asp-for="ClassId">الفصل</label>
+                            <select asp-for="ClassId" id="classDropdown" class="form-control">
+                                <option value="">اختر الفصل</option>
                             </select>
-                            <span asp-validation-for="SchoolId" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label asp-for="GradeId">المرحلة الدراسية</label>
-                                <select asp-for="GradeId" id="gradeDropdown" class="form-control">
-                                    <option value="">اختر المرحلة</option>
-                                </select>
-                                <span asp-validation-for="GradeId" class="text-danger"></span>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="ClassId">الفصل</label>
-                                <select asp-for="ClassId" id="classDropdown" class="form-control">
-                                    <option value="">اختر الفصل</option>
-                                </select>
-                                <span asp-validation-for="ClassId" class="text-danger"></span>
-                            </div>
+                            <span asp-validation-for="ClassId" class="text-danger"></span>
                         </div>
                     </div>
+                </div>
 
-                    <div class="terms-section">
-                        <div class="checkbox-group">
-                            <input asp-for="AllowEducatorAccess" type="checkbox" id="allowAccess">
+                <div class="terms-section">
+                    <div class="checkbox-group">
+                        <input asp-for="AllowEducatorAccess" type="checkbox" id="allowAccess">
                             <label for="allowAccess">أوافق على إمكانية الوصول لملف الطالب من خلال المشرفين</label>
                         </div>
                     </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="submit-btn">أضافة</button>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn-action">أضافة</button>
                     </div>
                 </form>
             </div>
-        </section>
+        </div>
     </div>
-</main>
 
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @section Scripts {
 
-    <script>
-        $(document).ready(function () {
+        <script>
+            $(document).ready(function () {
 
-            $('#cityDropdown').change(function () {
-                var city = $(this).val();
-                var $schoolDropdown = $('#schoolDropdown');
-                var $gradeDropdown = $('#gradeDropdown');
-                var $classDropdown = $('#classDropdown');
+                $('#cityDropdown').change(function () {
+                    var city = $(this).val();
+                    $('#schoolDropdown').html('<option value="">اختر المدرسة</option>');
+                    $('#gradeDropdown').html('<option value="">اختر المرحلة</option>');
+                    $('#classDropdown').html('<option value="">اختر الفصل</option>');
 
-                $schoolDropdown.html('<option value="">اختر المدرسة</option>');
-                $gradeDropdown.html('<option value="">اختر المرحلة</option>');
-                $classDropdown.html('<option value="">اختر الفصل</option>');
-
-                if (city) {
-                    $.ajax({
-                        url: '@Url.Action("GetSchoolsByCity", "Parent")',
-                        type: 'GET',
-                        data: { city: city },
-                        success: function (schools) {
-                            if (schools && schools.length > 0) {
-                                $.each(schools, function (i, school) {
-                                    $schoolDropdown.append($('<option>', {
-                                        value: school.id,
-                                        text: school.name
-                                    }));
+                    if (city) {
+                        $.ajax({
+                            url: '@Url.Action("GetSchoolsByCity", "Parent")',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: { city: city },
+                            success: function (schools) {
+                                var options = '<option value="">اختر المدرسة</option>';
+                                $.each(schools, function (i, s) {
+                                    options += '<option value="' + s.id + '">' + s.name + '</option>';
                                 });
+                                $('#schoolDropdown').html(options);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('خطأ في تحميل المدارس:', status, error, xhr.responseText);
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error loading schools:', error);
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
 
-            $('#schoolDropdown').change(function () {
-                var schoolId = $(this).val();
-                var $gradeDropdown = $('#gradeDropdown');
-                var $classDropdown = $('#classDropdown');
+                $('#schoolDropdown').change(function () {
+                    var schoolId = $(this).val();
+                    $('#gradeDropdown').html('<option value="">اختر المرحلة</option>');
+                    $('#classDropdown').html('<option value="">اختر الفصل</option>');
 
-                $gradeDropdown.html('<option value="">اختر المرحلة</option>');
-                $classDropdown.html('<option value="">اختر الفصل</option>');
-
-                if (schoolId) {
-                    $.ajax({
-                        url: '@Url.Action("GetGradesBySchool", "Parent")',
-                        type: 'GET',
-                        data: { schoolId: schoolId },
-                        success: function (grades) {
-                            if (grades && grades.length > 0) {
-                                $.each(grades, function (i, grade) {
-                                    $gradeDropdown.append($('<option>', {
-                                        value: grade.id,
-                                        text: grade.name
-                                    }));
+                    if (schoolId) {
+                        $.ajax({
+                            url: '@Url.Action("GetGradesBySchool", "Parent")',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: { schoolId: schoolId },
+                            success: function (grades) {
+                                var options = '<option value="">اختر المرحلة</option>';
+                                $.each(grades, function (i, g) {
+                                    options += '<option value="' + g.id + '">' + g.name + '</option>';
                                 });
+                                $('#gradeDropdown').html(options);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('خطأ في تحميل المراحل:', status, error, xhr.responseText);
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error loading grades:', error);
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
 
-            $('#gradeDropdown').change(function () {
-                var gradeId = $(this).val();
-                var $classDropdown = $('#classDropdown');
+                $('#gradeDropdown').change(function () {
+                    var gradeId = $(this).val();
+                    $('#classDropdown').html('<option value="">اختر الفصل</option>');
 
-                $classDropdown.html('<option value="">اختر الفصل</option>');
-
-                if (gradeId) {
-                    $.ajax({
-                        url: '@Url.Action("GetClassesByGrade", "Parent")',
-                        type: 'GET',
-                        data: { gradeId: gradeId },
-                        success: function (classes) {
-                            if (classes && classes.length > 0) {
+                    if (gradeId) {
+                        $.ajax({
+                            url: '@Url.Action("GetClassesByGrade", "Parent")',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: { gradeId: gradeId },
+                            success: function (classes) {
+                                var options = '<option value="">اختر الفصل</option>';
                                 $.each(classes, function (i, cls) {
-                                    var displayText = cls.name;
-                                    if (cls.educator) {
-                                        displayText += ' - معلم: ' + cls.educator;
-                                    }
-                                    $classDropdown.append($('<option>', {
-                                        value: cls.id,
-                                        text: displayText
-                                    }));
+                                    var label = cls.name;
+                                    if (cls.educator) label += ' - معلم: ' + cls.educator;
+                                    options += '<option value="' + cls.id + '">' + label + '</option>';
                                 });
+                                $('#classDropdown').html(options);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('خطأ في تحميل الفصول:', status, error, xhr.responseText);
                             }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Error loading classes:', error);
-                        }
-                    });
-                }
+                        });
+                    }
+                });
+
+                $('#addChildForm').submit(function (e) {
+                    if (!$('#cityDropdown').val()) {
+                        alert('الرجاء اختيار المدينة');
+                        e.preventDefault();
+                        return false;
+                    }
+                    if (!$('#schoolDropdown').val()) {
+                        alert('الرجاء اختيار المدرسة');
+                        e.preventDefault();
+                        return false;
+                    }
+                    if (!$('#gradeDropdown').val()) {
+                        alert('الرجاء اختيار المرحلة');
+                        e.preventDefault();
+                        return false;
+                    }
+                    if (!$('#classDropdown').val()) {
+                        alert('الرجاء اختيار الفصل');
+                        e.preventDefault();
+                        return false;
+                    }
+                    return true;
+                });
             });
+        </script>
 
-            $('#addChildForm').submit(function (e) {
-                if (!$('#cityDropdown').val()) {
-                    alert('الرجاء اختيار المدينة');
-                    e.preventDefault();
-                    return false;
-                }
-                if (!$('#schoolDropdown').val()) {
-                    alert('الرجاء اختيار المدرسة');
-                    e.preventDefault();
-                    return false;
-                }
-                if (!$('#gradeDropdown').val()) {
-                    alert('الرجاء اختيار المرحلة');
-                    e.preventDefault();
-                    return false;
-                }
-                if (!$('#classDropdown').val()) {
-                    alert('الرجاء اختيار الفصل');
-                    e.preventDefault();
-                    return false;
-                }
-
-                return true;
-            });
-        });
-    </script>
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <partial name="_ValidationScriptsPartial" />
     }
-}

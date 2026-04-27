@@ -1,44 +1,80 @@
-﻿@model LamiePlatform.DTOs.PlatformDTOs.LoginEducatorDTO
-
-<h2>تسجيل دخول المعلم</h2>
-
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+@model LamiePlatform.DTOs.PlatformDTOs.LoginEducatorDTO
+@{
+    ViewData["Title"] = "لامع - تسجيل دخول المعلم";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-@if (ViewData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
-}
+<div class="auth-layout">
 
-<form asp-controller="Educator" asp-action="Login" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="auth-form-side">
 
-    <div class="form-group">
-        <label asp-for="UsernameOrEmail">اسم المستخدم أو البريد الإلكتروني</label>
-        <input asp-for="UsernameOrEmail" type="text"
-               placeholder="أدخل اسم المستخدم أو بريدك هنا"
-               required
-               minlength="3"
-               maxlength="100" class="form-control" />
-        <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
+        <img src="~/images/LamieLogo.png" alt="لامع" class="auth-logo" />
+
+        <h1>مرحبا بعودتك إلى لامع</h1>
+        <h2>معلومات المعلم</h2>
+
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="lamie-toast lamie-toast-success" style="position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:9999;min-width:300px">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>@TempData["SuccessMessage"]</span>
+                <button class="lamie-toast-close" onclick="this.parentElement.remove()" aria-label="إغلاق">&times;</button>
+            </div>
+        }
+
+        <form asp-controller="Educator" asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label asp-for="UsernameOrEmail">اسم المستخدم أو البريد الإلكتروني</label>
+                <input asp-for="UsernameOrEmail" type="text"
+                       placeholder="أدخل اسم المستخدم أو بريدك هنا"
+                       required minlength="3" maxlength="100" />
+                <span asp-validation-for="UsernameOrEmail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password">كلمة المرور</label>
+                <input asp-for="Password" type="password"
+                       placeholder="أدخل كلمة المرور هنا"
+                       required minlength="8" maxlength="100" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-login">دخول</button>
+        </form>
+
+        <div class="signup-link">
+            <p>ليس لديك حساب؟ <a asp-controller="Educator" asp-action="Register">أنشئ الآن</a></p>
+        </div>
+
     </div>
 
-    <div class="form-group">
-        <label asp-for="Password">كلمة المرور</label>
-        <input asp-for="Password" type="password"
-               placeholder="أدخل كلمة المرور هنا"
-               required
-               minlength="8"
-               maxlength="100" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+    <div class="auth-media-side">
+        <video autoplay muted loop playsinline>
+            <source src="~/videos/Lubnah_Form.mp4" type="video/mp4" />
+        </video>
     </div>
 
-    <button type="submit" class="btn btn-primary">دخول</button>
-</form>
-<div class="signup-link">
-    <p>
-        ليس لديك حساب؟
-        <a asp-controller="Educator" asp-action="Register">أنشئ الآن</a>
-    </p>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

@@ -1,298 +1,590 @@
-.manage-dashbord-page {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: $spacing-md;
-  
-  @include respond-to(mobile) {
-    padding: $spacing-sm;
-  }
-}
+.dashboard-outer-container {
+  background-color: $child-light-yellow;
+  border-radius: 24px;
+  border: 2px solid rgba($primary-color, 0.25);
+  padding: $spacing-lg;
+  position: relative;
+  margin: $spacing-md;
 
-// ROW 1: Top Bar
-.top-bar {
-  flex-direction: row-reverse;
-  @include flex-between;
-  background: linear-gradient(135deg, $white 0%, $child-light-blue 100%);
-  padding: $spacing-lg $spacing-xl;
-  border-radius: 20px;
-  border-color: $tirquaz-color;
-  @include card-shadow;
-  margin-bottom: $spacing-md;
-  gap: $spacing-md;
-
-  @include respond-to(tablet) {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: $spacing-lg;
+  .dash-star-logo {
+    position: absolute;
+    top: $spacing-md;
+    left: $spacing-md;
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
   }
 
   @include respond-to(mobile) {
-    flex-direction: column;
     padding: $spacing-md;
-    gap: $spacing-md;
+    margin: $spacing-sm;
   }
 }
 
-.stats-wrapper {
-  flex-direction: row-reverse;
-  display: flex;
-  gap: $spacing-sm;
-
-  @include respond-to(mobile) {
-    width: 100%;
-    order: 2;
-  }
+.dash-main-heading {
+  color: $primary-color;
+  font-size: 1.6 rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: $spacing-lg;
+  padding-top: $spacing-xs;
 }
 
-// Challenges Box
-.challenges-box {
+.child-hero-card {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-lg;
+
+    .child-info-card-container {
+        background: $child-light-yellow;
+        border-radius: 28px;
+        padding: $spacing-xl $spacing-xl;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        min-width: 1000px;
+        box-shadow: 0 6px 24px rgba($primary-color, 0.5);
+
+        .hero-star {
+            position: absolute;
+            color: $primary-color;
+            opacity: 0.28;
+            line-height: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 3px 10px rgba($primary-color, 0.5));
+
+            &--tl {
+                top: 14px;
+                left: 16px;
+                font-size: 76px;
+            }
+
+            &--br {
+                bottom: 14px;
+                right: 16px;
+                font-size: 58px;
+                transform: rotate(20deg);
+            }
+        }
+
+        .child-icon-wavy-wrapper {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: $spacing-sm;
+
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: $child-yellow;
+                clip-path: polygon( 50% 0%, 61% 11%, 75% 4%, 79% 18%, 93% 12%, 90% 27%, 100% 29%, 91% 41%, 100% 50%, 91% 59%, 100% 71%, 90% 73%, 93% 88%, 79% 82%, 75% 96%, 61% 89%, 50% 100%, 39% 89%, 25% 96%, 21% 82%, 7% 88%, 10% 73%, 0% 71%, 9% 59%, 0% 50%, 9% 41%, 0% 29%, 10% 27%, 7% 12%, 21% 18%, 25% 4%, 39% 11% );
+                z-index: 0;
+            }
+        }
+
+        .child-icon-half {
+            position: relative;
+            z-index: 1;
+            width: 222px;
+            height: 222px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top center;
+                display: block;
+            }
+        }
+
+        .child-hero-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: $text-dark;
+            margin: 0 0 $spacing-xs 0;
+            text-align: center;
+        }
+
+        .child-age-badge {
+            background: $child-yellow;
+            color: $text-dark;
+            font-weight: 700;
+            font-size: $font-size-base;
+            padding: 6px 28px;
+            border-radius: 50px;
+        }
+    }
+}
+
+// ── Educator Contact Box ──────────────────────────────────────────────────────
+.educator-contact-box {
+    background: $tirquaz-color;
+    border: 2px solid $secondary-color;
+    border-radius: 18px;
+    padding: $spacing-md;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+
+    .educator-person-icon {
+        position: absolute;
+        top: $spacing-md;
+        right: $spacing-md;
+        color: $secondary-color;
+        font-size: 28px;
+    }
+
+    .contact-label {
+        font-size: 23px;
+        font-weight: 700;
+        color: $secondary-color;
+        margin-bottom: $spacing-xs;
+        padding-right: 38px;
+    }
+
+    .contact-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: $white;
+        margin-bottom: $spacing-xs;
+    }
+
+    .contact-email-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+
+        i {
+            color: $secondary-color;
+            font-size: 15px;
+        }
+
+        span {
+            color: $secondary-color;
+            font-size: $font-size-base;
+        }
+    }
+
+    .contact-class-info {
+        font-size: $font-size-small;
+        color: rgba($white, 0.75);
+        margin-bottom: $spacing-sm;
+    }
+
+    .btn-chat-dash {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: $secondary-color;
+        color: $white;
+        padding: 6px 18px;
+        border-radius: $btn-border-radius;
+        font-size: $font-size-small;
+        font-weight: 600;
+        text-decoration: none;
+        margin-top: auto;
+        margin-right: auto;
+        @include transition();
+
+        &:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            color: $white;
+        }
+    }
+}
+
+// ── Activity Box ──────────────────────────────────────────────────────────────
+.activity-dash-box {
+    background: lighten($purple-light, 12%);
+    border: 2px solid $purple-color;
+    border-radius: 18px;
+    padding: $spacing-md;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    direction: rtl;
+
+    .activity-pencil-icon {
+        position: absolute;
+        top: $spacing-md;
+        right: $spacing-md;
+        color: $purple-color;
+        font-size: 22px;
+    }
+
+    .activity-box-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: $purple-color;
+        margin-bottom: $spacing-md;
+        padding-right: 34px;
+    }
+
+    .activity-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: $spacing-sm;
+        padding-bottom: $spacing-sm;
+        border-bottom: 1px solid rgba($purple-color, 0.25);
+
+        .activity-item-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: $text-dark;
+        }
+
+        .activity-item-category {
+            font-size: $font-size-small;
+            color: $text-dark;
+            background: rgba($purple-color, 0.15);
+            padding: 2px 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+    }
+
+    .activity-empty-msg {
+        font-size: $font-size-base;
+        font-weight: 700;
+        color: $text-dark;
+        flex: 1;
+    }
+
+    .btn-activity-more {
+        display: inline-block;
+        background: $purple-color;
+        color: $white;
+        padding: 6px 22px;
+        border-radius: $btn-border-radius;
+        font-size: $font-size-small;
+        font-weight: 600;
+        text-decoration: none;
+        align-self: center;
+        margin-top: auto;
+        @include transition();
+
+        &:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            color: $white;
+        }
+    }
+}
+
+// ── Folder Tabs ───────────────────────────────────────────────────────────────
+.dash-tabs-nav {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: $spacing-md $spacing-lg;
-  border-radius: 15px;
-  min-width: 140px;
-  background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
-  border: 2px solid rgba($yellow-accent, 0.3);
-  @include transition;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
 
-  @include respond-to(mobile) {
-    width: calc(50% - 6px);
-    min-width: 0;
-  }
+  li { padding: 0; margin: 0; }
 
-  &::before {
-    content: '📋';
-    font-size: 32px;
-    margin-bottom: $spacing-xs;
-  }
-
-  h4 {
-    font-size: $font-size-small;
-    margin: 0;
-    color: $orange-text;
+  .dash-tab-btn {
+    background: rgba($white, 0.6);
+    border: 2px solid #ccc;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    padding: 10px 26px;
+    font-size: $font-size-base;
     font-weight: 600;
-    text-align: center;
-  }
+    cursor: pointer;
+    color: $text-light;
+    @include transition();
+    margin-bottom: -2px;
 
-  p {
-    font-size: 20px;
-    margin: 4px 0 0 0;
-    color: $orange-text;
-    font-weight: 700;
-  }
+    &:focus { outline: none; box-shadow: none; }
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: $box-shadow-hover;
-  }
-
-  &.level-box {
-    background: linear-gradient(135deg, lighten($secondary-color, 35%), lighten($secondary-color, 25%));
-    border: 2px solid rgba($secondary-color, 0.3);
-
-    h4, p {
-      color: darken($secondary-color, 20%);
-    }
-
-    &::before {
-      content: '👑';
+    &.active {
+      &.dash-tab-primary {
+        background: $global-bg;
+        border-color: $primary-color;
+        border-bottom: 2px solid $global-bg;
+        color: $primary-color;
+      }
+      &.dash-tab-secondary {
+        background: $global-bg;
+        border-color: $secondary-color;
+        border-bottom: 2px solid $global-bg;
+        color: $secondary-color;
+      }
+      &.dash-tab-purple {
+        background: $global-bg;
+        border-color: $purple-color;
+        border-bottom: 2px solid $global-bg;
+        color: $purple-color;
+      }
     }
   }
 }
-.dashboard-header {
-  flex-direction: row-reverse;
+
+// Pane show/hide
+.dash-pane {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.dash-tab-content {
+  background: $global-bg;
+  border: 2px solid $primary-color;
+  border-radius: 0 16px 16px 16px;
+  padding: $spacing-lg;
+  position: relative;
+  z-index: 0;
+
+  &.border-secondary-tab {
+    border-color: $secondary-color;
+    border-radius: 16px 16px 16px 16px;
+  }
+
+  &.border-purple-tab {
+    border-color: $purple-color;
+    border-radius: 16px 0 16px 16px;
+  }
+
+  // JS-rendered cards inside tabs
+  .card {
+    background: $child-light-yellow !important;
+    border-radius: 14px !important;
+  }
+}
+
+// ── Section Titles ────────────────────────────────────────────────────────────
+.dash-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-md;
+  display: block;
+}
+
+// ── Top Intelligence Box (Tab 1) ──────────────────────────────────────────────
+.top-intel-box {
+  background: $primary-color;
+  border-radius: 16px;
+  padding: $spacing-md $spacing-lg;
   display: flex;
   align-items: center;
   gap: $spacing-md;
+  direction: rtl;
 
-  @include respond-to(mobile) {
-    flex-direction: column-reverse;
-    width: 100%;
-    order: 1;
+  .top-intel-star {
+    font-size: 38px;
+    color: $white;
+    line-height: 1;
+    flex-shrink: 0;
   }
 
-  .child-info {
-    text-align: right;
+  .top-intel-main {
+    flex-shrink: 0;
 
-    @include respond-to(mobile) {
-      text-align: center;
+    .top-intel-label {
+      font-size: 13px;
+      color: $white;
+      margin: 0 0 2px 0;
+      font-weight: 600;
     }
 
-    h2 {
-      font-size: 22px;
-      color: $purple-color;
-      margin: 0 0 4px 0;
+    .top-intel-name {
+      font-size: 20px;
       font-weight: 700;
-    }
-
-    p {
-      font-size: $font-size-small;
-      color: $text-light;
+      color: $white;
       margin: 0;
     }
   }
 
-  .child-avatar {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    border: 3px solid $purple-color;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba($purple-color, 0.25);
+  .top-intel-aspects {
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 
-    @include respond-to(mobile) {
-      width: 65px;
-      height: 65px;
+    .intel-aspect-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .aspect-badge {
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        white-space: nowrap;
+
+        &.best { background: rgba($white, 0.3); color: $white; }
+        &.weak { background: rgba($white, 0.15); color: $white; }
+      }
+
+      .aspect-name { font-size: 14px; color: $white; font-weight: 600; }
+      .aspect-pct  { font-size: 14px; color: $text-dark; font-weight: 700; }
     }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 }
 
-// ROW 2: Charts Grid (2 columns)
-.charts-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-md;
-
-  @include respond-to(tablet) {
-    gap: $spacing-md;
-  }
-
-  @include respond-to(mobile) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
-}
-
-// ROW 3: Cards Grid (3 columns)
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-md;
-  margin-top: $spacing-md;
-  margin-bottom: $spacing-md;
-
-  @include respond-to(tablet) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-md;
-  }
-
-  @include respond-to(mobile) {
-    grid-template-columns: 1fr;
-    gap: $spacing-md;
-  }
-}
-
-// Educator Box - Light Blue Theme (Matches button color)
-.educator-box {
-  background: linear-gradient(135deg, lighten($secondary-color, 40%), lighten($secondary-color, 30%));
+// ── Chart Boxes ───────────────────────────────────────────────────────────────
+.dash-chart-box {
+  background: $child-light-yellow;
+  border-radius: 16px;
+  border: 1.5px solid transparent;
   padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($secondary-color, 0.2);
-  @include transition;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 
-  &:hover {
-    box-shadow: 0 4px 15px rgba($secondary-color, 0.15);
-  }
+  canvas { max-width: 100%; }
+}
 
-  h4 {
-    color: darken($secondary-color, 25%);
-    margin: 0 0 $spacing-lg 0;
-    font-weight: 700;
-    font-size: $font-size-large;
-  }
-
-  p {
-    margin: $spacing-xs 0;
-    color: darken($secondary-color, 35%);
-    font-size: $font-size-base;
-  }
-
-  small {
-    color: darken($secondary-color, 20%);
-    font-size: $font-size-small;
-    display: block;
-    margin-top: $spacing-xs;
-  }
-
-  button {
-    @include button-style($secondary-color);
+// ── Tables ────────────────────────────────────────────────────────────────────
+.dash-table {
     width: 100%;
-    margin-top: $spacing-lg;
+    border-collapse: collapse;
+    border: none; 
+
+    th, td {
+        border: none;
+        outline: none;
+        box-shadow: none;
+    }
+
+
+    th {
+        font-size: 16px;
+        font-weight: 700;
+        color: $text-dark;
+        padding: $spacing-sm;
+        text-align: right;
+        background: $child-light-yellow;
+    }
+
+    td {
+        font-size: $font-size-base;
+        color: $text-dark;
+        padding: $spacing-sm;
+        text-align: right;
+        background: $child-light-yellow;
+    }
+
+    tbody tr:nth-child(even) td {
+        background: darken($child-light-yellow, 3%);
+    }
+}
+
+.dash-thead-yellow th { background: $light-yellow !important; color: $text-dark !important; }
+.dash-thead-purple th { background: lighten($purple-light, 12%) !important; color: $text-dark !important; }
+
+// ── Intel Select (Tab 2) ──────────────────────────────────────────────────────
+.intel-select-wrap {
+  max-width: 320px;
+  direction: rtl;
+
+  .intel-select-dropdown {
+    background: $coral-light;
+    color: $white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: $font-size-base;
+    width: 100%;
+    cursor: pointer;
+
+    option { background: darken($coral-light, 10%); color: $white; }
   }
 }
 
-// Regular Content Box - Pink Theme
-.box {
-  background: linear-gradient(135deg, $yellow-gradient-light, $yellow-gradient-dark);
-  padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($yellow-accent, 0.3);
-  @include transition;
+// ── JS-rendered meta boxes (Tab 2) ────────────────────────────────────────────
+.intel-meta-box {
+  background: $tirquaz-color;
+  color: $white;
+  padding: 10px 20px;
+  border-radius: 14px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 110px;
 
-  &:hover {
-    box-shadow: 0 4px 15px rgba($yellow-accent, 0.25);
+  span { font-size: 13px; opacity: 0.85; }
+  h5   { margin: 2px 0 0; font-weight: 700; color: $white; font-size: 18px; }
+}
+
+// ── Footer with Wavy Line ─────────────────────────────────────────────────────
+.dash-footer {
+  margin-top: $spacing-lg;
+  padding-top: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .dash-wavy-line {
+    width: 100%;
+    height: 50px;
+    margin-bottom: $spacing-sm;
   }
 
-  h4 {
-    color: $orange-text;
-    margin: 0 0 $spacing-lg 0;
+  .dash-footer-text {
+    font-size: 15px;
     font-weight: 700;
-    font-size: $font-size-large;
+    color: $text-dark;
+    text-align: center;
+    margin-bottom: $spacing-sm;
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .btn-report-dash {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: $secondary-color;
+    color: $white;
+    padding: 10px 30px;
+    border-radius: $btn-border-radius;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: $font-size-base;
+    position: relative;
+    margin-top: $spacing-xs;
+    @include transition();
 
-    li {
-      padding: $spacing-sm;
-      border-bottom: 1px solid rgba($yellow-accent, 0.2);
-      color: $orange-text-dark;
-      @include transition;
+    .btn-report-icon {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      color: $tirquaz-color;
+      font-size: 20px;
+      background: $white;
+      border-radius: 50%;
+      padding: 3px;
+      line-height: 1;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
 
-      &:last-child {
-        border-bottom: none;
-      }
-
-      &:hover {
-        background: rgba($yellow-accent, 0.15);
-        padding-right: $spacing-md;
-      }
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      color: $white;
     }
   }
 }
-// Chart Box - Purple Theme
-.chart-box {
-  background: linear-gradient(135deg, lighten($child-purple, 40%), lighten($purple-color, 30%));
-  padding: $spacing-md;
-  border-radius: 18px;
-  @include card-shadow;
-  border: 1px solid rgba($purple-color, 0.2);
-  @include transition;
 
-  &:hover {
-    box-shadow: 0 4px 15px rgba($purple-color, 0.15);
-  }
-
-  h4 {
-    color: darken($purple-color, 15%);
-    margin: 0 0 $spacing-lg 0;
-    font-weight: 700;
-    font-size: $font-size-large;
-  }
-
-  canvas {
-    max-width: 100%;
-    height: auto !important;
-  }
+// ── Report Page ───────────────────────────────────────────────────────────────
+.report-card {
+    background: $child-light-yellow !important;
+    border-radius: 18px !important;
+    border: none !important;
 }

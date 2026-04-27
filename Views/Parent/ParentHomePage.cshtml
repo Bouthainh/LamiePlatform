@@ -2,9 +2,7 @@
 @model List<ChildrenViewModel>
 
 @{
-    ViewData["Title"] = "لامع -صفحة ولي الأمر ";
-}
-@{
+    ViewData["Title"] = "لامع - صفحة ولي الأمر";
     ViewData["HideHeader"] = true;
     ViewData["HideFooter"] = true;
     ViewData["SpicalHeader"] = true;
@@ -12,85 +10,67 @@
 }
 <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 
-    <main class="parent-home-page">
-        <div class="main-container">
+<main class="user-home-page" dir="rtl">
+    <div class="home-outer-container">
+        <img src="~/images/starLogo.png" class="page-star-logo" alt="star" />
+        <h1 class="page-title">الصفحة الرئيسية</h1>
 
-            <section class="main-content">
-                <div class="page-header">
-                    <h1>الصفحة الرئيسية</h1>
-                    <div class="logo-corner">
-                    <img src="~/images/LamieLogo.png" alt="LamieLogo">
+        <div class="features-container">
+            <div class="feature-boxes-grid">
+                <a asp-controller="Parent" asp-action="ManageMultipleChildren" class="feature-box color-turquoise">
+                    <i class="bi bi-people feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>إدارة الأطفال</h3>
+                        <p>عرض وإدارة قائمة أطفالك المسجلين</p>
                     </div>
-                </div>
+                </a>
+                <a asp-controller="Parent" asp-action="AddChild" class="feature-box color-light-yellow">
+                    <i class="bi bi-person-plus feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>إضافة طفل</h3>
+                        <p>تسجيل طفل جديد في المنصة</p>
+                    </div>
+                </a>
+                <a asp-controller="Parent" asp-action="ParentRequests" class="feature-box color-light-purple">
+                    <i class="bi bi-envelope-paper feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>طلبات المعلمين</h3>
+                        <p>مراجعة وقبول طلبات المعلمين</p>
+                    </div>
+                </a>
+                <a asp-controller="Parent" asp-action="ViewProfile" class="feature-box color-light-coral">
+                    <i class="bi bi-person-circle feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>الملف الشخصي</h3>
+                        <p>عرض وتعديل معلومات حسابك</p>
+                    </div>
+                </a>
+            </div>
 
-                <div class="children-section">
-                    <h2>قائمة الأطفال</h2>
-                    
-                    <div class="children-grid">
-                        <div class="add-child-card">
-
-                        <a asp-controller="Parent" asp-action="AddChild">
-                                <div class="add-icon">+</div>
-                                <p>اضافة طفل</p>
-                            </a>
-                        </div>
-
-                    @if (Model != null && Model.Any())
-                    {
-                        foreach (var child in Model)
-                        {
-                            <div class="child-card">
-                                <div class="child-avatar">
-                                    <img src="@child.IconImgPath" alt="child icon">
-                                </div>
-                                <div class="child-info">
-                                    <h3>@child.ChildName</h3>
-                                    <h3>@child.Age</h3>
-                                    <a asp-controller="Parent"
-                                       asp-action="ViewChildProfile"
-                                       asp-route-childId="@child.ChildId">
-                                        عرض الملف
-                                    </a>
-                                </div>
-                            </div>
-                        }
-                    }
-                    else 
-                    {
-                        <!-- NO Children Message -->
-                        <div class="alert alert-warning">
-                            ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد
-                        </div>
-                    }
-
-                        </div>
-                  
-                <div class="notifications-section">
+            <div class="notifications-section">
+                <div class="notifications-header">
+                    <i class="bi bi-bell-fill"></i>
                     <h2>الإشعارات</h2>
-                    <div class="notifications-list">
-                        <div class="notification-item">
-                            <div class="notification-icon">🎯</div>
-                            <p>تم اكتشاف تقدم في الذكاء البصري لدى عمر</p>
+                </div>
+                <div class="notifications-container">
+                    <div id="noNotifications" class="no-notifications">
+                        <p>لا يوجد اشعارات حالية</p>
+                    </div>
+                    <div id="unreadBadge" style="display:none;" class="notification-item">
+                        <span class="notif-dot"></span>
+                        <div class="notif-details">
+                            <span class="notif-text">
+                                لديك <strong><span id="unreadCount"></span></strong> رسالة غير مقروءة
+                            </span>
+                            <a href="@Url.Action("Index", "Chat")" class="notif-link">انتقل إلى الدردشة</a>
                         </div>
-                        <div class="notification-item">
-                            <div class="notification-icon">🔔</div>
-                            <p>تقرير جديد متاح لطفلك</p>
-                        </div>
-                        <a asp-controller="Parent" asp-action="ParentRequests">
-                            طلبات المعلمين
-                        </a>
-                        <div id="unreadBadge" style="display:none;" class="notification-item">
-                            <div class="notification-icon">💬</div>
-                            <a href="@Url.Action("Index", "Chat")">
-                                لديك <span id="unreadCount"></span> رسالة غير مقروءة
-                            </a>
-                        </div>
-
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
-    </main>
+    </div>
+</main>
+
 @section Scripts {
     <script>
         function checkUnread() {
@@ -98,8 +78,10 @@
                 if (data.count > 0) {
                     $('#unreadCount').text(data.count);
                     $('#unreadBadge').show();
+                    $('#noNotifications').hide();
                 } else {
                     $('#unreadBadge').hide();
+                    $('#noNotifications').show();
                 }
             });
         }

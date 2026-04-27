@@ -1,15 +1,9 @@
 @model LamiePlatform.DTOs.PlatformDTOs.RegisterParentDTO
 @using System.ComponentModel.DataAnnotations
-
 @{
     ViewData["Title"] = "لامع - تسجيل ولي أمر جديد";
-    Layout = null; 
+    Layout = null;
 }
-@{
-    ViewData["HideHeader"] = true;
-    ViewData["HideFooter"] = true;
-}
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -17,123 +11,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
-    
-    <!-- Load your compiled CSS -->
     <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
-    
-    <!-- Cairo Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="login-body">
-<main>
-    <div class="signup-container">
-        <div class="signup-form-section">
-            <div class="form-header">
-                <h1>أهلاً بك في لامع</h1>
-                <p>أنشئ حسابك الآن</p>
-                    <br>
-                    <h2>معلومات ولي الأمر</h2>
+<body>
 
-                    @if (ViewData["ErrorMessage"] != null)
-                    {
-                        <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
-                    }
+<div class="auth-layout">
 
+    <!-- Right side: form -->
+    <div class="auth-form-side">
+
+        <img src="~/images/LamieLogo.png" alt="لامع" class="auth-logo" />
+
+        <h1>أهلاً بك في لامع</h1>
+        <h2>معلومات ولي الأمر</h2>
+
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+        }
+
+        <form asp-controller="Parent" asp-action="Register" method="POST">
+            @Html.AntiForgeryToken()
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="FirstName">الاسم الأول</label>
+                    <input asp-for="FirstName" type="text" placeholder="أدخل اسمك الأول" required maxlength="50" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName">اللقب</label>
+                    <input asp-for="LastName" type="text" placeholder="أدخل لقبك" required maxlength="50" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
             </div>
 
-            <form class="signup-form" asp-controller="Parent" asp-action="Register" method="POST">
-                @Html.AntiForgeryToken()
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label asp-for="FirstName">الاسم الأول</label>
-                            <input asp-for="FirstName" type="text" placeholder="أدخل اسمك الأول" required maxlength="50" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label asp-for="LastName">اللقب</label>
-                            <input asp-for="LastName" type="text" placeholder="أدخل لقبك" required maxlength="50" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                    </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="ParentId">الهوية الوطنية</label>
-                        <input asp-for="ParentId" type="text" placeholder="أدخل رقم هويتك الوطنية هنا" required maxlength="10" pattern="\d{10}" title="يجب أن يتكون رقم الهوية من 10 أرقام" />
-                        <span asp-validation-for="ParentId" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber">رقم الجوال</label>
-                        <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx" required maxlength="10" pattern="05\d{8}" title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="ParentId">الهوية الوطنية</label>
+                    <input asp-for="ParentId" type="text" placeholder="أدخل رقم هويتك الوطنية هنا"
+                           required maxlength="10" pattern="\d{10}"
+                           title="يجب أن يتكون رقم الهوية من 10 أرقام" />
+                    <span asp-validation-for="ParentId" class="text-danger"></span>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label asp-for="Email">البريد الإلكتروني</label>
-                        <input asp-for="Email" type="email" placeholder="example@email.com" required maxlength="100" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Username">اسم المستخدم</label>
-                        <input asp-for="Username" type="text" placeholder="أدخل اسم المستخدم هنا" required minlength="3" maxlength="50" />
-                        <span asp-validation-for="Username" class="text-danger"></span>
-                    </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber">رقم الجوال</label>
+                    <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx"
+                           required maxlength="10" pattern="05\d{8}"
+                           title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group full-width">
-                        <label asp-for="Role">اختار دورك</label>
-                        <select asp-for="Role" class="form-control" required>
-                            <option value="">اختار دورك</option>
-                            <option value="Mother">أم</option>
-                            <option value="Father">أب</option>
-                        </select>
-                        <span asp-validation-for="Role" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="form-group full-width">
-                    <label asp-for="Password">كلمة المرور</label>
-                    <input asp-for="Password" type="password" required minlength="8" maxlength="100" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-
-                <div class="form-group full-width">
-                    <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
-                        <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
-                               title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +" />
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
-
-
-                <div class="form-submit">
-                    <button type="submit" class="signup-btn">سجل الآن</button>
-                </div>
-
-                <div class="login-link">
-                    <p>لديك حساب؟ <a asp-controller="Parent" asp-action="Login">سجل الدخول</a></p>
-                </div>
-            </form>
-        </div>
-
-        <div class="illustration-section">
-            <div class="character-container">
-                <img src="~/images/ChildwPrize.png" alt="شخصية ماهر">
             </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Email">البريد الإلكتروني</label>
+                    <input asp-for="Email" type="email" placeholder="example@email.com" required maxlength="100" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Username">اسم المستخدم</label>
+                    <input asp-for="Username" type="text" placeholder="أدخل اسم المستخدم هنا"
+                           required minlength="3" maxlength="50" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="Role">اختر دورك</label>
+                <select asp-for="Role" required>
+                    <option value="">اختر دورك</option>
+                    <option value="Mother">أم</option>
+                    <option value="Father">أب</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="Password">كلمة المرور</label>
+                <input asp-for="Password" type="password" required minlength="8" maxlength="100" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
+                <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100"
+                       pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                       title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-submit">
+                <button type="submit" class="btn-login">سجل الآن</button>
+            </div>
+        </form>
+
+        <div class="login-link">
+            <p>لديك حساب؟ <a asp-controller="Parent" asp-action="Login">سجل الدخول</a></p>
         </div>
+
     </div>
-</main>
-<!-- Scripts MUST be before </body> when Layout = null -->
+
+    <div class="auth-media-side">
+        <video autoplay muted loop playsinline>
+            <source src="~/videos/Lubnah_Form.mp4" type="video/mp4" />
+        </video>
+    </div>
+
+</div>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-
 </body>
 </html>

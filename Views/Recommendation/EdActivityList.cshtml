@@ -4,80 +4,75 @@
     ViewData["Title"] = "توصيات المعلم";
 }
 
-<div class="alert alert-info d-flex align-items-start gap-3 mb-4" role="alert">
-    <div>
-        <h5 class="alert-heading mb-1">ميزة مدعومة بالذكاء الاصطناعي</h5>
-        <p class="mb-0">
+<div class="rec-outer" dir="rtl">
+    <img src="~/images/starLogo.png" class="rec-star-logo" alt="" />
+
+    <h2 class="rec-heading">التوصيات النشاطية للمجموعة</h2>
+
+
+    <div class="rec-inner">
+        @if (!Model.Recommendations.Any())
+        {
+            <div class="rec-empty">
+                <p>لا توجد توصيات بعد</p>
+                <p>اضغط على الزر أدناه لتوليد أول توصية لهذه المجموعة</p>
+            </div>
+        }
+        else
+        {
+            <div class="rec-table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم النشاط</th>
+                            <th>التفاصيل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Recommendations)
+                        {
+                            <tr>
+                                <td>@item.ActivityName</td>
+                                <td>
+                                    <a asp-action="EdActivityDetail"
+                                       asp-route-id="@item.RecommendationId"
+                                       class="rec-view-btn">
+                                        عرض التفاصيل
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        @if (Model.GroupId.HasValue)
+        {
+            <div class="text-center mt-3">
+                <form asp-action="GenerateForGroup" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="groupId" value="@Model.GroupId" />
+                    <input type="hidden" name="educatorId" value="@Model.EducatorId" />
+                    <button type="submit" class="btn-action">توليد توصية جديدة للمجموعة</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning mt-3">
+                لا توجد مجموعة محددة. يرجى الوصول من صفحة المجموعة.
+            </div>
+        }
+    </div>
+
+    <div class="rec-ai-box">
+        <span class="rec-ai-icon"><i class="bi bi-robot"></i></span>
+        <p class="rec-ai-heading">ميزة مدعومة بالذكاء الاصطناعي</p>
+        <p class="rec-ai-text">
             تعتمد هذه الصفحة على الذكاء الاصطناعي لتحليل نقاط قوة كل طفل في المجموعة وفق نظرية الذكاءات المتعددة،
             ثم اقتراح أنشطة تعليمية جماعية تعمل كخطط تطويريه داخل الفصل تُمكّن كل طفل من المشاركة من موضع قوته وتُنمّي مهاراته.
-            يمكنك توليد توصية جديدة في أي وقت، وستُحفظ جميع التوصيات السابقة في القائمة أدناه
+            يمكنك توليد توصية جديدة في أي وقت، وستُحفظ جميع التوصيات السابقة في القائمة أدناه.
         </p>
     </div>
-</div>
-
-<h2 class="mb-4">التوصيات النشاطية للمجموعة</h2>
-
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-
-@if (!Model.Recommendations.Any())
-{
-    <div class="text-center py-5 text-muted">
-        <p class="fs-5">لا توجد توصيات بعد</p>
-        <p>اضغط على الزر أدناه لتوليد أول توصية لهذه المجموعة</p>
-    </div>
-}
-else
-{
-    <div class="table-responsive mb-4">
-        <table class="table table-bordered table-hover align-middle">
-            <thead class="table-light">
-                <tr>
-                    <th>اسم النشاط</th>
-                    <th>التفاصيل</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Recommendations)
-                {
-                    <tr>
-                        <td>@item.ActivityName</td>
-                        <td>
-                            <a asp-action="EdActivityDetail"
-                               asp-route-id="@item.RecommendationId"
-                               class="btn btn-sm btn-outline-primary">
-                                عرض التفاصيل
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
-
-@if (Model.GroupId.HasValue)
-{
-    <form asp-action="GenerateForGroup" method="post">
-        @Html.AntiForgeryToken()
-        <input type="hidden" name="groupId" value="@Model.GroupId" />
-        <input type="hidden" name="educatorId" value="@Model.EducatorId" />
-        <button type="submit" class="btn btn-success">
-             توليد توصية جديدة للمجموعة
-        </button>
-    </form>
-}
-else
-{
-    <div class="alert alert-warning">
-        لا توجد مجموعة محددة. يرجى الوصول من صفحة المجموعة.
-    </div>
-}
-
 </div>

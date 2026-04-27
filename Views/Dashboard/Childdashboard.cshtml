@@ -1,0 +1,342 @@
+@using System.Security.Claims
+@model LamiePlatform.Models.ViewModels.DashboardViewModels.ChildDashboardViewModel
+@{
+    ViewData["Title"] = "لوحة تحكم الطفل - " + Model.ChildName;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var barLabels = System.Text.Json.JsonSerializer.Serialize(Model.AllIntelligences.Select(x => x.Label));
+    var barData   = System.Text.Json.JsonSerializer.Serialize(Model.AllIntelligences.Select(x => x.Value));
+    var effortJson = System.Text.Json.JsonSerializer.Serialize(Model.EffortVsScore);
+    var trendJson  = System.Text.Json.JsonSerializer.Serialize(
+                         Model.ScoreTrend.Select(p => new {
+                             date  = p.Date.ToString("yyyy-MM-dd"),
+                             intel = p.IntelligenceName,
+                             score = p.Score
+                         }));
+    var detailJson = System.Text.Json.JsonSerializer.Serialize(
+                         Model.IntelligenceDetails.Select(d => new {
+                             id              = d.IntelligenceId,
+                             name            = d.IntelligenceName,
+                             score           = d.ProficiencyScore,
+                             level           = d.IntelligenceLevel,
+                             totalLevels     = d.TotalLevels,
+                             completedLevels = d.CompletedLevels,
+                             isUnderMeasurement = d.IsUnderMeasurement,   
+                             levels = d.Levels.Select(l => new {
+                                 levelId  = l.LevelId,
+                                 name     = l.LevelName,
+                                 isPlayed = l.IsPlayed
+                             }),
+                             aspects = d.Aspects.Select(a => new {
+                                 name   = a.AspectName,
+                                 score  = a.AspectScore,
+                                 rating = a.AspectRating,
+                                 indicators = a.Indicators.Select(i => new {
+                                     name   = i.IndicatorName,
+                                     score  = i.IndicatorScore,
+                                     rating = i.IndicatorRating,
+                                     pts    = i.PsychometricPts,
+                                     assessmentItems = i.AssessmentItems.Select(ai => new {
+                                         itemName        = ai.ItemName,
+                                         finalScore      = ai.FinalScore,
+                                         psychometricPts = ai.PsychometricPts,
+                                         rating          = ai.Rating
+                                     })
+                                 })
+                             })
+                         }));
+
+    var primaryContact = Model.ViewerRole == "Educator" ? Model.ParentContact : Model.EducatorContact;
+    var primaryLabel   = Model.ViewerRole == "Educator" ? "ولي الأمر" : "المعلم";
+    var chatTarget     = Model.ViewerRole == "Educator"
+                             ? Model.ParentContact?.UserId
+                             : Model.EducatorContact?.UserId;
+}
+
+<div class="dashboard-outer-container" dir="rtl">
+
+    <img src="~/images/starLogo.png" class="dash-star-logo" alt="">
+
+    <h1 class="dash-main-heading">لوحة التحكم</h1>
+
+    <div class="child-hero-card">
+        <div class="child-info-card-container">
+            <span class="hero-star hero-star--tl">&#9733;</span>
+            <span class="hero-star hero-star--br">&#10022;</span>
+
+            <div class="child-icon-wavy-wrapper">
+                <div class="child-icon-half">
+                    <img src="@Model.IconImgPath" alt="صورة الطفل">
+                </div>
+            </div>
+
+            <h2 class="child-hero-name">@Model.ChildName</h2>
+            <div class="child-age-badge">العمر: @Model.Age سنوات</div>
+        </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-5">
+            <div class="educator-contact-box">
+                <i class="bi bi-person-fill educator-person-icon"></i>
+                <p class="contact-label">@primaryLabel</p>
+                <h4 class="contact-name">@primaryContact?.Name</h4>
+                <div class="contact-email-row">
+                    <i class="bi bi-envelope-fill"></i>
+                    <span>@primaryContact?.Email</span>
+                </div>
+                <p class="contact-class-info">
+                    الفصل: @primaryContact?.ClassName &nbsp;|&nbsp; المرحلة: @primaryContact?.GradeName
+                </p>
+                @if (!string.IsNullOrEmpty(chatTarget))
+                {
+                    @if (Model.ViewerRole == "Educator")
+                    {
+                        <a href="@Url.Action("Chat", "Chat", new { educatorId = User.FindFirstValue(ClaimTypes.NameIdentifier), parentId = chatTarget })"
+                           class="btn-chat-dash"><i class="bi bi-chat-fill"></i> فتح المحادثة</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("Chat", "Chat", new { educatorId = chatTarget, parentId = User.FindFirstValue(ClaimTypes.NameIdentifier) })"
+                           class="btn-chat-dash"><i class="bi bi-chat-fill"></i> فتح المحادثة</a>
+                    }
+                }
+            </div>
+        </div>
+
+        @if (Model.ViewerRole == "Parent")
+        {
+            <div class="col-md-7">
+                <div class="activity-dash-box">
+                    <i class="bi bi-pencil-fill activity-pencil-icon"></i>
+                    <p class="activity-box-title">الأنشطة المقترحة</p>
+                    @if (Model.TopActivities != null && Model.TopActivities.Any())
+                    {
+                        @foreach (var act in Model.TopActivities)
+                        {
+                            <div class="activity-item">
+                                <span class="activity-item-name">@act.ActivityName</span>
+                                <span class="activity-item-category">@act.Category</span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="activity-empty-msg">لا توجد أنشطة مقترحة لهذا الطفل حتى الآن.</p>
+                    }
+                    <a href="@Url.Action("ActivityList", "Recommendation", new { childId = Model.ChildId })"
+                       class="btn-activity-more">عرض المزيد</a>
+                </div>
+            </div>
+        }
+    </div>
+
+    <ul class="dash-tabs-nav" id="dashTabs">
+        <li>
+            <button class="dash-tab-btn dash-tab-primary active" data-target="pane-overview" type="button">
+                نظرة عامة
+            </button>
+        </li>
+        <li>
+            <button class="dash-tab-btn dash-tab-secondary" data-target="pane-detail" type="button">
+                تفاصيل الذكاءات
+            </button>
+        </li>
+        <li>
+            <button class="dash-tab-btn dash-tab-purple" data-target="pane-sessions" type="button">
+                الجلسات
+            </button>
+        </li>
+    </ul>
+
+    <div class="dash-tab-content" id="dashTabContent">
+
+        <div class="dash-pane active" id="pane-overview">
+
+            @if (Model.TopIntelligence != null)
+            {
+                <div class="top-intel-box mb-4">
+                    <span class="top-intel-star">&#9733;</span>
+                    <div class="top-intel-main">
+                        <p class="top-intel-label">أبرز ذكاء</p>
+                        <h5 class="top-intel-name">@Model.TopIntelligence.IntelligenceName</h5>
+                    </div>
+                    <div class="top-intel-aspects">
+                        <div class="intel-aspect-item">
+                            <span class="aspect-badge best">أفضل جانب</span>
+                            <span class="aspect-name">@Model.TopIntelligence.BestAspectName</span>
+                            <span class="aspect-pct">(@(Math.Round(Model.TopIntelligence.BestAspectScore * 100, 0))%)</span>
+                        </div>
+                        @if (!string.IsNullOrEmpty(Model.TopIntelligence.WeakAspectName))
+                        {
+                            <div class="intel-aspect-item">
+                                <span class="aspect-badge weak">يحتاج تعزيز</span>
+                                <span class="aspect-name">@Model.TopIntelligence.WeakAspectName</span>
+                                <span class="aspect-pct">(@(Math.Round(Model.TopIntelligence.WeakAspectScore * 100, 0))%)</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-light border text-muted mb-4">
+                    لا تتوفر بيانات ذكاء كافية لعرض الملخص.
+                </div>
+            }
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="dash-chart-box">
+                        <span class="dash-section-title">جميع الذكاءات</span>
+                        @if (Model.AllIntelligences.Any())
+                        {
+                            <canvas id="barChart" height="260" aria-label="مخطط شريطي لجميع الذكاءات"></canvas>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center py-4">لا تتوفر بيانات.</p>
+                        }
+                    </div>
+                </div>
+                    <div class="col-md-6">
+                        <div class="dash-chart-box">
+                            <span class="dash-section-title">مستوى الذكاءات</span>
+                            <div id="gaugeRow" style="
+                                display:flex;
+                                flex-direction:row;
+                                gap:12px;
+                                overflow-x:auto;
+                                padding:8px 4px 12px;
+                                justify-content:center;">
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-12">
+                    <div class="dash-chart-box">
+                        <span class="dash-section-title">الجهد مقابل الدرجة</span>
+                        <canvas id="effortChart" height="120" aria-label="مخطط"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash-pane" id="pane-detail">
+            @if (!Model.IntelligenceDetails.Any())
+            {
+                <div class="alert alert-light border text-muted">
+                    لا تتوفر تفاصيل ذكاءات لهذا الطفل حتى الآن.
+                </div>
+            }
+            else
+            {
+                <div class="intel-select-wrap mb-4">
+                    <label class="dash-section-title">اختر الذكاء</label>
+                    <select id="intelSelect" class="intel-select-dropdown">
+                        @foreach (var d in Model.IntelligenceDetails)
+                        {
+                            <option value="@d.IntelligenceId">@d.IntelligenceName — @d.ProficiencyScore نقطة</option>
+                        }
+                    </select>
+                </div>
+                <div id="intelDetailPanel"></div>
+            }
+        </div>
+
+        <div class="dash-pane" id="pane-sessions">
+            <div class="dash-chart-box mb-4">
+                <span class="dash-section-title">آخر 4 جلسات</span>
+                @if (Model.RecentSessions.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="dash-table">
+                            <thead class="dash-thead-purple">
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>اللعبة</th>
+                                    <th>الذكاء</th>
+                                    <th>الدرجة</th>
+                                    <th>الوقت (ث)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var s in Model.RecentSessions)
+                                {
+                                    <tr>
+                                        <td>@s.PlayedAt.ToString("yyyy/MM/dd")</td>
+                                        <td>@s.LevelName</td>
+                                        <td>@s.IntelligenceName</td>
+                                        <td>
+                                            @{
+                                                var pct = Math.Round(s.AspectScore * 100, 0);
+                                                var badgeClass = pct >= 75 ? "success" : pct >= 50 ? "warning" : "danger";
+                                            }
+                                            <span class="badge bg-@badgeClass">@pct%</span>
+                                        </td>
+                                        <td>@Math.Round(s.TotalTimeSec, 0)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted text-center py-3">لا توجد جلسات مسجلة لهذا الطفل حتى الآن.</p>
+                }
+            </div>
+
+            <div class="dash-chart-box">
+                <span class="dash-section-title">منحنى الأداء عبر الزمن</span>
+                <canvas id="trendChart" height="120" aria-label="مخطط خطي لتطور الأداء"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="dash-footer">
+        <svg class="dash-wavy-line" viewBox="0 0 1200 50" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,25 C75,5 150,45 225,25 C300,5 375,45 450,25 C525,5 600,45 675,25 C750,5 825,45 900,25 C975,5 1050,45 1125,25 C1175,10 1200,25 1200,25"
+                  stroke="#ff6531" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <p class="dash-footer-text">يمكنك تصدير لوحة التحكم كتقرير PDF أو عرض التقارير السابقة</p>
+        <a href="@Url.Action("Report", "Report", new { childId = Model.ChildId })" class="btn-report-dash">
+            <i class="bi bi-file-earmark-text btn-report-icon"></i>
+            التقارير
+        </a>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+    <script src="~/js/dashboardCharts.js"></script>
+    <script>
+        const barLabels  = @Html.Raw(barLabels);
+        const barData    = @Html.Raw(barData);
+        const effortData = @Html.Raw(effortJson);
+        const trendData  = @Html.Raw(trendJson);
+        const detailData = @Html.Raw(detailJson);
+
+        initDashboard(barLabels, barData, effortData, trendData, detailData);
+
+        document.querySelectorAll('.dash-tab-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var targetId = this.getAttribute('data-target');
+
+                document.querySelectorAll('.dash-pane').forEach(function (p) { p.classList.remove('active'); });
+                document.querySelectorAll('.dash-tab-btn').forEach(function (b) { b.classList.remove('active'); });
+
+                this.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+
+           
+                var content = document.querySelector('.dash-tab-content');
+                content.classList.remove('border-secondary-tab', 'border-purple-tab');
+                if (targetId === 'pane-detail')   content.classList.add('border-secondary-tab');
+                if (targetId === 'pane-sessions') content.classList.add('border-purple-tab');
+            });
+        });
+    </script>
+}

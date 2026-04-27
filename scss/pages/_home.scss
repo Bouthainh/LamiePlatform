@@ -1,7 +1,4 @@
 
-// ══════════════════════════════════════════
-// SECTION 1 — HERO
-// ══════════════════════════════════════════
 
 .main-section {
     position: relative;
@@ -29,7 +26,6 @@
     }
 }
 
-// Logo — sits above the paragraph, smaller than hero image
 .main-text {
     flex: 1;
     max-width: 500px;
@@ -39,8 +35,7 @@
     animation: slideInRight 1.5s ease-out forwards;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; // RTL: flex-start = right side
-    // Logo image — above the paragraph
+    align-items: flex-start;
     img.site-logo {
         width: 300px;
         height: auto;
@@ -56,25 +51,13 @@
         order: 1;
     }
 
-    .hero-btn {
+    .btn-service {
         order: 2;
-        display: inline-block;
-        align-self: flex-start; 
-        @include button-style($secondary-color, $white, lg);
-        padding: $btn-padding-lg;
-        font-size: $btn-font-size-lg;
-        border-radius: 30px;
-        text-decoration: none;
-        box-shadow: 0 4px 14px rgba(50, 200, 195, 0.35);
-
-        &:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(50, 200, 195, 0.45);
-        }
+        align-self: flex-start;
+        margin-top: $spacing-sm;
     }
 }
 
-// Hero image
 .main-image {
     flex: 1;
     position: relative;
@@ -104,9 +87,16 @@
         max-height: 700px;
         animation: floatChild 4s ease-in-out infinite;
     }
+
+    .hero-video {
+        max-width: 100%;
+        height: 650px;
+        max-height: 700px;
+        border-radius: 24px;
+        object-fit: cover;
+    }
 }
 
-// Decorative blobs
 .blob-yellow {
     position: absolute;
     width: 60px;
@@ -165,9 +155,6 @@
 }
 
 
-// ══════════════════════════════════════════
-// SECTION 2 — ABOUT
-// ══════════════════════════════════════════
 
 .about-section {
     width: 100%;
@@ -192,7 +179,6 @@
         line-height: 1.9;
     }
 
-    // ── Floating stars
     .about-star {
         position: absolute;
         z-index: 1;
@@ -200,7 +186,6 @@
         opacity: 0.85;
     }
 
-    // 5-point star — secondary (teal) — top left
     .about-star--five {
         width: 48px;
         height: 48px;
@@ -211,7 +196,6 @@
         animation: starFloat1 5s ease-in-out infinite;
     }
 
-    // 4-point star — purple — bottom right
     .about-star--four {
         width: 40px;
         height: 40px;
@@ -222,7 +206,6 @@
         animation: starFloat2 6s ease-in-out infinite;
     }
 
-    // 6-point star — coral vivid — top right
     .about-star--six {
         width: 44px;
         height: 44px;
@@ -243,7 +226,6 @@
         background-color: #ffb90f;
         clip-path: path('M0 40 Q25% 0 50% 20 Q75% 40 100% 10 L100% 40 L0 40 Z');
     }
-    // Wave clip at the bottom
     &::after {
         content: '';
         position: absolute;
@@ -257,19 +239,16 @@
 }
 
 
-// ══════════════════════════════════════════
-// SECTION 3 — FEATURES
-// ══════════════════════════════════════════
 
 .features-section {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
-    padding: 60px 160px 100px; // extra bottom padding to accommodate the downward shift
+    padding: 60px 160px 100px; 
     display: flex !important;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: flex-start; // allow each card to sit at its own vertical position
+    align-items: flex-start; 
     gap: 30px;
     direction: rtl;
 
@@ -340,36 +319,29 @@
                 font-weight: 600;
             }
         }
-        // Card 1 (Parents) — dotted tirquaz border
         &:nth-child(2) {
             border: 3px dotted $tirquaz-color;
         }
-        // Card 2 (Educators) — solid primary border
         &:nth-child(3) {
             border: 3px solid $primary-color;
         }
-        // Card 3 (Children) — dashed purple border
         &:nth-child(4) {
             border: 3px dashed $purple-color;
         }
 
-        // Card 1 (Parents) — turquoise tags
         &:nth-child(2) .feature-tags span {
             background: rgba($tirquaz-color, 0.2);
             color: darken($tirquaz-color, 25%);
         }
-        // Card 2 (Educators) — yellow (unchanged)
         &:nth-child(3) .feature-tags span {
             background: #FFF3CD;
             color: #856404;
         }
-        // Card 3 (Games) — purple (unchanged)
         &:nth-child(4) .feature-tags span {
             background: #E2D9F3;
             color: #6C5CE7;
         }
 
-        // Triangle arrangement: side cards down, middle card up
         &:nth-child(2),
         &:nth-child(4) {
             margin-top: 70px;
@@ -382,20 +354,66 @@
 }
 
 
-// ══════════════════════════════════════════
-// SECTION 4 — PROCESS
-// ══════════════════════════════════════════
-
 .process-section {
     width: 100%;
     max-width: 860px;
     margin: 60px auto;
-    padding: 80px 40px;
+    padding: 80px 40px 160px;
     display: flex !important;
     flex-direction: column !important;
     align-items: stretch;
     gap: 24px;
     direction: rtl;
+    position: relative;
+    left: -60px;
+
+    .about-star {
+        position: absolute;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.85;
+    }
+
+    .about-star--five {
+        width: 48px;
+        height: 48px;
+        background-color: $coral-vivid;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        top: 12%;
+        left: 2%;
+        animation: starFloat1 5s ease-in-out infinite;
+    }
+
+    .about-star--four {
+        width: 40px;
+        height: 40px;
+        background-color: $primary-color;
+        clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+        bottom: 15%;
+        right: -60px;
+        animation: starFloat2 6s ease-in-out infinite;
+    }
+
+    .about-star--six {
+        width: 44px;
+        height: 44px;
+        background-color: $tirquaz-color;
+        clip-path: polygon(50% 0%, 61% 31%, 93% 18%, 75% 47%, 97% 72%, 63% 65%, 50% 100%, 37% 65%, 3% 72%, 25% 47%, 7% 18%, 39% 31%);
+        top: 52%;
+        right:-20%;
+        animation: starFloat3 7s ease-in-out infinite;
+    }
+
+    > img {
+        position: absolute;
+        bottom: 0;
+        left: -60px;
+        width: 210px;
+        height: auto;
+        object-fit: contain;
+        pointer-events: none;
+        z-index: 2;
+    }
 
     h2 {
         text-align: center;
@@ -419,6 +437,7 @@
         transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
         position: relative;
         overflow: hidden;
+        isolation: isolate;
 
         &::before {
             content: '';
@@ -442,8 +461,8 @@
             }
         }
 
-        &:nth-child(2) {
-            background: $secondary-color;
+        &:nth-of-type(odd) {
+            background: $secondary-color !important;
 
             &:hover {
                 box-shadow: 0 16px 40px rgba(50, 200, 195, 0.45);
@@ -454,8 +473,8 @@
             }
         }
 
-        &:nth-child(3) {
-            background: $primary-color;
+        &:nth-of-type(even) {
+            background: $primary-color !important;
 
             &:hover {
                 box-shadow: 0 16px 40px rgba(255, 185, 15, 0.45);
@@ -466,8 +485,8 @@
             }
         }
 
-        &:nth-child(4) {
-            background: $purple-color;
+        &:last-of-type {
+            background-color: $purple-color !important;
 
             &:hover {
                 box-shadow: 0 16px 40px rgba(127, 119, 221, 0.45);
@@ -529,9 +548,6 @@
 }
 
 
-// ══════════════════════════════════════════
-// SECTION 5 — FAQ
-// ══════════════════════════════════════════
 
 .faq-section {
     width: 100%;
@@ -574,7 +590,6 @@
                     font-weight: 700; 
                     margin: 0;
                 }
-                // Toggle arrow icon
                 .faq-icon {
                     width: 28px;
                     height: 28px;
@@ -608,7 +623,6 @@
                     margin: 0;
                 }
             }
-            // Open state
             &.open {
                 box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 
@@ -629,9 +643,6 @@
 }
 
 
-// ══════════════════════════════════════════
-// SECTION 6 — CTA
-// ══════════════════════════════════════════
 
 .cta-section {
     width: 100%;
@@ -657,19 +668,6 @@
             color: #666;
             margin-bottom: $spacing-lg;
             line-height: 1.8;
-        }
-        // Buttons 
-        .register-btn {
-            @include button-style($secondary-color, $white, lg);
-            text-decoration: none;
-            display: inline-block;
-            margin-left: $spacing-sm;
-            box-shadow: 0 6px 18px rgba(50, 200, 195, 0.3);
-
-            &:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 10px 28px rgba(50, 200, 195, 0.4);
-            }
         }
     }
 
@@ -705,9 +703,6 @@
 }
 
 
-// ══════════════════════════════════════════
-// ANIMATIONS (shared)
-// ══════════════════════════════════════════
 
 @keyframes starFloat1 {
     0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -800,9 +795,6 @@
 }
 
 
-// ══════════════════════════════════════════
-// MOBILE RESPONSIVE
-// ══════════════════════════════════════════
 
 @media (max-width: 992px) {
     .main-section {
@@ -830,6 +822,11 @@
             img {
                 max-height: 360px;
             }
+
+            .hero-video {
+                height: 340px;
+                max-height: 360px;
+            }
         }
 
         .blob-pink,
@@ -849,7 +846,7 @@
         .feature-card:nth-child(2),
         .feature-card:nth-child(3),
         .feature-card:nth-child(4) {
-            margin-top: 0; // reset triangle offset on mobile
+            margin-top: 0; 
         }
     }
 
