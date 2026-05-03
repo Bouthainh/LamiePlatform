@@ -2,10 +2,20 @@
 
 .sidebar-container {
     display: flex;
-    flex-direction: row-reverse; // sidebar on the right
-    gap: $spacing-lg; // space between sidebar and main content
+    flex-direction: row-reverse;
+    gap: $spacing-lg;
     padding: $spacing-lg;
-    background-color: $light-bg;
+    background-image: url('/images/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    &.no-bg-image {
+        background-image: none;
+        background-color: $global-bg;
+    }
+
     direction: ltr;
 
     main {
@@ -17,14 +27,15 @@
         background: $white;
         border-radius: 22px;
         padding: $spacing-md $spacing-sm;
-        height: 92vh;
+        height: calc(100vh - 40px);
         position: sticky;
         top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: $spacing-md;
+        justify-content: space-between;
         @include card-shadow;
+        flex-shrink: 0;
 
         .sidebar-links {
             display: flex;
@@ -45,20 +56,45 @@
                 cursor: pointer;
                 @include transition();
 
+                svg { stroke: darken($primary-color, 10%); }
+
                 &:hover {
                     transform: translateY(-4px);
-                    background: lighten($primary-color, 30%);
+                    background: lighten($primary-color, 28%);
                 }
             }
 
-            .logout {
-                margin-top: auto;
-                background: color.scale($secondary-color, $lightness: 78%);
-                color: darken($secondary-color, 15%);
+            .sidebar-logout {
+                background: color.scale($coral-red, $lightness: 70%);
+                color: $coral-red;
+
+                svg { stroke: $coral-red; }
 
                 &:hover {
-                    background: lighten($secondary-color, 35%);
+                    background: color.scale($coral-red, $lightness: 55%);
+                    transform: translateY(-4px);
                 }
+            }
+        }
+
+        .sidebar-star-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            @include transition();
+            flex-shrink: 0;
+
+            img {
+                width: 42px;
+                height: 42px;
+                object-fit: contain;
+            }
+
+            &:hover {
+                transform: scale(1.1) rotate(15deg);
             }
         }
     }

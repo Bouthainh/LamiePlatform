@@ -1,8 +1,9 @@
 ﻿using LamiePlatform.Data;
-using LamiePlatform.Models;
-using LamiePlatform.Services;
 using LamiePlatform.DTOs.PlatformDTOs;
+using LamiePlatform.Models;
 using LamiePlatform.Models.ViewModels;
+using LamiePlatform.Models.ViewModels.DashboardViewModels;
+using LamiePlatform.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.Json;
@@ -105,7 +106,7 @@ namespace LamiePlatform.Services
             return new ServiceResult(true, "تم توليد التوصية بنجاح.", data: recommendation.RecommendationId.ToString());
         }
 
-        //************ Prompt Builders ******************
+
 
         // Parent prompt >> individual child context
         private string BuildPrompt(Child child)
@@ -121,7 +122,7 @@ namespace LamiePlatform.Services
                 sb.AppendLine($"  {ci.Intelligence?.IntelligenceName}: {ci.ProficiencyScore}");
 
             sb.AppendLine();
-            //control instruction to ensure home-friendly activities for parents
+            //control instruction to ensure homefriendly activities for parents
             sb.AppendLine("تأكد أن النشاط المقترح مناسب للتطبيق في المنزل، ولا يتطلب معدات متخصصة أو بيئة مدرسية"); 
             AppendSharedInstructions(sb);
 
@@ -146,7 +147,7 @@ namespace LamiePlatform.Services
             foreach (var (childName, dominantIntelligence) in memberDominants)
                 sb.AppendLine($"  الطفل {memberNumber++} ({childName}): الذكاء الأبرز هو {dominantIntelligence}");
 
-            //control instruction to ensure classroom-friendly activities for educators
+            //control instruction to ensure classroomfriendly activities for educators
             sb.AppendLine();
             sb.AppendLine("المطلوب: اقترح نشاطاً جماعياً واحداً داخل الفصل يستثمر الذكاء الأبرز لكل عضو في المجموعة،");
             sb.AppendLine("بحيث يُسهم كل طفل من موضع قوته ويكمل الآخرين، مما يُنمّي مهاراتهم جميعاً معاً.");
@@ -196,7 +197,7 @@ namespace LamiePlatform.Services
                 .ToList();
         }
 
-        // //call the GPT API and parse the response into a structured result
+        // //call the GPT API
         private async Task<GptRecommendationResult?> CallGptAsync(string userPrompt)
         {
             try
@@ -335,6 +336,144 @@ namespace LamiePlatform.Services
                     Category = r.Category,
                 })
                 .ToListAsync();
+        }
+
+        public async Task<GptReportOverviewResult?> GenerateReportOverviewAsync(ChildDashboardViewModel data, string viewerRole)
+        {
+            var prompt = BuildReportOverviewPrompt(data, viewerRole);
+            return await CallGptReportOverviewAsync(prompt, viewerRole);
+        }
+
+        private string BuildReportOverviewPrompt(ChildDashboardViewModel data, string viewerRole)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("أنت خبير في تحليل أداء الأطفال وفق نظرية الذكاءات المتعددة، وهدفك تقديم تحليل عميق ومفيد، وليس مجرد وصف للبيانات");
+            sb.AppendLine($"اسم الطفل: {data.ChildName}، العمر: {data.Age} سنوات.");
+            sb.AppendLine();
+
+            sb.AppendLine("درجات الذكاءات المتعددة (من 100):");
+            foreach (var intel in data.AllIntelligences)
+                sb.AppendLine($"  {intel.Label}: {intel.Value}");
+
+            sb.AppendLine();
+            sb.AppendLine($"أبرز ذكاء: {data.TopIntelligence?.IntelligenceName} — الدرجة: {data.TopIntelligence?.Score}");
+
+            sb.AppendLine();
+            sb.AppendLine("تفاصيل الجوانب والمؤشرات لكل ذكاء:");
+            foreach (var intel in data.IntelligenceDetails)
+            {
+                sb.AppendLine($"  [{intel.IntelligenceName}] — الدرجة الكلية: {intel.ProficiencyScore}");
+                foreach (var aspect in intel.Aspects)
+                {
+                    sb.AppendLine($"    الجانب: {aspect.AspectName} ({Math.Round(aspect.AspectScore * 100, 0)}%) — {aspect.AspectRating}");
+                    foreach (var ind in aspect.Indicators)
+                        sb.AppendLine($"      - {ind.IndicatorName}: {Math.Round(ind.IndicatorScore * 100, 0)}% ({ind.IndicatorRating})");
+                }
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("آخر الجلسات:");
+            foreach (var s in data.RecentSessions)
+                sb.AppendLine($"  {s.PlayedAt:yyyy/MM/dd} | {s.LevelName} | {s.IntelligenceName} | {Math.Round(s.AspectScore * 100, 0)}% | {Math.Round(s.TotalTimeSec, 0)}ث");
+
+            sb.AppendLine();
+            sb.AppendLine("المطلوب منك التحليل كالتالي:");
+
+            sb.AppendLine("1) نظرة عامة: تحليل عام لأداء الطفل (ليس مجرد إعادة أرقام، بل ماذا تعني).");
+            sb.AppendLine("2) تحليل أعلى ذكاء:");
+            sb.AppendLine("   - ما الذي يميز هذا الذكاء لدى الطفل؟");
+            sb.AppendLine("   - أقوى جانب داخله وأضعف جانب.");
+            sb.AppendLine("   - ماذا يعني هذا عملياً لسلوك الطفل أو تعلمه؟");
+
+            sb.AppendLine("3) تحليل أضعف ذكاء:");
+            sb.AppendLine("   - هل يعتبر ضعفاً يحتاج تدخل أم ضمن الطبيعي؟");
+            sb.AppendLine("   - متى يجب القلق أو التركيز عليه؟");
+
+            sb.AppendLine("4) التوصيات:");
+            sb.AppendLine("   - كيف ننمّي الذكاء الأعلى بشكل عملي؟");
+            sb.AppendLine("   - كيف ندعم الذكاء الأضعف بدون ضغط على الطفل؟");
+            sb.AppendLine("   - توصيات عامة متوازنة.");
+
+            sb.AppendLine();
+
+            if (viewerRole == "Parent")
+            {
+                sb.AppendLine("الجمهور: ولي أمر.");
+                sb.AppendLine("الأسلوب: بسيط، دافئ، مشجع، بدون مصطلحات معقدة.");
+                sb.AppendLine("ركّز على التفسير والمعنى أكثر من الأرقام.");
+                sb.AppendLine("اكتب parent_summary فقط.");
+            }
+            else
+            {
+                sb.AppendLine("الجمهور: معلم/مختص.");
+                sb.AppendLine("الأسلوب: تحليلي وتربوي مهني.");
+                sb.AppendLine("اكتب parent_summary و educator_summary.");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("أجب فقط بصيغة JSON صالحة، بدون markdown:");
+
+            sb.AppendLine("{");
+            sb.AppendLine("  \"parent_summary\": \"ملخص تفسيري شامل (5-6 جمل) يشرح الأداء العام، معنى أعلى ذكاء، وأضعف ذكاء بطريقة مفهومة\",");
+            sb.AppendLine("  \"educator_summary\": \"تحليل مهني أعمق يربط بين الجوانب والمؤشرات ويشرح دلالاتها التربوية، أو null إذا Parent\",");
+            sb.AppendLine("  \"recommendations\": \"توصيات عملية متوازنة: تطوير القوة + دعم الضعف (3-5 نقاط، كل نقطة سطر مستقل)\"");
+            sb.AppendLine("}");
+
+            return sb.ToString();
+        }
+
+        private async Task<GptReportOverviewResult?> CallGptReportOverviewAsync(string userPrompt, string viewerRole)
+        {
+            try
+            {
+                var http = _httpFactory.CreateClient("OpenAI");
+
+                var bodyObj = new
+                {
+                    model = GptModel,
+                    max_tokens = 1000,
+                    temperature = 0.6,
+                    messages = new[]
+                    {
+                new { role = "system", content = "أنت متخصص في تقييم ذكاءات الأطفال. أجب دائماً باللغة العربية وبصيغة JSON صالحة فقط، بدون markdown." },
+                new { role = "user", content = userPrompt }
+            }
+                };
+
+                using var content = new StringContent(
+                    JsonSerializer.Serialize(bodyObj), Encoding.UTF8, "application/json");
+
+                var response = await http.PostAsync(OpenAiEndpoint, content);
+                var raw = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"GPT Report Overview error {(int)response.StatusCode}: {raw}");
+                    return null;
+                }
+
+                var envelope = JsonNode.Parse(raw);
+                var text = envelope?["choices"]?[0]?["message"]?["content"]
+                                   ?.GetValue<string>()?.Trim();
+
+                if (string.IsNullOrWhiteSpace(text)) return null;
+
+                text = text.Replace("```json", "").Replace("```", "").Trim();
+
+                var parsed = JsonNode.Parse(text);
+                return new GptReportOverviewResult
+                {
+                    ParentSummary = parsed?["parent_summary"]?.GetValue<string>(),
+                    EducatorSummary = parsed?["educator_summary"]?.GetValue<string>(),
+                    Recommendations = parsed?["recommendations"]?.GetValue<string>()
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"GPT Report Overview call failed: {ex.Message}");
+                return null;
+            }
         }
     }
 }

@@ -1,16 +1,79 @@
-﻿<h1>الصفحة الرئيسية للمعلم</h1>
+@{
+    ViewData["Title"] = "لامع - صفحة المعلم";
+    ViewData["HideHeader"] = true;
+    ViewData["HideFooter"] = true;
+    ViewData["SpicalHeader"] = true;
+    ViewData["SpicalFooter"] = true;
+}
+<link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 
-<a asp-controller="Educator" asp-action="ViewEducatorProfile">عرض الملف الشخصي</a>
-<a asp-controller="Educator" asp-action="Logout">الخروج من الحساب</a>
-<a asp-controller="Educator" asp-action="SearchChildren">البحث عن طفل</a>
-<a asp-controller="Educator" asp-action="MyStudents">طلابي</a>
-<a asp-controller="Grouping" asp-action="Index">عرض المجموعات</a>
+<main class="user-home-page" dir="rtl">
+    <div class="home-outer-container">
+        <img src="~/images/starLogo.png" class="page-star-logo" alt="star" />
+        <h1 class="page-title">الصفحة الرئيسية</h1>
 
-<div id="unreadBadge" style="display:none;">
-    <a href="@Url.Action("Index", "Chat")">
-        💬 لديك <span id="unreadCount"></span> رسالة غير مقروءة
-    </a>
-</div>
+        <div class="features-container">
+            <div class="feature-boxes-grid">
+                <a asp-controller="Educator" asp-action="ViewEducatorProfile" class="feature-box color-turquoise">
+                    <i class="bi bi-person-circle feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>الملف الشخصي</h3>
+                        <p>عرض وتعديل معلومات حسابك</p>
+                    </div>
+                </a>
+                <a asp-controller="Educator" asp-action="MyStudents" class="feature-box color-light-yellow">
+                    <i class="bi bi-mortarboard feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>طلابي</h3>
+                        <p>عرض قائمة الطلاب المرتبطين بك</p>
+                    </div>
+                </a>
+                <a asp-controller="Educator" asp-action="SearchChildren" class="feature-box color-light-purple">
+                    <i class="bi bi-search feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>البحث عن طالب</h3>
+                        <p>البحث عن طالب بالاسم أو رقم الهوية</p>
+                    </div>
+                </a>
+                <a asp-controller="Educator" asp-action="SearchChildren" class="feature-box color-light-coral">
+                    <i class="bi bi-send feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>إرسال طلب</h3>
+                        <p>إرسال طلب ربط لطالب جديد</p>
+                    </div>
+                </a>
+                <a asp-controller="Grouping" asp-action="Index" class="feature-box color-soft-coral">
+                    <i class="bi bi-diagram-3 feature-icon"></i>
+                    <div class="feature-content">
+                        <h3>مجموعات الطلاب</h3>
+                        <p>عرض وإدارة مجموعات طلابك</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="notifications-section">
+                <div class="notifications-header">
+                    <i class="bi bi-bell-fill"></i>
+                    <h2>الإشعارات</h2>
+                </div>
+                <div class="notifications-container">
+                    <div id="noNotifications" class="no-notifications">
+                        <p>لا يوجد اشعارات حالية</p>
+                    </div>
+                    <div id="unreadBadge" style="display:none;" class="notification-item">
+                        <span class="notif-dot"></span>
+                        <div class="notif-details">
+                            <span class="notif-text">
+                                لديك <strong><span id="unreadCount"></span></strong> رسالة غير مقروءة
+                            </span>
+                            <a href="@Url.Action("Index", "Chat")" class="notif-link">انتقل إلى الدردشة</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
 @section Scripts {
     <script>
@@ -19,8 +82,10 @@
                 if (data.count > 0) {
                     $('#unreadCount').text(data.count);
                     $('#unreadBadge').show();
+                    $('#noNotifications').hide();
                 } else {
                     $('#unreadBadge').hide();
+                    $('#noNotifications').show();
                 }
             });
         }

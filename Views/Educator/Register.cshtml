@@ -1,145 +1,182 @@
-﻿@model LamiePlatform.DTOs.PlatformDTOs.RegisterEducatorDTO
-
-<h2>هلا..تسجيل معلم جديد</h2>
-
-@if (ViewData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+@model LamiePlatform.DTOs.PlatformDTOs.RegisterEducatorDTO
+@{
+    ViewData["Title"] = "لامع - تسجيل معلم جديد";
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-<form asp-controller="Educator" asp-action="Register" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="auth-layout">
 
-    <div class="form-group">
-        <label asp-for="EducatorId">رقم الهوية الوطنية</label>
-        <input asp-for="EducatorId" type="text" placeholder="أدخل رقم هويتك الوطنية هنا" required maxlength="10" pattern="\d{10}" title="يجب أن يتكون رقم الهوية من 10 أرقام" class="form-control" />
-        <span asp-validation-for="EducatorId" class="text-danger"></span>
-    </div>
+    <div class="auth-form-side">
 
-    <div class="form-group">
-        <label asp-for="FirstName">الاسم الأول</label>
-        <input asp-for="FirstName" class="form-control" />
-        <span asp-validation-for="FirstName" class="text-danger"></span>
-    </div>
+        <img src="~/images/LamieLogo.png" alt="لامع" class="auth-logo" />
 
-    <div class="form-group">
-        <label asp-for="LastName">اسم العائلة</label>
-        <input asp-for="LastName" class="form-control" />
-        <span asp-validation-for="LastName" class="text-danger"></span>
-    </div>
+        <h1>أهلاً بك في لامع</h1>
+        <h2>تسجيل معلم جديد</h2>
 
-    <div class="form-group">
-        <label asp-for="PhoneNumber">رقم الهاتف</label>
-        <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx" required maxlength="10" pattern="05\d{8}" title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" class="form-control" />
-        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-    </div>
+        @if (ViewData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger">@ViewData["ErrorMessage"]</div>
+        }
 
-    <div class="form-group">
-        <label asp-for="SchoolId">المدرسة</label>
-        @Html.DropDownListFor(m => m.SchoolId,
-        ViewBag.Schools as SelectList,
-                        "-- اختر المدرسة --",
-                new { @class = "form-control" })
-        <span asp-validation-for="SchoolId" class="text-danger"></span>
-    </div>
+        <form asp-controller="Educator" asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
 
-    <div class="form-group">
-        <label>المرحلة الدراسية</label>
-        <select id="GradeId" name="GradeId" class="form-control" disabled>
-            <option value="">-- اختر المدرسة أولاً --</option>
-        </select>
-    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="FirstName">الاسم الأول</label>
+                    <input asp-for="FirstName" type="text" placeholder="الاسم الأول" required maxlength="50" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName">اسم العائلة</label>
+                    <input asp-for="LastName" type="text" placeholder="اسم العائلة" required maxlength="50" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label>الفصل الدراسي</label>
-        <div id="ClassCheckboxes" style="display:none; border:1px solid #ced4da; border-radius:8px; padding:10px; background:#f9f9f9;">
-            <p id="noClassMsg" class="text-muted" style="display:none;">لا توجد فصول متاحة</p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="EducatorId">رقم الهوية الوطنية</label>
+                    <input asp-for="EducatorId" type="text" placeholder="10 أرقام"
+                           required maxlength="10" pattern="\d{10}"
+                           title="يجب أن يتكون رقم الهوية من 10 أرقام" />
+                    <span asp-validation-for="EducatorId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber">رقم الجوال</label>
+                    <input asp-for="PhoneNumber" type="tel" placeholder="05xxxxxxxx"
+                           required maxlength="10" pattern="05\d{8}"
+                           title="يجب أن يبدأ رقم الجوال بـ 05 ويتكون من 10 أرقام" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="SchoolId">المدرسة</label>
+                @Html.DropDownListFor(m => m.SchoolId,
+                    ViewBag.Schools as SelectList,
+                    "-- اختر المدرسة --")
+                <span asp-validation-for="SchoolId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group full-width">
+                <label>المرحلة الدراسية</label>
+                <select id="GradeId" name="GradeId" disabled>
+                    <option value="">-- اختر المدرسة أولاً --</option>
+                </select>
+            </div>
+
+            <div class="form-group full-width">
+                <label>الفصل الدراسي</label>
+                <div id="ClassCheckboxes" style="display:none; border:2px solid #e5e7eb; border-radius:12px; padding:12px; background:#fff;">
+                    <p id="noClassMsg" class="text-muted" style="display:none;">لا توجد فصول متاحة</p>
+                </div>
+                <p id="classPlaceholder" class="text-muted" style="margin-top:5px; font-size:0.85rem;">-- اختر المرحلة الدراسية أولاً --</p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="Email">البريد الإلكتروني</label>
+                    <input asp-for="Email" type="email" placeholder="example@email.com" required maxlength="100" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Username">اسم المستخدم</label>
+                    <input asp-for="Username" type="text" placeholder="اسم المستخدم"
+                           required minlength="3" maxlength="50" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="Password">كلمة المرور</label>
+                <input asp-for="Password" type="password" required minlength="8" maxlength="100" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group full-width">
+                <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
+                <input asp-for="ConfirmPassword" type="password" required minlength="8" maxlength="100"
+                       pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
+                       title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-submit">
+                <button type="submit" class="btn-login">تسجيل</button>
+            </div>
+        </form>
+
+        <div class="login-link">
+            <p>لديك حساب؟ <a asp-controller="Educator" asp-action="Login">سجل الدخول</a></p>
         </div>
-        <p id="classPlaceholder" class="text-muted" style="margin-top:5px;">-- المرحلة الدراسية أولاً --</p>
+
     </div>
 
-    <div class="form-group">
-        <label asp-for="Email">البريد الإلكتروني</label>
-        <input asp-for="Email" type="email" placeholder="example@email.com" required maxlength="100" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div class="auth-media-side">
+        <video autoplay muted loop playsinline>
+            <source src="~/videos/Lubnah_Form.mp4" type="video/mp4" />
+        </video>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Username">اسم المستخدم</label>
-        <input asp-for="Username" type="text" placeholder="أدخل اسم المستخدم هنا" required minlength="3" maxlength="50" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
+</div>
 
-    <div class="form-group">
-        <label asp-for="Password">كلمة المرور</label>
-        <input asp-for="Password" type="password" required minlength="8" maxlength="100" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $('#SchoolId').change(function () {
+        var schoolId = $(this).val();
+        $('#GradeId').prop('disabled', true).html('<option value="">-- اختر الصف --</option>');
+        $('#ClassCheckboxes').hide().html('');
+        $('#classPlaceholder').show();
 
-    <div class="form-group">
-        <label asp-for="ConfirmPassword">تأكيد كلمة المرور</label>
-        <input asp-for="ConfirmPassword" class="form-control" type="password" required minlength="8" maxlength="100" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$"
-               title="يجب أن تحتوي كلمة المرور على: حرف كبير، حرف صغير، رقم، ورمز خاص مثل ! @@ # $ % ^ & * ( ) _ - +" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-    </div>
-
-    <button type="submit" class="btn btn-primary">تسجيل</button>
-
-    <div class="login-link">
-        <p>لديك حساب؟ <a asp-controller="Educator" asp-action="Login">سجل الدخول</a></p>
-    </div>
-</form>
-
-@section Scripts {
-    <script>
-        $('#SchoolId').change(function () {
-            var schoolId = $(this).val();
-            $('#GradeId').prop('disabled', true)
-                         .html('<option value="">-- اختر الصف --</option>');
-            $('#ClassIds').prop('disabled', true)
-                          .html('<option value="">-- اختر الفصل --</option>');
-
-            if (schoolId) {
-                $.getJSON('/Educator/GetGradesBySchool', { schoolId: schoolId }, function (data) {
-                    var options = '<option value="">-- اختر الصف --</option>';
-                    $.each(data, function (i, g) {
-                        options += '<option value="' + g.id + '">' + g.name + '</option>';
-                    });
-                    $('#GradeId').html(options).prop('disabled', false);
+        if (schoolId) {
+            $.getJSON('/Educator/GetGradesBySchool', { schoolId: schoolId }, function (data) {
+                var options = '<option value="">-- اختر الصف --</option>';
+                $.each(data, function (i, g) {
+                    options += '<option value="' + g.id + '">' + g.name + '</option>';
                 });
-            }
-        });
+                $('#GradeId').html(options).prop('disabled', false);
+            });
+        }
+    });
 
-        $('#GradeId').change(function () {
-            var gradeId = $(this).val();
-            $('#ClassCheckboxes').hide().html('');
-            $('#classPlaceholder').show();
+    $('#GradeId').change(function () {
+        var gradeId = $(this).val();
+        $('#ClassCheckboxes').hide().html('');
+        $('#classPlaceholder').show();
 
-            if (gradeId) {
-                $.getJSON('/Educator/GetClassesByGrade', { gradeId: gradeId }, function (data) {
-                    if (data.length === 0) {
-                        $('#ClassCheckboxes').show()
-                            .html('<p class="text-muted">لا توجد فصول متاحة</p>');
-                        $('#classPlaceholder').hide();
-                        return;
-                    }
-
-                    var html = '';
-                    $.each(data, function (i, c) {
-                        html += `
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox"
-                                       name="ClassIds" value="${c.id}" id="class_${c.id}">
-                                <label class="form-check-label" for="class_${c.id}">
-                                    ${c.name}
-                                </label>
-                            </div>`;
-                    });
-
-                    $('#ClassCheckboxes').show().html(html);
+        if (gradeId) {
+            $.getJSON('/Educator/GetClassesByGrade', { gradeId: gradeId }, function (data) {
+                if (data.length === 0) {
+                    $('#ClassCheckboxes').show().html('<p class="text-muted">لا توجد فصول متاحة</p>');
                     $('#classPlaceholder').hide();
+                    return;
+                }
+                var html = '';
+                $.each(data, function (i, c) {
+                    html += '<div class="form-check">' +
+                        '<input class="form-check-input" type="checkbox" name="ClassIds" value="' + c.id + '" id="class_' + c.id + '">' +
+                        '<label class="form-check-label" for="class_' + c.id + '">' + c.name + '</label>' +
+                        '</div>';
                 });
-            }
-        });
-    </script>
-}
+                $('#ClassCheckboxes').show().html(html);
+                $('#classPlaceholder').hide();
+            });
+        }
+    });
+</script>
+</body>
+</html>

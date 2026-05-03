@@ -1,4 +1,4 @@
-﻿@model List<LamiePlatform.Models.Request>
+@model List<LamiePlatform.Models.Request>
 @{
     ViewData["Title"] = "لامع - طلبات المعلمين";
     ViewData["HideHeader"] = true;
@@ -9,49 +9,47 @@
 
 <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 
-<main dir="rtl">
+<main class="parent-requests-page" dir="rtl">
+    <div class="requests-outer-container">
+        <img src="~/images/starLogo.png" class="page-star-logo" alt="star" />
+        <h1>طلبات المعلمين</h1>
 
-    <h1>طلبات المعلمين</h1>
 
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <p style="color:green;">@TempData["SuccessMessage"]</p>
-    }
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <p style="color:red;">@TempData["ErrorMessage"]</p>
-    }
-
-    @if (Model != null && Model.Any())
-    {
-        @foreach (var req in Model)
-        {
-            <div>
-                <p>المعلم: @req.Educator?.EducatorName</p>
-                <p>الطالب: @req.Child?.ChildName</p>
-                <p>رقم هوية الطالب: @req.ChildId</p>
-                <p>تاريخ الطلب: @req.SentAt?.ToString("yyyy/MM/dd")</p>
-
-                <form method="post" asp-action="RespondToRequest" asp-controller="Parent">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="requestId" value="@req.RequestId" />
-                    <input type="hidden" name="status" value="Approved" />
-                    <button type="submit">قبول ✓</button>
-                </form>
-
-                <form method="post" asp-action="RespondToRequest" asp-controller="Parent">
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="requestId" value="@req.RequestId" />
-                    <input type="hidden" name="status" value="Rejected" />
-                    <button type="submit">رفض ✗</button>
-                </form>
-            </div>
-            <hr />
-        }
-    }
-    else
-    {
-        <p>لا توجد طلبات معلقة حالياً</p>
-    }
-
+        <div class="requests-inner-container">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var req in Model)
+                {
+                    <div class="request-card">
+                        <div class="request-info">
+                            <p>المعلم: @req.Educator?.EducatorName</p>
+                            <p>الطالب: @req.Child?.ChildName</p>
+                            <p>رقم هوية الطالب: @req.ChildId</p>
+                            <p>تاريخ الطلب: @req.SentAt?.ToString("yyyy/MM/dd")</p>
+                        </div>
+                        <div class="request-actions">
+                            <form method="post" asp-action="RespondToRequest" asp-controller="Parent">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="requestId" value="@req.RequestId" />
+                                <input type="hidden" name="status" value="Approved" />
+                                <button type="submit" class="btn-approve">قبول ✓</button>
+                            </form>
+                            <form method="post" asp-action="RespondToRequest" asp-controller="Parent">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="requestId" value="@req.RequestId" />
+                                <input type="hidden" name="status" value="Rejected" />
+                                <button type="submit" class="btn-deny">رفض ✗</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-requests">
+                    <p>لا توجد طلبات معلقة حالياً</p>
+                </div>
+            }
+        </div>
+    </div>
 </main>

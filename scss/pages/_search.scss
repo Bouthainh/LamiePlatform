@@ -1,0 +1,243 @@
+.search-outer {
+    background: $white;
+    border-radius: 22px;
+    border: 2px solid rgba($purple-color, 0.18);
+    padding: $spacing-lg;
+    position: relative;
+    margin: $spacing-md auto;
+    direction: rtl;
+
+    .search-star-logo {
+        position: absolute;
+        top: $spacing-md;
+        left: $spacing-md;
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+    }
+}
+
+.search-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $coral-vivid;
+    margin-bottom: $spacing-lg;
+    text-align: right;
+}
+
+.search-bar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-lg;
+
+    .search-bar-inner {
+        display: flex;
+        align-items: center;
+        width: 60%;
+        background: $global-bg;
+        border:3px solid $coral-light;
+        border-radius: 50px;
+        overflow: hidden;
+        direction: rtl;
+
+        .search-icon {
+            font-size: 20px;
+            color: $coral-vivid;
+            padding: 0 $spacing-sm;
+            flex-shrink: 0;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 12px 8px;
+            font-size: 15px;
+            color: $text-dark;
+            direction: rtl;
+            text-align: right;
+            outline: none;
+
+            &::placeholder {
+                color: $text-light;
+            }
+        }
+
+        .btn-search {
+            background: $coral-vivid;
+            color: $white;
+            border: none;
+            border-radius:60px;
+            padding: 12px $spacing-md;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            flex-shrink: 0;
+            @include transition();
+
+            &:hover {
+                background: darken($coral-light, 8%);
+            }
+        }
+    }
+}
+
+.search-results-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $secondary-color;
+    text-align: center;
+    margin-bottom: $spacing-sm;
+}
+
+.search-table-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-lg;
+
+    table {
+        width: 90%;
+        border-collapse: collapse;
+        text-align: right;
+        direction: rtl;
+
+        th, td {
+            border: none !important;
+            padding: 12px 16px;
+            font-size: 15px;
+            color: $text-dark;
+        }
+
+        thead tr th {
+            background: $tirquaz-color !important;
+            font-size: 15px;
+            font-weight: 700;
+            color: $text-dark;
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba($tirquaz-color, 0.12);
+        }
+    }
+}
+
+.btn-send-request {
+    background: $primary-color;
+    color: $text-dark;
+    border: none;
+    border-radius: $btn-border-radius;
+    padding: 6px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    @include transition();
+
+    &:hover { opacity: 0.85; }
+}
+
+.search-no-results {
+    text-align: center;
+    color: $text-light;
+    font-size: 15px;
+    padding: $spacing-md 0;
+}
+
+// ── My Students page ──────────────────────────────────────
+.students-outer {
+    background: $white;
+    border-radius: 22px;
+    border: 2px solid rgba($purple-color, 0.18);
+    padding: $spacing-lg;
+    position: relative;
+    margin: $spacing-md auto;
+    direction: rtl;
+
+    .students-star-logo {
+        position: absolute;
+        top: $spacing-md;
+        left: $spacing-md;
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+    }
+}
+
+.students-heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: $purple-color;
+    margin-bottom: $spacing-md;
+    text-align: right;
+}
+
+.students-inner {
+    background: $global-bg;
+    border-radius: 16px;
+    padding: $spacing-md;
+    overflow-x: auto;
+}
+
+.students-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+    direction: rtl;
+    background: $white;
+    border-radius: 12px;
+    overflow: hidden;
+
+    th, td {
+        border: none !important;
+        border-bottom: 1px solid rgba($purple-color, 0.1) !important;
+        padding: 13px 16px;
+        font-size: 15px;
+        color: $text-dark;
+    }
+
+    thead tr th {
+        background: $purple-light !important;
+        font-size: 15px;
+        font-weight: 700;
+        color: $text-dark;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none !important;
+    }
+
+    tbody tr:hover {
+        background: rgba($child-purple, 0.15);
+    }
+}
+
+.btn-dashboard-sm {
+    background: $tirquaz-color;
+    color: $text-dark;
+    border-radius: $btn-border-radius;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    @include transition();
+
+    &:hover { opacity: 0.85; color: $text-dark; }
+}
+
+.btn-chat-sm {
+    background: $purple-color;
+    color: $white;
+    border-radius: $btn-border-radius;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    @include transition();
+
+    &:hover { opacity: 0.85; color: $white; }
+}

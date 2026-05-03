@@ -1,367 +1,390 @@
-// test Child Profile Page
-main {
-  width: 100%;
-  padding: $spacing-lg 0;
-  @include flex-center;
-}
+.child-profile-page {
+    background-color: $global-bg;
+    min-height: 100vh;
+    padding: $spacing-xl $spacing-md;
+    direction: rtl;
+    font-family: $primary-font;
 
-.main-container {
-  width: 100%;
-  padding-inline: $spacing-lg;
-  @include flex-center;
-}
+    > .alert {
+        max-width: 900px;
+        margin: 0 auto $spacing-md;
+        padding: $spacing-sm $spacing-md;
+        border-radius: 10px;
+        font-weight: 600;
+        text-align: center;
 
-.main-content {
-  width: 100%;
-  max-width: 1050px;
-  background: linear-gradient(180deg, $white 0%, $child-purple 60%, $child-light-pink 100%);
-  border-radius: 25px;
-  padding: $spacing-xl $spacing-lg;
-  @include card-shadow;
-  position: relative;
+        &-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
 
-  @include respond-to(mobile) {
-    padding: $spacing-lg $spacing-sm;
-  }
-}
+        &-danger {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
 
-// Header
-.profile-header {
-  text-align: center;
-  position: relative;
-  margin-bottom: $spacing-xl;
-
-  h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: $purple-color;
-  }
-
-  .logo-corner {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-
-    img {
-      width: 70px;
-      opacity: 0.9;
-    }
-  }
-}
-
-// Profile Card
-.profile-card {
-  background: $child-purple;
-  border-radius: 20px;
-  padding: $spacing-xl;
-  text-align: center;
-  margin-bottom: $spacing-xl;
-  @include card-shadow;
-
-  .profile-avatar {
-    img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: $spacing-md;
-    }
-  }
-
-  .profile-info {
-    h2 {
-      color: $purple-color;
-      font-weight: 700;
-      margin-bottom: $spacing-xs;
-      font-size: 1.6rem;
+        &-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
     }
 
-    .age {
-      color: $primary-color;
-      font-weight: 600;
+    .child-profile-container {
+        position: relative;
+        max-width: 900px;
+        margin: 0 auto;
+        background: $child-light-yellow;
+        border-radius: 28px;
+        padding: $spacing-lg;
+        box-shadow: 0 8px 32px rgba($primary-color, 0.15);
+
+        .star-logo-corner {
+            position: absolute;
+            top: $spacing-sm;
+            left: $spacing-sm;
+            width: 55px;
+            height: auto;
+            z-index: 5;
+        }
+
+        > h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: $primary-color;
+            text-align: center;
+            margin-bottom: $spacing-lg;
+        }
     }
 
-    .school {
-      color: $purple-color;
-      margin-top: 5px;
+    .delete-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: $spacing-lg;
+        padding-top: $spacing-md;
     }
 
-    .access-code {
-      font-weight: 600;
-      color: $dark;
-      margin-top: 10px;
+    .profile-card {
+        position: relative;
+        background: #fff4d6;
+        border: 2px solid rgba($primary-color, 0.2);
+        border-radius: 28px;
+        padding: $spacing-xl;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 0;
+        margin-bottom: $spacing-lg;
+        @include card-shadow;
 
-      span {
-        color: $purple-color;
-        font-weight: 700;
-      }
-    }
-  }
-}
+        .profile-avatar {
+            flex-shrink: 0;
 
-// Permissions Section
-.contact-section {
-    background: $child-light-pink;
-    padding: $spacing-lg;
-    border-radius: 20px;
-    text-align: center;
-    margin-bottom: $spacing-xl;
+            img {
+                width: 260px;
+                height: auto;
+                object-fit: contain;
+                display: block;
+            }
+        }
 
-    .contact-title {
-        color: $primary-color;
-        font-weight: 700;
-        margin-bottom: $spacing-md;
-    }
-
-    .contact-options {
-        @include flex-center;
-        gap: $spacing-md;
-        flex-wrap: wrap;
-
-        form {
+        .profile-info {
+            flex: 1;
+            padding-bottom: $spacing-md;
             display: flex;
-            gap: $spacing-md;
+            flex-direction: column;
+            gap: $spacing-sm;
+
+
+            h2 {
+                font-size: 2.1rem;
+                font-weight: 800;
+                color: $text-dark;
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            .info-age {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: $text-dark;
+                margin: 0;
+            }
+
+            .login-code-box {
+                background: rgba(255, 255, 255, 0.35);
+                border-radius: 14px;
+                padding: $spacing-sm $spacing-md;
+                display: flex;
+                align-items: center;
+                gap: $spacing-sm;
+                flex-wrap: nowrap;
+                margin-top: $spacing-xs;
+
+                .login-code-label {
+                    font-weight: 700;
+                    color: $text-dark;
+                    font-size: 1.4rem;
+                    white-space: nowrap;
+                }
+
+                .login-code-value {
+                    font-size: 1.4rem;
+                    font-weight: 800;
+                    color: $text-dark;
+                    letter-spacing: 3px;
+                    flex: 1;
+                    direction: ltr;
+                    text-align: right;
+                }
+
+                .btn-copy-code {
+                    background: $coral-vivid;
+                    color: $white;
+                    border: none;
+                    border-radius: 8px;
+                    padding: 7px 16px;
+                    cursor: pointer;
+                    font-family: $primary-font;
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    white-space: nowrap;
+                    @include transition(background);
+
+                    &:hover {
+                        background: darken($coral-vivid, 8%);
+                    }
+
+                    &:active {
+                        transform: scale(0.97);
+                    }
+                }
+            }
+
+            .card-actions {
+                display: flex;
+                gap: $spacing-sm;
+                flex-wrap: wrap;
+                margin-top: $spacing-xs;
+
+                form {
+                    flex: 0 0 auto;
+                }
+            }
+        }
+
+        @include respond-to(tablet) {
+            flex-direction: column;
             align-items: center;
-        }
+            gap: $spacing-md;
+            padding: $spacing-lg;
 
-        .contact-option {
-            padding: $spacing-sm $spacing-xl;
-            min-width: 180px;
-            background-color: $white;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            @include flex-center;
-            gap: 6px;
-            font-weight: 600;
-            cursor: not-allowed;
-            box-sizing: border-box;
-            @include transition(all);
-
-            &.active {
-                background: #e8fbe8;
-                border-color: $secondary-color;
-                color: $tirquaz-color;
-            }
-        }
-
-        .inactive-btn {
-            padding: $spacing-sm $spacing-xl;
-            min-width: 180px;
-            background: $white;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            @include transition(all);
-            box-sizing: border-box;
-
-            &:hover {
-                background: #f9f9f9;
-                border-color: #999;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            .profile-avatar img {
+                width: 180px;
             }
 
-            &:active {
-                transform: translateY(0);
+            .profile-info {
+                align-items: center;
+                text-align: center;
+                width: 100%;
+
+                .login-code-box {
+                    width: 100%;
+                    justify-content: center;
+                }
+
+                .card-actions {
+                    justify-content: center;
+                }
             }
         }
 
         @include respond-to(mobile) {
-            flex-direction: column;
+            padding: $spacing-md;
+            border-radius: 18px;
 
-            form {
+            .profile-avatar img {
+                width: 140px;
+            }
+
+            .profile-info h2 {
+                font-size: 1.7rem;
+            }
+
+            .profile-info .login-code-box .login-code-value {
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    .school-details {
+        position: relative;
+        background: $purple-light;
+        border-radius: 20px;
+
+        .section-icon {
+            color: $purple-color;
+            font-size: 2.4rem;
+            position: absolute;
+            top: $spacing-md;
+            right: $spacing-md;
+        }
+
+        padding: $spacing-lg;
+        margin-bottom: $spacing-lg;
+
+        h3 {
+            text-align: center;
+            color: $purple-color;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: $spacing-md;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: $spacing-sm;
+            padding: 6px 0;
+
+            .label {
+                font-weight: 700;
+                color: $purple-color;
+                font-size: 1.2rem;
+            }
+
+            .value {
+                color: $text-dark;
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .contact-section {
+        position: relative;
+        background: $tirquaz-color;
+        border-radius: 20px;
+
+        .section-icon {
+            color: $secondary-color;
+            font-size: 2.4rem;
+            position: absolute;
+            top: $spacing-md;
+            right: $spacing-md;
+        }
+
+        padding: $spacing-lg;
+
+        .contact-title {
+            text-align: center;
+            color: $secondary-color;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: $spacing-md;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-md;
+            flex-wrap: wrap;
+
+            .contact-options {
+                display: flex;
+                align-items: center;
+                gap: $spacing-md;
+
+                form {
+                    display: flex;
+                    align-items: center;
+                    gap: $spacing-md;
+                }
+
+                .contact-option {
+                    padding: $spacing-sm $spacing-lg;
+                    background: $white;
+                    border: 2px solid #ddd;
+                    border-radius: 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    font-weight: 700;
+                    font-size: $font-size-base;
+                    font-family: $primary-font;
+                    cursor: not-allowed;
+
+                    input[type="checkbox"] {
+                        width: 16px;
+                        height: 16px;
+                        pointer-events: none;
+                        flex-shrink: 0;
+                    }
+
+                    &.allow-active {
+                        background: rgba(#008c88, 0.25);
+                        border-color: #008c88;
+                        color: darken(#008c88, 30%);
+                        accent-color: #008c88;
+                    }
+
+                    &.deny-active {
+                        background: rgba($coral-soft, 0.25);
+                        border-color: $coral-soft;
+                        color: darken($coral-soft, 30%);
+                        accent-color: $coral-soft;
+                    }
+                }
+
+                .action-option {
+                    padding: $spacing-sm $spacing-lg;
+                    border: 2px solid #ddd;
+                    border-radius: 12px;
+                    font-weight: 700;
+                    font-size: $font-size-base;
+                    font-family: $primary-font;
+                    cursor: pointer;
+                    background: $white;
+                    @include transition(all);
+
+                    &.allow-btn:hover {
+                        background: rgba(#008c88, 0.2);
+                        border-color: #008c88;
+                        color: darken(#008c88, 25%);
+                    }
+
+                    &.deny-btn:hover {
+                        background: rgba($coral-soft, 0.2);
+                        border-color: $coral-soft;
+                        color: darken($coral-soft, 25%);
+                    }
+                }
+            }
+        }
+
+        .contact-chat {
+            display: flex;
+            justify-content: center;
+            margin-top: $spacing-md;
+        }
+
+        @include respond-to(mobile) {
+            .contact-row {
                 flex-direction: column;
-                width: 100%;
+
+                .contact-options {
+                    flex-direction: column;
+
+                    form {
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                }
             }
-
-            .contact-option,
-            .inactive-btn {
-                width: 100%;
-                min-width: unset; // Reset min-width on mobile
-            }
         }
     }
-}
-// School Details
-.school-details {
-  background: $white;
-  padding: $spacing-lg;
-  border-radius: 20px;
-  @include card-shadow;
-  margin-bottom: $spacing-xl;
-
-  h3 {
-    text-align: center;
-    color: $purple-color;
-    font-weight: 700;
-    margin-bottom: $spacing-md;
-  }
-
-  .detail-row {
-    @include flex-between;
-    padding: $spacing-sm 0;
-    border-bottom: 1px solid #eee;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    .label {
-      font-weight: 700;
-      color: $text-light;
-    }
-
-    .value {
-      color: $dark;
-      font-weight: 600;
-    }
-  }
-}
-
-.action-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $spacing-sm;
-    margin-top: $spacing-lg;
-
-    form {
-        flex: 0 0 auto;
-    }
-
-    .btn {
-        padding: $spacing-sm $spacing-xl;
-        min-width: 180px;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: $font-size-base;
-        text-align: center;
-        cursor: pointer;
-        border: none;
-        text-decoration: none;
-        display: inline-block;
-        box-sizing: border-box;
-        @include transition(all);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-        &:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        &:active {
-            transform: translateY(0);
-        }
-    }
-
-    .btn-delete {
-        background: $primary-color;
-        color: $white;
-
-        &:hover {
-            background: darken($primary-color, 8%);
-            box-shadow: 0 4px 16px rgba($primary-color, 0.4);
-        }
-    }
-
-    .btn-edit {
-        background: $secondary-color;
-        color: $white;
-
-        &:hover {
-            background: $secondary-color;
-            box-shadow: 0 4px 16px rgba($tirquaz-color, 0.4);
-        }
-    }
-
-    @include respond-to(mobile) {
-        flex-direction: column;
-
-        form {
-            width: 100%;
-        }
-
-        .btn {
-            width: 100%;
-        }
-    }
-}
-
-// Alerts
-.alert {
-  padding: $spacing-sm;
-  border-radius: 12px;
-  font-weight: 600;
-  margin-bottom: $spacing-md;
-  text-align: center;
-
-  &-success {
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-  }
-
-  &-danger {
-    background: #f8d7da;
-    border: 1px solid #f5c6cb;
-    color: #721c24;
-  }
-
-  &-warning {
-    background: #fff3cd;
-    border: 1px solid #ffeaa7;
-    color: #856404;
-  }
-}
-
-// Responsive adjustments
-@include respond-to(tablet) {
-  .profile-header {
-    h1 {
-      font-size: 1.6rem;
-    }
-
-    .logo-corner img {
-      width: 60px;
-    }
-  }
-
-  .profile-card {
-    padding: $spacing-lg;
-
-    .profile-info h2 {
-      font-size: 1.4rem;
-    }
-  }
-}
-
-@include respond-to(mobile) {
-  .profile-header {
-    h1 {
-      font-size: 1.4rem;
-    }
-
-    .logo-corner {
-      top: -10px;
-      right: -10px;
-
-      img {
-        width: 50px;
-      }
-    }
-  }
-
-  .profile-card {
-    padding: $spacing-md;
-
-    .profile-avatar img {
-      width: 80px;
-      height: 80px;
-    }
-
-    .profile-info h2 {
-      font-size: 1.2rem;
-    }
-  }
 }

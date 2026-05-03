@@ -74,25 +74,25 @@ public partial class LamieDbContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("recommendation_ID");
             entity.Property(e => e.ActivityDescription)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_description");
             entity.Property(e => e.ActivityName)
                 .HasMaxLength(3000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("activity_name");
             entity.Property(e => e.Category)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("category");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.GroupId).HasColumnName("group_ID");
 
@@ -188,7 +188,7 @@ public partial class LamieDbContext : DbContext
             entity.Property(e => e.ChildGroupId).HasColumnName("child_group_ID");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_name");
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.CreatedAt)
@@ -196,15 +196,15 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.Gender)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("gender");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
             entity.Property(e => e.IconImgPath)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("Icon_img_path");
             entity.Property(e => e.LoginCode)
                 .HasMaxLength(8)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("login_code");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
 
@@ -241,7 +241,7 @@ public partial class LamieDbContext : DbContext
             entity.Property(e => e.ClassId).HasColumnName("class_ID");
             entity.Property(e => e.GroupName)
                 .HasMaxLength(50)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("group_name");
             entity.Property(e => e.MatchScore).HasColumnName("match_score");
 
@@ -258,20 +258,20 @@ public partial class LamieDbContext : DbContext
 
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.IntelligenceId).HasColumnName("intelligence_ID");
             entity.Property(e => e.AssessmentDate)
                 .HasDefaultValueSql("(sysdatetime())")
                 .HasColumnName("assessment_date");
             entity.Property(e => e.IntelligenceLevel)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("intelligence_level");
             entity.Property(e => e.ProficiencyScore)
                 .HasColumnType("numeric(18, 0)")
                 .HasColumnName("proficiency_score");
             entity.Property(e => e.Summary)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("summary");
 
             entity.HasOne(d => d.Child).WithMany(p => p.ChildIntelligences)
@@ -295,14 +295,14 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("class_ID");
             entity.Property(e => e.ClassName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("class_name");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
                 .HasColumnName("created_at");
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
 
@@ -331,11 +331,11 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_ID");
 
             entity.HasOne(d => d.Educator).WithMany(p => p.Conversations)
@@ -362,31 +362,31 @@ public partial class LamieDbContext : DbContext
 
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.EducatorName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_name");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("email");
             entity.Property(e => e.IsVerified)
                 .HasDefaultValue(false)
                 .HasColumnName("is_verified");
             entity.Property(e => e.Password)
                 .HasMaxLength(256)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("password");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("phone_number");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
             entity.Property(e => e.Username)
                 .HasMaxLength(8)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("username");
 
             entity.HasOne(d => d.School).WithMany(p => p.Educators)
@@ -405,18 +405,18 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("request_ID");
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
                 .HasColumnName("created_at");
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_ID");
 
             entity.HasOne(d => d.Child).WithMany(p => p.EducatorPermissions)
@@ -445,11 +445,11 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("character_ID");
             entity.Property(e => e.CharacterDescription)
                 .HasMaxLength(5000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("character_description");
             entity.Property(e => e.CharacterName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("character_name");
         });
 
@@ -464,11 +464,11 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("level_ID");
             entity.Property(e => e.IntelligenceId).HasColumnName("intelligence_ID");
             entity.Property(e => e.LevelDescription)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("level_description");
             entity.Property(e => e.LevelName)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("level_name");
 
             entity.HasOne(d => d.Intelligence).WithMany(p => p.GameLevels)
@@ -485,7 +485,7 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("gameSession_ID");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.LevelId).HasColumnName("level_ID");
             entity.Property(e => e.PlayedAt).HasColumnName("played_at");
@@ -515,7 +515,7 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("created_at");
             entity.Property(e => e.GradeName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("grade_name");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
 
@@ -560,11 +560,11 @@ public partial class LamieDbContext : DbContext
                 .HasDefaultValueSql("(newsequentialid())")
                 .HasColumnName("intelligence_ID");
             entity.Property(e => e.IconImgPath)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("Icon_img_path");
             entity.Property(e => e.IntelligenceName)
                 .HasMaxLength(1000)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("intelligence_name");
             entity.Property(e => e.IntelligenceTypeDescription).HasColumnName("intelligenceType_description");
         });
@@ -585,11 +585,11 @@ public partial class LamieDbContext : DbContext
             entity.Property(e => e.IsRead).HasColumnName("is_read");
             entity.Property(e => e.SenderId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("sender_ID");
             entity.Property(e => e.SenderType)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("sender_type");
             entity.Property(e => e.SentAt)
                 .HasDefaultValueSql("(getdate())")
@@ -615,21 +615,21 @@ public partial class LamieDbContext : DbContext
 
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_ID");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(sysdatetime())")
                 .HasColumnName("created_at");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("email");
             entity.Property(e => e.IsVerified)
                 .HasDefaultValue(false)
                 .HasColumnName("is_verified");
             entity.Property(e => e.ParentName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(256)
@@ -637,14 +637,14 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("password");
             entity.Property(e => e.PhoneNumber)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("phone_number");
             entity.Property(e => e.Role)
                 .HasMaxLength(20)
-                .IsUnicode(false);
+                .IsUnicode(true);
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("username");
         });
 
@@ -656,15 +656,15 @@ public partial class LamieDbContext : DbContext
 
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_ID");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.RelationshipType)
                 .HasMaxLength(20)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("relationship_type");
 
             entity.HasOne(d => d.Child).WithMany(p => p.ParentChildren)
@@ -688,19 +688,19 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("request_ID");
             entity.Property(e => e.ChildId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("child_ID");
             entity.Property(e => e.EducatorId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("educator_ID");
             entity.Property(e => e.ParentId)
                 .HasMaxLength(10)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("parent_ID");
             entity.Property(e => e.RequestStatus)
                 .HasMaxLength(20)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasDefaultValue("Pending")
                 .HasColumnName("request_status");
             entity.Property(e => e.SentAt)
@@ -733,15 +733,15 @@ public partial class LamieDbContext : DbContext
                 .HasColumnName("school_ID");
             entity.Property(e => e.Branch)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("branch");
             entity.Property(e => e.City)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("city");
             entity.Property(e => e.SchoolName)
                 .HasMaxLength(100)
-                .IsUnicode(false)
+                .IsUnicode(true)
                 .HasColumnName("school_name");
         });
 

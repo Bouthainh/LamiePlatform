@@ -1,275 +1,218 @@
-// Manage Multiple Children Page
 .manage-children-page {
-  direction: rtl;
-  font-family: $primary-font;
-  min-height: 100vh;
-  background-color: $light-bg;
-  color: $text-color;
-  padding: $spacing-md;
+    direction: rtl;
+    font-family: $primary-font;
+    min-height: 100vh;
+    background-color: #fff4d6;
+    color: $text-color;
+    padding: $spacing-md;
 
-  .main-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .main-content {
-    background: linear-gradient(135deg, $child-light-pink 0%, $child-light-blue 50%, $child-light-yellow 100%);
-    border-radius: 22px;
-    padding: $spacing-xl;
-    @include card-shadow;
-    box-sizing: border-box;
-
-    // Page Header
-    h2 {
-      text-align: center;
-      color: $purple-color;
-      font-size: 32px;
-      font-weight: 700;
-      margin: 0 0 $spacing-xl;
+    .main-container {
+        width: 100%;
     }
 
-    // Empty State Message
-    .empty-state {
-      background: $white;
-      padding: $spacing-xl;
-      border-radius: 18px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    .main-content {
+        position: relative;
+        background: #fff4d6;
+        border-radius: 22px;
+        padding: $spacing-xl;
+        @include card-shadow;
+        box-sizing: border-box;
 
-      p {
-        color: $text-dark;
-        font-size: $font-size-large;
-        font-weight: 600;
-        margin: 0 0 $spacing-lg;
-        line-height: 1.8;
-      }
-
-      .add-child-btn {
-        background: $primary-green;
-        color: $white;
-        text-decoration: none;
-        padding: $spacing-sm $spacing-xl;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: $font-size-base;
-        display: inline-block;
-        @include transition(all);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
-        &:hover {
-          background: $primary-green-dark;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba($primary-green, 0.4);
+        .star-logo-corner {
+            position: absolute;
+            top: $spacing-sm;
+            left: $spacing-sm;
+            width: 55px;
+            height: auto;
+            z-index: 5;
         }
 
-        &:active {
-          transform: translateY(0);
-        }
-      }
-    }
-
-    // Children List
-    .children-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 $spacing-xl;
-      display: grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap: $spacing-lg;
-
-      .child-card {
-        background: $white;
-        border-radius: 18px;
-        padding: $spacing-lg;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        @include transition(all);
-        border: 2px solid transparent;
-
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-          border-color: $secondary-color;
-        }
-
-        .child-header {
-          display: flex;
-          align-items: center;
-          gap: $spacing-md;
-          margin-bottom: $spacing-md;
-          padding-bottom: $spacing-md;
-          border-bottom: 2px solid #f0f0f0;
-
-          .child-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid $child-light-blue;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            flex-shrink: 0;
-
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          }
-
-          .child-name {
-            flex: 1;
-            color: $purple-color;
-            font-size: $font-size-large;
-            font-weight: 700;
-            margin: 0;
-          }
-        }
-
-        .child-actions {
-          display: flex;
-          flex-direction: column;
-          gap: $spacing-xs;
-
-          .action-btn {
-            padding: $spacing-xs $spacing-md;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: $font-size-small;
+        h2 {
             text-align: center;
-            text-decoration: none;
-            display: block;
-            cursor: pointer;
-            border: none;
-            @include transition(all);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-
-            &:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            }
-
-            &:active {
-              transform: translateY(0);
-            }
-
-            &.view-btn {
-              background: $secondary-color;
-              color: $white;
-
-              &:hover {
-                background: darken($secondary-color, 8%);
-              }
-            }
-
-            &.edit-btn {
-              background: $primary-green;
-              color: $white;
-
-              &:hover {
-                background: $primary-green-dark;
-              }
-            }
-
-            &.delete-btn {
-              background: $primary-color;
-              color: $white;
-
-              &:hover {
-                background: darken($primary-color, 8%);
-              }
-            }
-          }
-
-          form {
-            margin: 0;
-          }
+            color: $primary-color;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 $spacing-xl;
         }
-      }
+
+        .empty-state {
+            background: $white;
+            padding: $spacing-xl;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+            p {
+                color: $text-dark;
+                font-size: $font-size-large;
+                font-weight: 600;
+                margin: 0 0 $spacing-lg;
+                line-height: 1.8;
+            }
+        }
+
+        .children-list {
+            list-style: none;
+            padding: $spacing-lg 0;
+            margin: 0 0 $spacing-xl;
+            display: grid;
+            grid-template-columns: minmax(0, 680px);
+            gap: $spacing-lg;
+            justify-content: center;
+
+            .child-card {
+                background: $child-light-yellow;
+                border-radius: 20px;
+                padding: $spacing-md $spacing-lg;
+                box-shadow: 0 4px 16px rgba($primary-color, 0.22);
+                border: 2px solid rgba($primary-color, 0.2);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: $spacing-md;
+                @include transition(all);
+
+                &:hover {
+                    transform: translateY(-3px);
+                    box-shadow: 0 8px 28px rgba($primary-color, 0.38);
+                    border-color: rgba($primary-color, 0.45);
+                }
+
+                .child-avatar {
+                    flex-shrink: 0;
+                    width: 130px;
+                    height: 130px;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: contain;
+                        filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.18));
+                    }
+                }
+
+                .child-card-content {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: $spacing-xs;
+
+                    .child-name {
+                        color: $text-dark;
+                        font-size: $font-size-large;
+                        font-weight: 700;
+                        margin: 0 0 $spacing-sm 0;
+                        text-align: right;
+                    }
+
+                    .child-actions {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        align-items: center;
+
+                        form { display: contents; }
+
+                        .btn-child-sm {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 5px;
+                            padding: 7px 14px;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            font-weight: 700;
+                            font-family: $primary-font;
+                            background: $secondary-color;
+                            color: $white;
+                            border: none;
+                            cursor: pointer;
+                            text-decoration: none;
+                            white-space: nowrap;
+                            @include transition(all);
+
+                            i { font-size: 13px; }
+
+                            &:hover {
+                                background: darken($secondary-color, 10%);
+                                color: $white;
+                                text-decoration: none;
+                            }
+
+                            &.btn-child-delete {
+                                background: $coral-red;
+
+                                &:hover { background: darken($coral-red, 10%); }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .add-child-footer {
+            text-align: center;
+            padding-top: $spacing-lg;
+            border-top: 2px solid rgba($primary-color, 0.3);
+        }
     }
-    // Add Child Button at Bottom
-    .add-child-footer {
-      text-align: center;
-      padding-top: $spacing-lg;
-      border-top: 2px solid rgba($white, 0.5);
 
-      .add-child-btn {
-        background: $primary-green;
-        color: $white;
-        text-decoration: none;
-        padding: $spacing-sm $spacing-xl;
-        border-radius: 12px;
-        font-weight: 600;
-        font-size: $font-size-base;
-        display: inline-block;
-        @include transition(all);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    @include respond-to(tablet) {
+        padding: $spacing-sm;
 
-        &:hover {
-          background: $primary-green-dark;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba($primary-green, 0.4);
-        }
+        .main-content {
+            padding: $spacing-lg;
+            border-radius: 18px;
 
-        &:active {
-          transform: translateY(0);
-        }
-      }
-    }
-  }
+            .star-logo-corner { width: 45px; }
+            h2 { font-size: 26px; }
 
-  // Responsive adjustments
-  @include respond-to(tablet) {
-    padding: $spacing-sm;
+            .children-list {
+                grid-template-columns: 1fr;
+                gap: $spacing-md;
 
-    .main-content {
-      padding: $spacing-lg;
-      border-radius: 18px;
-
-      h2 {
-        font-size: 26px;
-      }
-      .children-list {
-         grid-template-columns: repeat(2, 1fr);
+                .child-card {
+                    .child-avatar { width: 100px; height: 100px; }
+                    .child-card-content .child-actions .btn-child-sm {
+                        font-size: 11px;
+                        padding: 6px 10px;
+                    }
+                }
+            }
         }
     }
-  }
 
-  @include respond-to(mobile) {
-    .main-content {
-      padding: $spacing-md;
-      border-radius: 16px;
+    @include respond-to(mobile) {
+        .main-content {
+            padding: $spacing-md;
+            border-radius: 16px;
 
-      h2 {
-        font-size: 22px;
-      }
-      .children-list {
-       grid-template-columns: 1fr;
-      }
-      .children-list .child-card {
-        padding: $spacing-md;
+            .star-logo-corner { width: 38px; }
+            h2 { font-size: 22px; }
 
-        .child-header {
-          flex-direction: column;
-          text-align: center;
+            .children-list {
+                grid-template-columns: 1fr;
+                gap: $spacing-md;
 
-          .child-avatar {
-            width: 60px;
-            height: 60px;
-          }
+                .child-card {
+                    padding: $spacing-sm $spacing-md;
 
-          .child-name {
-            font-size: $font-size-base;
-          }
+                    .child-avatar { width: 64px; height: 64px; }
+
+                    .child-card-content {
+                        .child-name { font-size: $font-size-base; }
+                        .child-actions .btn-child-sm {
+                            font-size: 11px;
+                            padding: 5px 10px;
+                        }
+                    }
+                }
+            }
+
+            .empty-state {
+                padding: $spacing-lg;
+                p { font-size: $font-size-base; }
+            }
         }
-      }
-
-      .empty-state {
-        padding: $spacing-lg;
-
-        p {
-          font-size: $font-size-base;
-        }
-      }
     }
-  }
 }

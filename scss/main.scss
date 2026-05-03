@@ -1,19 +1,77 @@
 @import 'base/variables';
 @import 'base/mixins';
+@import 'components/buttons';
+@import 'components/forms';
 @import 'layout/header';
 @import 'layout/footer';
 @import 'layout/sidebar';
 @import 'pages/home';
-@import 'pages/auth';
-@import 'pages/ParentHomePage';
+@import 'pages/userHomePage';
 @import 'pages/childProfile';
-@import 'pages/addChild';
-@import 'pages/editChildProfile';
-@import 'pages/parentProfile';
 @import 'pages/childDashboard';
 @import 'pages/manageMultipleChildren';
+@import 'pages/chat';
+@import 'pages/recommendation';
+@import 'pages/groups';
+@import 'pages/search';
 
 
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: $global-bg;
+}
+
+// ── Global toast notifications ────────────────────────────────────────────────
+.lamie-toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 300px;
+    max-width: 480px;
+    width: max-content;
+    pointer-events: none;
+}
+
+.lamie-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    pointer-events: all;
+    transition: opacity 0.4s ease;
+
+    i { font-size: 1.1rem; flex-shrink: 0; }
+
+    span { flex: 1; }
+
+    &.lamie-toast-success { background: #d4f5f0; color: #1a7a77; border: 1.5px solid #32c8c3; }
+    &.lamie-toast-error   { background: #ffe0d4; color: #cc3300; border: 1.5px solid #ff6531; }
+    &.lamie-toast-info    { background: #fff3d4; color: #7a5800; border: 1.5px solid #ffb90f; }
+}
+
+.lamie-toast-close {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.6;
+    margin-right: auto;
+    padding: 0 4px;
+    &:hover { opacity: 1; }
+}
 
 body, main, .container {
     display: block !important;

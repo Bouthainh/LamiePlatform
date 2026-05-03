@@ -16,13 +16,11 @@ namespace LamiePlatform.Controllers
         private readonly IRequestService _requestService;
         private readonly IChildService _childService;
         private readonly IParentService _parentService;
-        private readonly IDashboardService _dashboardService;
 
-        public ParentController(IChildService childService, IParentService parentService, IDashboardService dashboardService, IRequestService requestService)
+        public ParentController(IChildService childService, IParentService parentService,  IRequestService requestService)
         {
             _childService = childService;
             _parentService = parentService;
-            _dashboardService = dashboardService;
             _requestService = requestService;
         }
 
@@ -215,56 +213,58 @@ namespace LamiePlatform.Controllers
             }
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetSchoolsByCity(string city)
         {
-            if (string.IsNullOrEmpty(city))
+            try
             {
-                return Json(new List<School>());
-            }
+                if (string.IsNullOrEmpty(city))
+                    return Json(new List<object>());
 
-            var schools = await _childService.GetSchoolsByCityAsync(city);
-            return Json(schools.Select(s => new
+                var schools = await _childService.GetSchoolsByCityAsync(city);
+                return Json(schools.Select(s => new { id = s.SchoolId.ToString(), name = s.SchoolName }).ToList());
+            }
+            catch (Exception ex)
             {
-                id = s.SchoolId,
-                name = s.SchoolName
-            }));
+                Console.WriteLine($"GetSchoolsByCity error: {ex.Message}");
+                return Json(new List<object>());
+            }
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetGradesBySchool(string schoolId)
         {
-            if (string.IsNullOrEmpty(schoolId) || !Guid.TryParse(schoolId, out Guid parsedSchoolId))
+            try
             {
-                return Json(new List<Grade>());
-            }
+                if (string.IsNullOrEmpty(schoolId) || !Guid.TryParse(schoolId, out Guid parsedSchoolId))
+                    return Json(new List<object>());
 
-            var grades = await _childService.GetGradesBySchoolIdAsync(parsedSchoolId);
-            return Json(grades.Select(g => new
+                var grades = await _childService.GetGradesBySchoolIdAsync(parsedSchoolId);
+                return Json(grades.Select(g => new { id = g.GradeId.ToString(), name = g.GradeName }).ToList());
+            }
+            catch (Exception ex)
             {
-                id = g.GradeId,
-                name = g.GradeName
-            }));
+                Console.WriteLine($"GetGradesBySchool error: {ex.Message}");
+                return Json(new List<object>());
+            }
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetClassesByGrade(string gradeId)
         {
-            if (string.IsNullOrEmpty(gradeId) || !Guid.TryParse(gradeId, out Guid parsedGradeId))
+            try
             {
-                return Json(new List<Class>());
-            }
+                if (string.IsNullOrEmpty(gradeId) || !Guid.TryParse(gradeId, out Guid parsedGradeId))
+                    return Json(new List<object>());
 
-            var classes = await _childService.GetClassesByGradeIdAsync(parsedGradeId);
-            return Json(classes.Select(c => new
+                var classes = await _childService.GetClassesByGradeIdAsync(parsedGradeId);
+                return Json(classes.Select(c => new { id = c.ClassId.ToString(), name = c.ClassName, educator = c.Educator?.EducatorName }).ToList());
+            }
+            catch (Exception ex)
             {
-                id = c.ClassId,
-                name = c.ClassName,
-                educator = c.Educator?.EducatorName
-            }));
+                Console.WriteLine($"GetClassesByGrade error: {ex.Message}");
+                return Json(new List<object>());
+            }
         }
 
         [Authorize]
@@ -477,21 +477,6 @@ namespace LamiePlatform.Controllers
             var children = await _childService.GetAllChildrenByParentIdAsync(parentId);
 
             return View(children);
-        }
-
-        [Authorize]
-        [HttpGet]
-        public IActionResult ViewChildDashboard(string childId)
-        {
-            var dashboardData = _dashboardService.GetChildDashboard(childId);
-
-            if (dashboardData == null)
-            {
-                TempData["ErrorMessage"] = "لا توجد بيانات متاحة للعرض في لوحة التحكم لهذا الطفل";
-                return RedirectToAction("ManageMultipleChildren");
-            }
-
-            return View("ViewChildDashboard", dashboardData);
         }
 
         [Authorize]

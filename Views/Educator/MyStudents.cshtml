@@ -1,4 +1,4 @@
-﻿@model List<LamiePlatform.Models.Child>
+@model List<LamiePlatform.Models.Child>
 @{
     ViewData["Title"] = "لامع - طلابي";
     ViewData["HideHeader"] = true;
@@ -9,59 +9,62 @@
 
 <link rel="icon" type="image/png" href="~/images/LamieLogo.png" />
 
-<main dir="rtl">
+<div class="students-outer" dir="rtl">
+    <img src="~/images/starLogo.png" class="students-star-logo" alt="" />
 
-    <h1>قائمة طلابي</h1>
+    <h1 class="students-heading">قائمة طلابي</h1>
 
-    @if (Model != null && Model.Any())
-    {
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>رقم الهوية</th>
-                    <th>اسم الطالب</th>
-                    <th>المرحلة</th>
-                    <th>الفصل</th>
-                    <th>المدرسة</th>
-                    <th>لوحة التحكم</th>
-                    <th>المجموعات</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var child in Model)
-                {
+    <div class="students-inner">
+        @if (Model != null && Model.Any())
+        {
+            <table class="students-table">
+                <thead>
                     <tr>
-                        <td>@child.ChildId</td>
-                        <td>@child.ChildName</td>
-                        <td>@child.Grade?.GradeName</td>
-                        <td>@child.Class?.ClassName</td>
-                        <td>@child.School?.SchoolName</td>
-                        <td>
-                           <a asp-controller="Educator"
-                           asp-action="ViewStudentDashboard"
-                           asp-route-childId="@child.ChildId">
-                           عرض لوحة التحكم
-                       </a>
-                        </td>
-                        <td>
-                            @foreach (var pc in child.ParentChildren)
-                            {
-                                <a href="@Url.Action("Chat", "Chat", new { 
-                                       educatorId = ViewBag.CurrentEducatorId, 
-                                       parentId = pc.ParentId })"
-                                   class="btn btn-primary" style="margin:2px;">
-                                    💬 مراسلة ولي الأمر
-                                </a>
-                            }
-                        </td>
+                        <th>رقم الهوية</th>
+                        <th>اسم الطالب</th>
+                        <th>المرحلة</th>
+                        <th>الفصل</th>
+                        <th>المدرسة</th>
+                        <th>لوحة التحكم</th>
+                        <th>المراسلة</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>لا يوجد طلاب مضافين حتى الآن</p>
-    }
-
-</main>
+                </thead>
+                <tbody>
+                    @foreach (var child in Model)
+                    {
+                        <tr>
+                            <td>@child.ChildId</td>
+                            <td>@child.ChildName</td>
+                            <td>@child.Grade?.GradeName</td>
+                            <td>@child.Class?.ClassName</td>
+                            <td>@child.School?.SchoolName</td>
+                            <td>
+                                <a asp-controller="Dashboard"
+                                   asp-action="ChildDashboardEducator"
+                                   asp-route-childId="@child.ChildId"
+                                   class="btn-dashboard-sm">
+                                    <i class="bi bi-speedometer2"></i> لوحة التحكم
+                                </a>
+                            </td>
+                            <td>
+                                @foreach (var pc in child.ParentChildren)
+                                {
+                                    <a href="@Url.Action("Chat", "Chat", new {
+                                               educatorId = ViewBag.CurrentEducatorId,
+                                               parentId = pc.ParentId })"
+                                       class="btn-chat-sm">
+                                        <i class="bi bi-chat-dots"></i> مراسلة ولي الأمر
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="search-no-results">لا يوجد طلاب مضافين حتى الآن</p>
+        }
+    </div>
+</div>

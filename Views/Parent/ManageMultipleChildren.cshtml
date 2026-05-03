@@ -15,37 +15,15 @@
 <div class="manage-children-page">
     <div class="main-container">
         <section class="main-content">
-            <h2>أطفالي</h2>
+            <img class="star-logo-corner" src="~/images/starLogo.png" alt="" />
+            <h2>إدارة الأطفال</h2>
 
-            @* Success messages after adding children *@
-            @if (TempData["ChildSuccessMessage"] != null)
-            {
-                <div class="alert alert-success">
-                    @TempData["ChildSuccessMessage"]
-                </div>
-            }
 
-            @if (TempData["LoginCode"] != null)
-            {
-                <div class="alert alert-info">
-                    كود الدخول للطفل: <strong>@TempData["LoginCode"]</strong>
-                </div>
-            }
-
-            @* No Dashboard Record, Errors in managing child *@
-            @if (TempData["ErrorMessage"] != null)
-            {
-                <div class="alert alert-danger">
-                    @TempData["ErrorMessage"]
-                </div>
-            }
-
-            @* NO Children Message *@
             @if (Model == null || !Model.Any())
             {
                 <div class="empty-state">
                     <p>ليس لديك أطفال مسجلين... الرجاء إضافة طفل جديد</p>
-                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                    <a href="@Url.Action("AddChild", "Parent")" class="btn-action">
                         إضافة طفل جديد
                     </a>
                 </div>
@@ -56,42 +34,40 @@
                     @foreach (var child in Model)
                     {
                         <li class="child-card">
-                            <div class="child-header">
-                                <div class="child-avatar">
-                                    <img src="@child.IconImgPath" alt="@child.ChildName">
-                                </div>
-                                <h3 class="child-name">@child.ChildName</h3>
+                            <div class="child-avatar">
+                                <img src="@child.IconImgPath" alt="@child.ChildName">
                             </div>
-                            
-                            <div class="child-actions">
-                                <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })" 
-                                   class="action-btn view-btn">
-                                    عرض الملف الشخصي
-                                </a>
-                                
-                                <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })" 
-                                   class="action-btn edit-btn">
-                                    تعديل البيانات
-                                </a>
-
-                                <a href="@Url.Action("ViewChildDashboard", "Parent", new { childId = child.ChildId })" 
-                                   class="action-btn dashboard-btn">
-                                    لوحة التحكم
-                                </a>
-                                
-                                <form asp-action="DeleteChildProfile" asp-controller="Parent" method="post"
-                                      onsubmit="return confirm('هل أنت متأكد من حذف ملف @child.ChildName؟');">
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="childId" value="@child.ChildId" />
-                                    <button type="submit" class="action-btn delete-btn">حذف</button>
-                                </form>
+                            <div class="child-card-content">
+                                <h2 class="child-name">@child.ChildName</h2>
+                                <div class="child-actions">
+                                    <a href="@Url.Action("ViewChildProfile", "Parent", new { childId = child.ChildId })"
+                                       class="btn-child-sm">
+                                        <i class="bi bi-person-fill"></i> الملف الشخصي
+                                    </a>
+                                    <a href="@Url.Action("ChildDashboardParent", "Dashboard", new { childId = child.ChildId })"
+                                       class="btn-child-sm">
+                                        <i class="bi bi-speedometer2"></i> لوحة التحكم
+                                    </a>
+                                    <a href="@Url.Action("EditChildProfile", "Parent", new { childId = child.ChildId })"
+                                       class="btn-child-sm">
+                                        <i class="bi bi-pencil-fill"></i> تعديل البيانات
+                                    </a>
+                                    <form asp-action="DeleteChildProfile" asp-controller="Parent" method="post"
+                                          onsubmit="return confirm('هل أنت متأكد من حذف ملف @child.ChildName؟');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="childId" value="@child.ChildId" />
+                                        <button type="submit" class="btn-child-sm btn-child-delete">
+                                            <i class="bi bi-trash-fill"></i> حذف
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </li>
                     }
                 </ul>
 
                 <div class="add-child-footer">
-                    <a href="@Url.Action("AddChild", "Parent")" class="add-child-btn">
+                    <a href="@Url.Action("AddChild", "Parent")" class="btn-action">
                         إضافة طفل
                     </a>
                 </div>

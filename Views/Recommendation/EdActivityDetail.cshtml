@@ -1,36 +1,41 @@
 @model LamiePlatform.Models.ViewModels.RecommendationDetailViewModel
+
 @{
     ViewData["Title"] = "تفاصيل التوصية";
 }
 
-<div class="container mt-4" dir="rtl">
-    <h2 class="mb-4">تفاصيل التوصية</h2>
+<div class="rec-outer" dir="rtl">
+    <img src="~/images/starLogo.png" class="rec-star-logo" alt="" />
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-bordered align-middle">
-                <tr>
-                    <th class="table-light" style="width: 180px;">اسم النشاط</th>
-                    <td>@Model.ActivityName</td>
-                </tr>
-                <tr>
-                    <th class="table-light">الوصف</th>
-                    <td>@Model.ActivityDescription</td>
-                </tr>
-                <tr>
-                    <th class="table-light">المدة (دقيقة)</th>
-                    <td>@(Model.Duration.HasValue? Model.Duration.Value.ToString() + " دقيقة" : "غير محدد")</td>
-                </tr>
+    <h2 class="rec-heading-secondary">تفاصيل التوصية</h2>
+
+    <div class="rec-inner">
+        <div class="rec-table-detail">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>اسم النشاط</th>
+                        <td>@Model.ActivityName</td>
+                    </tr>
+                    <tr>
+                        <th>الوصف</th>
+                        <td>@Model.ActivityDescription</td>
+                    </tr>
+                    <tr>
+                        <th>المدة (دقيقة)</th>
+                        <td>@(Model.Duration.HasValue ? Model.Duration.Value.ToString() + " دقيقة" : "غير محدد")</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-    </div>
 
-    <div class="mt-3">
-        <a asp-action="EdActivityList"
-           asp-route-educatorId="@ViewBag.EducatorId"
-           asp-route-groupId="@Model.GroupId"
-           class="btn btn-outline-secondary">
-            ← العودة إلى قائمة التوصيات
-        </a>
+        <div class="mt-3 text-end">
+            <a asp-action="EdActivityList"
+               asp-route-educatorId="@ViewBag.EducatorId"
+               asp-route-groupId="@Model.GroupId"
+               class="btn-back">
+                العودة إلى قائمة التوصيات
+            </a>
+        </div>
     </div>
 </div>

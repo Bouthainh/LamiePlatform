@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["ShowSidebar"] = false;
+    ViewData["IsHomePage"] = true;
 }
 
 @{
@@ -7,7 +8,6 @@
 }
 
 
-<!-- SECTION 1 – MAIN SECTION -->
 <section id="main" class="main-section">
 
     <div class="squiggle-orange"></div>
@@ -27,17 +27,18 @@
             <br>
             <strong>ابدأ الآن</strong> واكتشف عالم طفلك المميز!
         </p>
-        <a asp-controller="Parent" asp-action="Register" class="hero-btn">
+        <a asp-controller="Parent" asp-action="Register" class="btn-service">
             سجّل الآن!
         </a>
     </div>
 
     <div class="main-image">
-        <img src="~/images/HeroScene.png" alt="مشهد من اللعبة">
+        <video class="hero-video" src="~/videos/heroscene.mp4"
+               autoplay muted loop playsinline
+               aria-label="مشهد من اللعبة"></video>
     </div>
 </section>
 
-<!-- SECTION 2 – ABOUT -->
 <section id="about" class="about-section">
     <div class="about-star about-star--five"></div>
     <div class="about-star about-star--four"></div>
@@ -50,11 +51,9 @@
     </p>
 </section>
 
-<!-- SECTION 3 – FEATURE CARDS -->
 <section class="features-section">
   <h2>الخدمات</h2>
 
-    <!-- Family Card -->
     <div class="feature-card">
         <img src="~/images/ParentsPic.jpg" alt="منصة الأهل">
         <h3>منصة الأهل</h3>
@@ -66,7 +65,6 @@
         </div>
     </div>
 
-    <!-- Educators Card -->
     <div class="feature-card">
         <img src="~/images/EducatorsPic.jpg" alt="منصة المعلّمين">
         <h3>منصة المعلّمين</h3>
@@ -78,7 +76,6 @@
         </div>
     </div>
 
-    <!-- Children Card -->
     <div class="feature-card">
         <img src="~/images/LearningPic.jpg" alt="ألعاب تفاعلية">
         <h3>ألعاب تفاعلية</h3>
@@ -95,10 +92,11 @@
 
 </section>
 
-<!-- SECTION 4 – PROCESS STEPS -->
 <section id="how-it-works" class="process-section">
+                        <div class="about-star about-star--five"></div>
+                        <div class="about-star about-star--four"></div>
+                        <div class="about-star about-star--six"></div>
     <h2>كيف نعمل؟</h2>
-
     <div class="process-step">
         <div class="step-number">1</div>
         <h3>قياس المهارات</h3>
@@ -127,10 +125,9 @@
                                     تساعد على تنمية مهارات الطفل وتعزيز ذكاءاته بشكل مستمر
                                 </p>
     </div>
-
+                        <img src="~/images/Lubnah.png" alt="لبنه _شخصية لعبة">
 </section>
 
-<!-- SECTION 5 – FAQ -->
 <section id="faq" class="faq-section">
     <h2>الأسئلة الشائعة</h2>
 
@@ -169,13 +166,12 @@
                         </div>
 </section>
 
-<!-- SECTION 6 – CALL TO ACTION -->
-<section class="cta-section">
+<section class="cta-section" id="cta">
     <div>
         <h2>كل شخص يولد لامع!</h2>
         <p>امنح طفلك فرصة لمعرفة نقاط قوته بطريقة ممتعة وذكية</p>
-        <a asp-controller="Parent" asp-action="Register" class="register-btn"> التسجيل كأهل</a>
-        <a asp-controller="Educator" asp-action="Register" class="register-btn">التسجيل كمعلم</a>
+        <a asp-controller="Parent" asp-action="Register" class="btn-service"> التسجيل كأهل</a>
+        <a asp-controller="Educator" asp-action="Register" class="btn-service">التسجيل كمعلم</a>
     </div>
     <div class="cta-image">
       <img src="~/images/multiIntelegencescene.png" alt="مشهد أطفال بذكاءات متعددة">

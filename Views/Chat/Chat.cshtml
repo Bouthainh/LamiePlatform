@@ -1,60 +1,65 @@
-﻿@model List<LamiePlatform.Models.Message>
+@using System.Text.RegularExpressions
+@model List<LamiePlatform.Models.Message>
 @{
-    var userType = ViewBag.UserType as string;
-    var userId = ViewBag.UserId as string;
+    var userType       = ViewBag.UserType as string;
+    var userId         = ViewBag.UserId as string;
     var conversationId = ViewBag.ConversationId;
-    var educatorId = ViewBag.EducatorId as string;
-    var parentId = ViewBag.ParentId as string;
+    var educatorId     = ViewBag.EducatorId as string;
+    var parentId       = ViewBag.ParentId as string;
+
+    string RenderContent(string raw)
+    {
+        if (string.IsNullOrEmpty(raw)) return "";
+        var escaped = System.Net.WebUtility.HtmlEncode(raw);
+        escaped = Regex.Replace(
+            escaped,
+            @"(https?://[^\s]+)",
+            "<a href=\"$1\" target=\"_blank\" style=\"color:inherit;text-decoration:underline\">$1</a>");
+        escaped = escaped.Replace("&#xA;", "<br>").Replace("\n", "<br>");
+        return escaped;
+    }
 }
 
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">المحادثة</h5>
-            <a href="@Url.Action("Index", "Chat")" class="btn btn-sm btn-outline-secondary">رجوع</a>
+<div class="chat-page-wrap">
+    <div class="chat-frame">
+
+        <div class="chat-header">
+            <a href="@Url.Action("Index", "Chat")" class="btn-back-chat">رجوع</a>
+            <h5 class="chat-header-title">المحادثة</h5>
         </div>
 
-        <!-- Messages -->
-        <div class="card-body" id="chatBox"
-             style="height:450px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;">
+        <div class="chat-messages" id="chatBox">
             @foreach (var msg in Model)
             {
                 var isMine = msg.SenderId == userId;
-                <div class="d-flex @(isMine ? "justify-content-end" : "justify-content-start")">
-                    <div class="p-2 rounded-3 @(isMine ? "bg-primary text-white" : "bg-light text-dark")"
-                         style="max-width:65%;">
-                        <div>@msg.Content</div>
-                        <small class="d-block mt-1 @(isMine ? "text-white-50" : "text-muted")"
-                               style="font-size:0.7rem;">
+                <div class="chat-bubble-wrap @(isMine ? "mine" : "theirs")">
+                    <div class="chat-bubble @(isMine ? "mine" : "theirs")">
+                        @Html.Raw(RenderContent(msg.Content))
+                        <small class="bubble-time">
                             @msg.SentAt?.ToString("hh:mm tt")
-                            @if (isMine)
-                            {
-                                <span>@(msg.IsRead ? "✓✓" : "✓")</span>
-                            }
+                            @if (isMine) { <span>@(msg.IsRead ? "✓✓" : "✓")</span> }
                         </small>
                     </div>
                 </div>
             }
         </div>
 
-        <!-- Send Message -->
-        <div class="card-footer">
-            <form asp-action="SendMessage" asp-controller="Chat" method="post"
-                  class="d-flex gap-2">
+        <div class="chat-footer">
+            <form asp-action="SendMessage" asp-controller="Chat" method="post">
                 <input type="hidden" name="conversationId" value="@conversationId" />
-                <input type="hidden" name="educatorId" value="@educatorId" />
-                <input type="hidden" name="parentId" value="@parentId" />
-                <input type="text" name="content" class="form-control"
+                <input type="hidden" name="educatorId"     value="@educatorId" />
+                <input type="hidden" name="parentId"       value="@parentId" />
+                <input type="text" name="content" class="chat-input"
                        placeholder="اكتب رسالتك هنا..." required autocomplete="off" />
-                <button type="submit" class="btn btn-primary">إرسال</button>
+                <button type="submit" class="btn-send">إرسال</button>
             </form>
         </div>
+
     </div>
 </div>
 
 @section Scripts {
     <script>
-        // Auto scroll to bottom
         var chatBox = document.getElementById('chatBox');
         chatBox.scrollTop = chatBox.scrollHeight;
     </script>
