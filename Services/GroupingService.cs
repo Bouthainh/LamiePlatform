@@ -21,7 +21,6 @@ public class GroupingService : IGroupingService
             .AnyAsync(g => g.ClassId == classId);
     }
 
-    // Main grouping method 
     public async Task<List<ChildGroup>> CreateGroupsForClassAsync(Guid classId)
     {
         // 1. Load all children in this class with their intelligences
@@ -85,7 +84,6 @@ public class GroupingService : IGroupingService
 
         foreach (var groupChildren in allGroups)
         {
-            // Group name = most common Top 1 intelligence among members
             var dominantIntelligence = groupChildren
                 .Select(c => c.ChildIntelligences
                     .OrderByDescending(ci => ci.ProficiencyScore)

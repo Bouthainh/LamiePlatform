@@ -36,7 +36,6 @@ public partial class LamieDbContext : DbContext
 
     public virtual DbSet<EducatorPermission> EducatorPermissions { get; set; }
 
-    public virtual DbSet<GameCharacter> GameCharacters { get; set; }
 
     public virtual DbSet<GameLevel> GameLevels { get; set; }
 
@@ -184,7 +183,6 @@ public partial class LamieDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("child_ID");
             entity.Property(e => e.Age).HasColumnName("age");
-            entity.Property(e => e.CharacterId).HasColumnName("character_ID");
             entity.Property(e => e.ChildGroupId).HasColumnName("child_group_ID");
             entity.Property(e => e.ChildName)
                 .HasMaxLength(100)
@@ -199,18 +197,11 @@ public partial class LamieDbContext : DbContext
                 .IsUnicode(true)
                 .HasColumnName("gender");
             entity.Property(e => e.GradeId).HasColumnName("grade_ID");
-            entity.Property(e => e.IconImgPath)
-                .IsUnicode(true)
-                .HasColumnName("Icon_img_path");
             entity.Property(e => e.LoginCode)
                 .HasMaxLength(8)
                 .IsUnicode(true)
                 .HasColumnName("login_code");
             entity.Property(e => e.SchoolId).HasColumnName("school_ID");
-
-            entity.HasOne(d => d.Character).WithMany(p => p.Children)
-                .HasForeignKey(d => d.CharacterId)
-                .HasConstraintName("FK__Child__character__72C60C4A");
 
             entity.HasOne(d => d.ChildGroup).WithMany(p => p.Children)
                 .HasForeignKey(d => d.ChildGroupId)
@@ -432,25 +423,6 @@ public partial class LamieDbContext : DbContext
             entity.HasOne(d => d.Parent).WithMany(p => p.EducatorPermissions)
                 .HasForeignKey(d => d.ParentId)
                 .HasConstraintName("FK__EducatorP__paren__7F2BE32F");
-        });
-
-        modelBuilder.Entity<GameCharacter>(entity =>
-        {
-            entity.HasKey(e => e.CharacterId).HasName("PK__GameChar__11D466B6A16FD769");
-
-            entity.ToTable("GameCharacter");
-
-            entity.Property(e => e.CharacterId)
-                .HasDefaultValueSql("(newsequentialid())")
-                .HasColumnName("character_ID");
-            entity.Property(e => e.CharacterDescription)
-                .HasMaxLength(5000)
-                .IsUnicode(true)
-                .HasColumnName("character_description");
-            entity.Property(e => e.CharacterName)
-                .HasMaxLength(100)
-                .IsUnicode(true)
-                .HasColumnName("character_name");
         });
 
         modelBuilder.Entity<GameLevel>(entity =>
