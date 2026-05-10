@@ -257,17 +257,17 @@ namespace LamiePlatform.Services
                 bool isUnderMeasurement = allLevels.Count > 0
                        && !allLevels.All(l => playedLevelIds.Contains(l.LevelId));
 
-                var latestSession = _db.GameSessions
+                var allSessionIds = _db.GameSessions
                     .Where(gs => gs.ChildId == childId
                               && gs.Level != null
                               && gs.Level.IntelligenceId == ci.IntelligenceId)
-                    .OrderByDescending(gs => gs.PlayedAt)
-                    .FirstOrDefault();
+                    .Select(gs => gs.GameSessionId)
+                    .ToList();
 
-                if (latestSession == null) continue;
+                if (!allSessionIds.Any()) continue;
 
                 var aspectResults = _db.AspectResults
-                    .Where(a => a.GameSessionId == latestSession.GameSessionId
+                    .Where(a => allSessionIds.Contains(a.GameSessionId)
                              && a.IntelligenceId == ci.IntelligenceId)
                     .Include(a => a.IndicatorResults)
                         .ThenInclude(ind => ind.AssessmentItems)
