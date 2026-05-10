@@ -53,9 +53,8 @@ function ratingBadgeStyle(r) {
 }
 
 
-function initDashboard(barLabels, barData, effortData, trendData, detailData) {
+function initDashboard(barLabels, barData, trendData, detailData) {
     initBarAndRadarCharts(barLabels, barData, detailData);
-    initEffortChart(effortData);
     initTrendChart(trendData);
     initIntelDetail(detailData);
 }
@@ -153,47 +152,13 @@ function initBarAndRadarCharts(barLabels, barData) {
     </svg>`;
     }
 }
-
-function initEffortChart(effortData) {
-    const canvas = document.getElementById("effortChart");
-    if (!canvas) return;
-
-    const hasData = effortData.some(d => d.totalTimeSec > 0);
-    if (!hasData) {
-        showEmptyState(canvas, "لا تتوفر بيانات كافية لعرض مخطط الجهد مقابل الدرجة بعد.");
-        return;
-    }
-
-    const colors = Object.values(intelligenceColors);
-    const datasets = effortData.map((d, i) => ({
-        label: d.intelligenceName,
-        data: [{ x: d.totalTimeSec, y: d.score, r: 6 + d.sessionCount * 5 }],
-        backgroundColor: (colors[i] || "#ccc") + "BB",
-        borderColor: colors[i] || "#ccc",
-        borderWidth: 1.5
-    }));
-
-    new Chart(canvas, {
-        type: "bubble",
-        data: { datasets },
-        options: {
-            responsive: true,
-            layout: { padding: 16 },
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { title: { display: true, text: "الوقت الكلي (ثانية)" }, min: 0 },
-                y: { title: { display: true, text: "الدرجة" }, min: 0, max: 100 }
-            }
-        }
-    });
-}
 function initTrendChart(trendData) {
     const canvas = document.getElementById("trendChart");
     if (!canvas) return;
 
     const dates = [...new Set(trendData.map(p => p.date))].sort();
 
-    if (dates.length < 2) {
+    if (dates.length ==0) {
         showEmptyState(
             canvas,
             dates.length === 0
@@ -216,7 +181,7 @@ function initTrendChart(trendData) {
             backgroundColor: "transparent",
             pointBackgroundColor: color,
             borderWidth: 1.5,
-            pointRadius: 4,
+            pointRadius: 6,
             spanGaps: true,
             tension: 0.3
         };
@@ -250,7 +215,13 @@ function renderIntelDetail(detailData, id) {
     if (!d) return;
 
     const panel = document.getElementById("intelDetailPanel");
+    const heatmapTableId  = "heatTable_"      + Date.now();
+    const chartContainerId = "groupedBarWrap_" + Date.now();
+    const groupedBarId    = "groupedBar_"      + Date.now();
+    const assessPanelId   = "assessPanel_"     + Date.now();
+    let groupedChart = null;
 
+    //Levels summary card 
     let levelsHtml = "";
     if (!d.levels || d.levels.length === 0) {
         levelsHtml = `<p class="text-muted" style="font-size:13px">لا توجد مستويات محددة لهذا الذكاء.</p>`;
@@ -258,29 +229,21 @@ function renderIntelDetail(detailData, id) {
         const listItems = d.levels.map(l => {
             const played = l.isPlayed;
             return `
-                <li class="d-flex align-items-center gap-2 py-2 border-bottom"
-                    style="list-style:none">
-                    <span style="
-                        display:inline-block;width:10px;height:10px;border-radius:50%;
-                        background:${played ? "#32c8c3" : "#ced4da"};
-                        flex-shrink:0">
-                    </span>
+                <li class="d-flex align-items-center gap-2 py-2 border-bottom" style="list-style:none">
+                    <span style="display:inline-block;width:10px;height:10px;border-radius:50%;
+                                 background:${played ? "#32c8c3" : "#ced4da"};flex-shrink:0"></span>
                     <span style="font-size:13px;color:${played ? "#1a7a77" : "#6c757d"};
-                                 font-weight:${played ? "600" : "400"}">
-                        ${l.name}
-                    </span>
+                                 font-weight:${played ? "600" : "400"}">${l.name}</span>
                     ${played
-                    ? `<span class="ms-auto badge" style="background:#d4f5f3;color:#1a7a77;font-size:11px">مكتمل ✓</span>`
-                    : `<span class="ms-auto badge" style="background:#f8f9fa;color:#adb5bd;font-size:11px">لم يُلعب</span>`
-                }
+                        ? `<span class="ms-auto badge" style="background:#d4f5f3;color:#1a7a77;font-size:11px">مكتمل ✓</span>`
+                        : `<span class="ms-auto badge" style="background:#f8f9fa;color:#adb5bd;font-size:11px">لم يُلعب</span>`}
                 </li>`;
         }).join("");
 
         levelsHtml = `
             <div class="card border-0 shadow-sm mb-4">
                 <div class="card-body">
-                    <p class="text-muted mb-1"
-                       style="font-size:12px;text-transform:uppercase;letter-spacing:.05em">المستويات</p>
+                    <p class="text-muted mb-1" style="font-size:12px;text-transform:uppercase;letter-spacing:.05em">المستويات</p>
                     <div class="mb-3 d-flex align-items-center gap-2">
                         <span class="fw-bold" style="font-size:22px">${d.completedLevels ?? 0}</span>
                         <span class="text-muted" style="font-size:15px">/ ${d.totalLevels}</span>
@@ -291,8 +254,35 @@ function renderIntelDetail(detailData, id) {
             </div>`;
     }
 
+    //Clickable aspect  above the heatmap 
+    let levelPillsHtml = "";
+    const hasLevels  = d.levels  && d.levels.length  > 0;
+    const hasAspects = d.aspects && d.aspects.length > 0;
+    const pillColors = ["#8ee4e0", "#32c8c3", "#c9a3db", "#ffb90f", "#ff8282"];
+    if (hasAspects) {
+        const pills = d.aspects.map((a, i) => {
+            const c = pillColors[i] || "#888";
+            return `
+            <button type="button" class="heat-level-pill" data-aspect-idx="${i}"
+                    style="background:${c}22;color:${c};border:1.5px solid ${c};
+                           border-radius:20px;padding:5px 14px;font-size:12px;
+                           font-weight:600;cursor:pointer;
+                           display:inline-flex;align-items:center;gap:6px;
+                           white-space:nowrap;transition:all 0.15s ease;">
+                ${a.name}
+            </button>`;
+        }).join("");
+
+        levelPillsHtml = `
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center">
+                <span style="font-size:12px;color:var(--color-text-secondary);font-weight:500;flex-shrink:0">الجوانب:</span>
+                ${pills}
+            </div>`;
+    }
+
+    //Heatmap table 
     let heatHtml = "";
-    if (!d.aspects || d.aspects.length === 0) {
+    if (!hasAspects) {
         heatHtml = `<p class="text-muted" style="font-size:13px">لا تتوفر بيانات جوانب لهذا الذكاء.</p>`;
     } else {
         const allIndicators = [...new Set(
@@ -304,22 +294,26 @@ function renderIntelDetail(detailData, id) {
         } else {
             let rows = "";
             allIndicators.forEach(indName => {
-                rows += `<tr><td class="text-end fw-semibold" style="font-size:12px;min-width:160px;padding:6px 10px">${indName}</td>`;
-                d.aspects.forEach(a => {
+                const rowAspects = d.aspects
+                    .map((a, i) => a.indicators.some(ind => ind.name === indName) ? i : -1)
+                    .filter(i => i >= 0).join(',');
+                rows += `<tr data-aspects="${rowAspects}"><td class="text-end fw-semibold" style="font-size:12px;min-width:160px;padding:6px 10px">${indName}</td>`;
+                d.aspects.forEach((a, colIdx) => {
                     const ind = a.indicators.find(i => i.name === indName);
                     if (ind) {
                         const pct = Math.round(ind.score * 100);
                         rows += `
-                            <td style="
-                                background:${ratingBgColor(ind.rating)};
-                                color:${ratingTextColor(ind.rating)};
-                                font-weight:600;text-align:center;
-                                padding:6px 8px;font-size:12px">
+                            <td data-col-idx="${colIdx}"
+                                style="background:${ratingBgColor(ind.rating)};
+                                       color:${ratingTextColor(ind.rating)};
+                                       font-weight:600;text-align:center;
+                                       padding:6px 8px;font-size:12px;
+                                       transition:opacity 0.2s ease">
                                 ${pct}%<br>
                                 <small style="font-size:10px;font-weight:400">${ind.rating}</small>
                             </td>`;
                     } else {
-                        rows += `<td style="text-align:center;color:#adb5bd;font-size:13px">—</td>`;
+                        rows += `<td data-col-idx="${colIdx}" style="text-align:center;color:#adb5bd;font-size:13px;transition:opacity 0.2s ease">—</td>`;
                     }
                 });
                 rows += `</tr>`;
@@ -327,12 +321,11 @@ function renderIntelDetail(detailData, id) {
 
             heatHtml = `
                 <div class="table-responsive">
-                    <table class="dash-table table-sm align-middle mb-0"
-                           style="font-size:12px">
+                    <table class="dash-table table-sm align-middle mb-0" id="${heatmapTableId}" style="font-size:12px">
                         <thead class="dash-thead-yellow">
                             <tr>
                                 <th class="text-end" style="min-width:160px">المؤشر</th>
-                                ${d.aspects.map(a => `<th style="text-align:center">${a.name}</th>`).join("")}
+                                ${d.aspects.map((a, i) => `<th data-col-idx="${i}" style="text-align:center;transition:opacity 0.2s ease">${a.name}</th>`).join("")}
                             </tr>
                         </thead>
                         <tbody>${rows}</tbody>
@@ -341,12 +334,9 @@ function renderIntelDetail(detailData, id) {
         }
     }
 
-    const chartContainerId = "groupedBarWrap_" + Date.now();
-    const groupedBarId = "groupedBar_" + Date.now();
-    const assessPanelId = "assessPanel_" + Date.now();
-
+    //Grouped bar chart
     let groupedHtml = "";
-    if (!d.aspects || d.aspects.length === 0) {
+    if (!hasAspects) {
         groupedHtml = `<p class="text-muted" style="font-size:13px">لا تتوفر بيانات لعرض المخطط المجمع.</p>`;
     } else {
         groupedHtml = `
@@ -365,21 +355,10 @@ function renderIntelDetail(detailData, id) {
         ? `<div class="intel-meta-box"><span>المستويات المنجزة</span><h5>${d.completedLevels ?? 0} / ${d.totalLevels}</h5></div>`
         : "";
 
-    // ── Under-measurement warning banner ─────────────────────────────────────
     const underMeasurementBanner = d.isUnderMeasurement ? `
-        <div style="
-            background-color : #fff0ed;
-            border           : 1.5px solid #e85d4a;
-            border-radius    : 10px;
-            padding          : 12px 18px;
-            margin-bottom    : 18px;
-            color            : #c0392b;
-            font-weight      : 600;
-            font-size        : 0.92rem;
-            display          : flex;
-            align-items      : center;
-            gap              : 10px;
-        ">
+        <div style="background-color:#fff0ed;border:1.5px solid #e85d4a;border-radius:10px;
+                    padding:12px 18px;margin-bottom:18px;color:#c0392b;font-weight:600;
+                    font-size:0.92rem;display:flex;align-items:center;gap:10px;">
             <i class="bi bi-exclamation-circle-fill" style="font-size:1.2rem;flex-shrink:0"></i>
             هذا الذكاء لا يزال قيد القياس — لم يُكمل الطفل جميع مستويات هذه المرحلة بعد.
         </div>` : "";
@@ -395,7 +374,9 @@ function renderIntelDetail(detailData, id) {
 
         ${levelsHtml}
 
+        <div class="dash-chart-box">
             <span class="dash-section-title">خريطة المؤشرات الحرارية</span>
+            ${levelPillsHtml}
             ${heatHtml}
         </div>
 
@@ -404,57 +385,98 @@ function renderIntelDetail(detailData, id) {
             ${groupedHtml}
         </div>`;
 
-    if (d.aspects && d.aspects.length) {
-        const indicatorLabels = [...new Set(
-            d.aspects.flatMap(a => a.indicators.map(i => i.name))
-        )];
-        const aspectColors = ["#378ADD", "#1D9E75", "#7F77DD", "#EF9F27", "#D85A30"];
+    //heatmap filter + chart rebuild per aspect 
+    function applyHeatmapFilter(aspectIdx) {
+        const table = document.getElementById(heatmapTableId);
+        if (!table) return;
+        table.querySelectorAll('tbody tr').forEach(row => {
+            const rowAspects = (row.dataset.aspects || '').split(',').map(Number);
+            row.style.display = rowAspects.includes(aspectIdx) ? '' : 'none';
+        });
+        table.querySelectorAll('[data-col-idx]').forEach(el => {
+            el.style.display = parseInt(el.dataset.colIdx) === aspectIdx ? '' : 'none';
+        });
+    }
 
-        const datasets = d.aspects.map((a, i) => ({
-            label: a.name,
-            data: indicatorLabels.map(indName => {
-                const ind = a.indicators.find(x => x.name === indName);
-                return ind ? +(ind.score * 100).toFixed(1) : 0;
-            }),
-            backgroundColor: (aspectColors[i] || "#ccc") + "CC",
-            borderColor: aspectColors[i] || "#ccc",
-            borderWidth: 1
-        }));
+    function renderAspectChart(aspectIdx) {
+        if (groupedChart) { groupedChart.destroy(); groupedChart = null; }
+        const canvas = document.getElementById(groupedBarId);
+        if (!canvas) return;
+        const aspect = d.aspects[aspectIdx];
+        if (!aspect) return;
 
-        const groupedChart = new Chart(document.getElementById(groupedBarId), {
-            type: "bar",
-            data: { labels: indicatorLabels, datasets },
+        const color = pillColors[aspectIdx] || '#ccc';
+        const labels = aspect.indicators.map(i => i.name);
+
+        groupedChart = new Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels,
+                datasets: [{
+                    label: aspect.name,
+                    data: aspect.indicators.map(i => +(i.score * 100).toFixed(1)),
+                    backgroundColor: color + 'CC',
+                    borderColor: color,
+                    borderWidth: 1
+                }]
+            },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: "bottom" } },
+                plugins: { legend: { display: false } },
                 scales: {
                     x: { ticks: { autoSkip: false, maxRotation: 35, font: { size: 11 } } },
-                    y: { min: 0, max: 100, ticks: { callback: v => v + "%" } }
+                    y: { min: 0, max: 100, ticks: { callback: v => v + '%' } }
                 },
                 onClick(event) {
                     const hits = groupedChart.getElementsAtEventForMode(
-                        event, "nearest", { intersect: true }, false
+                        event, 'nearest', { intersect: true }, false
                     );
                     if (!hits.length) return;
-
-                    const { datasetIndex, index } = hits[0];
-                    const clickedAspect = d.aspects[datasetIndex];
-                    const clickedIndName = indicatorLabels[index];
-                    const clickedIndicator = clickedAspect?.indicators.find(
-                        i => i.name === clickedIndName
-                    );
-
-                    showAssessmentItems(
-                        assessPanelId,
-                        clickedIndicator,
-                        clickedIndName,
-                        clickedAspect?.name,
-                        d.name
-                    );
+                    const { index } = hits[0];
+                    const ind = aspect.indicators[index];
+                    showAssessmentItems(assessPanelId, ind, ind.name, aspect.name, d.name);
                 }
             }
         });
+    }
+
+    function activatePill(aspectIdx) {
+        const allPills = panel.querySelectorAll('.heat-level-pill');
+        allPills.forEach(p => {
+            const i = parseInt(p.dataset.aspectIdx);
+            const c = pillColors[i] || '#888';
+            Object.assign(p.style, {
+                background: c + '22', color: c,
+                border: `1.5px solid ${c}`,
+                fontWeight: '600', boxShadow: ''
+            });
+        });
+        const activePill = panel.querySelector(`.heat-level-pill[data-aspect-idx="${aspectIdx}"]`);
+        if (activePill) {
+            const c = pillColors[aspectIdx] || '#888';
+            Object.assign(activePill.style, {
+                background: c, color: '#fff',
+                border: `1.5px solid ${c}`,
+                fontWeight: '700', boxShadow: `0 2px 8px ${c}88`
+            });
+        }
+    }
+
+    if (hasAspects) {
+        panel.querySelectorAll('.heat-level-pill').forEach(pill => {
+            pill.addEventListener('click', function () {
+                const idx = parseInt(this.dataset.aspectIdx);
+                activatePill(idx);
+                applyHeatmapFilter(idx);
+                renderAspectChart(idx);
+            });
+        });
+
+        // BYDefault: show first aspect on load
+        activatePill(0);
+        applyHeatmapFilter(0);
+        renderAspectChart(0);
     }
 }
 
