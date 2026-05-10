@@ -53,8 +53,9 @@ function ratingBadgeStyle(r) {
 }
 
 
-function initDashboard(barLabels, barData, trendData, detailData) {
+function initDashboard(barLabels, barData, effortData, trendData, detailData) {
     initBarAndRadarCharts(barLabels, barData, detailData);
+    initEffortChart(effortData);
     initTrendChart(trendData);
     initIntelDetail(detailData);
 }
@@ -151,6 +152,41 @@ function initBarAndRadarCharts(barLabels, barData) {
         ${dot}
     </svg>`;
     }
+}
+
+function initEffortChart(effortData) {
+    const canvas = document.getElementById("effortChart");
+    if (!canvas) return;
+
+    if (!effortData || !effortData.length) {
+        showEmptyState(canvas, "لا تتوفر بيانات كافية لعرض مخطط الجهد مقابل الدرجة بعد.");
+        return;
+    }
+
+    const colors = Object.values(intelligenceColors);
+    const datasets = effortData.map((d, i) => ({
+        label: d.intelligenceName,
+        data: [{ x: d.totalTimeSec || 0, y: d.score || 0, r: 6 + (d.sessionCount || 1) * 5 }],
+        backgroundColor: (colors[i] || "#ccc") + "BB",
+        borderColor: colors[i] || "#ccc",
+        borderWidth: 1.5
+    }));
+
+    new Chart(canvas, {
+        type: "bubble",
+        data: { datasets },
+        options: {
+            responsive: true,
+            layout: { padding: 16 },
+            plugins: {
+                legend: { display: true, position: "bottom" }  
+            },
+            scales: {
+                x: { title: { display: true, text: "الوقت الكلي (ثانية)" }, min: 0 },
+                y: { title: { display: true, text: "الدرجة" }, min: 0, max: 100 }
+            }
+        }
+    });
 }
 function initTrendChart(trendData) {
     const canvas = document.getElementById("trendChart");
