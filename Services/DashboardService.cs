@@ -15,6 +15,44 @@ namespace LamiePlatform.Services
         {
             _db = db;
         }
+
+        private void EnsureChildIntelligencesExist(string childId)
+        {
+           var playedIntelligenceIds = _db.GameSessions
+          .Where(gs => gs.ChildId == childId && gs.Level != null && gs.Level.IntelligenceId != null)
+          .Select(gs => gs.Level.IntelligenceId.Value)  
+          .Distinct()
+          .ToList();
+
+            if (!playedIntelligenceIds.Any()) return;
+
+            var existingIntelligenceIds = _db.ChildIntelligences
+                .Where(ci => ci.ChildId == childId)
+                .Select(ci => ci.IntelligenceId)
+                .ToHashSet();
+
+            var toInsert = playedIntelligenceIds
+                .Where(id => !existingIntelligenceIds.Contains(id))
+                .ToList();
+
+            if (!toInsert.Any()) return;
+
+            foreach (var intelligenceId in toInsert)
+            {
+                _db.ChildIntelligences.Add(new ChildIntelligence
+                {
+                    ChildId = childId,
+                    IntelligenceId = intelligenceId,
+                    ProficiencyScore = null,       
+                    IntelligenceLevel = null,      
+                    AssessmentDate = DateTime.Now,
+                    Summary = null
+                });
+            }
+
+            _db.SaveChanges();
+        }
+
         private void CalculateAndUpdateIntelligenceScores(string childId)
         {
             var childIntelligences = _db.ChildIntelligences
@@ -46,8 +84,8 @@ namespace LamiePlatform.Services
 
         public ChildDashboardViewModel GetChildDashboard(string childId, string viewerRole)
         {
-
-            CalculateAndUpdateIntelligenceScores(childId); //calculate latest scores before fetching data for dashboard
+            EnsureChildIntelligencesExist(childId);          //auto: ensure all intelligences with game data have entries in ChildIntelligences table
+            CalculateAndUpdateIntelligenceScores(childId); //auto: calculate latest scores before fetching data for dashboard
 
             var child = _db.Children
                 .Include(c => c.Class)
