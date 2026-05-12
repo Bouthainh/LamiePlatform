@@ -167,7 +167,7 @@ namespace LamiePlatform.Services
             sb.AppendLine("3. اكتب وصفاً للنشاط من 3 إلى 4 أسطر كحد أقصى، يكون واضحاً ومباشراً");
             sb.AppendLine("4. حدّد المدة الموصى بها للنشاط (بالدقائق، رقم فقط)");
             sb.AppendLine("5. صنّف النشاط تحت إحدى الفئات التالية فقط:");
-            sb.AppendLine("   الذكاء اللغوي | الذكاء المنطقي | الذكاء البصري | الذكاء الجسدي");
+            sb.AppendLine("   الذكاء اللغوي | الذكاء المنطقي | الذكاء المكاني | الذكاء الجسدي");
             sb.AppendLine("   الذكاء الموسيقي | الذكاء الاجتماعي | الذكاء الذاتي | الذكاء الطبيعي");
             sb.AppendLine();
             sb.AppendLine("أجب فقط بكائن JSON صالح، بدون markdown، بدون أي نص إضافي، باللغة العربية:");
@@ -197,7 +197,7 @@ namespace LamiePlatform.Services
                 .ToList();
         }
 
-        // //call the GPT API
+        //call the GPT API
         private async Task<GptRecommendationResult?> CallGptAsync(string userPrompt)
         {
             try

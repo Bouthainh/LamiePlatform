@@ -1,4 +1,22 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
+(function () {
+    var loader = document.getElementById('page-loader');
+
+    function showLoader() {
+        if (loader) loader.classList.remove('loader-hidden');
+    }
+
+    function hideLoader() {
+        if (loader) loader.classList.add('loader-hidden');
+    }
+
+    window.addEventListener('load', hideLoader);
+
+    window.addEventListener('beforeunload', showLoader);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.jQuery) {
+            $(document).ajaxStart(showLoader).ajaxStop(hideLoader);
+        }
+    });
+})();

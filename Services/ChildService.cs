@@ -307,7 +307,6 @@ namespace LamiePlatform.Services
                     Age = child.Age ?? 0,
                     Gender = child.Gender,
                     LoginCode = child.LoginCode,
-                    IconImgPath = child.IconImgPath,
 
                     SchoolName = child.School?.SchoolName,
                     City = child.School?.City,

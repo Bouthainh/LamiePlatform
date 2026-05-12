@@ -15,8 +15,6 @@ public partial class Child
 
     public Guid? GradeId { get; set; }
 
-    public Guid? CharacterId { get; set; }
-
     public string? ChildName { get; set; }
 
     public string? Gender { get; set; }
@@ -25,13 +23,11 @@ public partial class Child
 
     public string? LoginCode { get; set; }
 
-    public string? IconImgPath { get; set; }
 
     public DateTime? CreatedAt { get; set; }
 
     public virtual ICollection<ActivityRecommendation> ActivityRecommendations { get; set; } = new List<ActivityRecommendation>();
 
-    public virtual GameCharacter? Character { get; set; }
 
     public virtual ChildGroup? ChildGroup { get; set; }
 

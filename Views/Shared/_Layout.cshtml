@@ -20,6 +20,15 @@
 </style>
 <body>
 
+    <div id="page-loader">
+        <div class="loader-rings">
+            <div class="loader-ring loader-ring--outer"></div>
+            <div class="loader-ring loader-ring--mid"></div>
+            <div class="loader-ring loader-ring--inner"></div>
+            <img src="~/images/starLogo.png" alt="لامع" class="loader-logo" />
+        </div>
+    </div>
+
     @{
         var _toastSuccess = (TempData["SuccessMessage"]
                           ?? TempData["RegisterSuccessMessage"]
